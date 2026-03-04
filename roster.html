@@ -275,6 +275,13 @@
   /* VIDEO SECTION */
   .modal-video-section{border-top:1px solid rgba(255,255,255,.05);padding:18px 22px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
   .modal-video-label{font-size:.6rem;color:var(--muted);letter-spacing:2.5px;text-transform:uppercase;font-weight:700;}
+  .entrance-bars{display:none;align-items:flex-end;gap:2px;height:16px;margin-right:4px;}
+  .entrance-bars span{display:block;width:3px;background:#fff;border-radius:1px;animation:bar-bounce .8s ease-in-out infinite;}
+  .entrance-bars span:nth-child(2){animation-delay:.15s;}
+  .entrance-bars span:nth-child(3){animation-delay:.3s;}
+  @keyframes bar-bounce{0%,100%{height:3px}50%{height:14px}}
+  .modal-yt-btn.playing .entrance-bars{display:flex;}
+  .modal-yt-btn.playing .entrance-play-icon{display:none;}
   .modal-yt-btn{
     display:inline-flex;align-items:center;gap:8px;
     background:var(--accent);color:#fff;
@@ -417,7 +424,8 @@
           <div style="font-size:.55rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;">Rating</div>
         </div>
         <button id="modal-yt-btn" onclick="toggleEntrance()" class="modal-yt-btn">
-          <svg id="entrance-play-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <div class="entrance-bars"><span></span><span></span><span></span></div>
+          <svg class="entrance-play-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           <span id="entrance-btn-text">Watch Entrance</span>
         </button>
       </div>
@@ -784,13 +792,13 @@ function toggleEntrance(){
   const player = document.getElementById('entrance-player');
   const iframe = document.getElementById('entrance-iframe');
   const btnText = document.getElementById('entrance-btn-text');
-  const playIcon = document.getElementById('entrance-play-icon');
+  const playIcon = document.querySelector('.entrance-play-icon');
   if(player.style.display === 'none'){
     if(!currentVideoId) return;
     iframe.src = `https://www.youtube.com/embed/${currentVideoId}?autoplay=1&rel=0`;
     player.style.display = 'block';
     btnText.textContent = 'Close Video';
-    playIcon.style.display = 'none';
+    document.getElementById('modal-yt-btn').classList.add('playing');
   } else { closeEntrance(); }
 }
 
@@ -798,7 +806,7 @@ function closeEntrance(){
   const player = document.getElementById('entrance-player');
   const iframe = document.getElementById('entrance-iframe');
   const btnText = document.getElementById('entrance-btn-text');
-  const playIcon = document.getElementById('entrance-play-icon');
+  const playIcon = document.querySelector('.entrance-play-icon');
   if(!player) return;
   iframe.src = '';
   player.style.display = 'none';
