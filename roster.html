@@ -187,7 +187,8 @@
   .modal-box.champ-modal{border-color:rgba(200,168,75,.3);}
 
   /* TOP SECTION */
-  .modal-top{position:relative;display:flex;min-height:520px;}
+  .modal-top{position:relative;display:flex;min-height:unset;}
+  .modal-extended{padding:0 28px 20px;border-top:1px solid rgba(255,255,255,.06);margin-top:0;}
   .modal-photo-wrap{
     width:220px;flex-shrink:0;
     background:var(--surface2);overflow:hidden;
@@ -311,7 +312,7 @@
 
   @media(max-width:600px){
     .modal-top{flex-direction:column;}
-    .modal-photo-wrap{width:100%;height:220px;}
+    .modal-photo-wrap{width:100%;height:200px;}
     .modal-stats-grid{grid-template-columns:repeat(3,1fr);}
     /* When video plays on mobile - expand modal-top to 16:9 */
     .modal-top.video-playing{height:56.25vw;min-height:unset;}
@@ -443,11 +444,14 @@
         <div class="modal-stable" id="modal-stable"></div>
         <div class="modal-bio" id="modal-bio"></div>
         <div class="modal-moves" id="modal-moves"></div>
+      </div>
+    </div>
+    <!-- EXTENDED: full width section below photo -->
+    <div class="modal-extended" id="modal-extended">
         <div class="modal-faction" id="modal-faction" style="display:none;margin-top:14px;"></div>
         <div class="modal-title-history" id="modal-title-history" style="display:none;margin-top:14px;"></div>
-        <div class="modal-endorsements" id="modal-endorsements" style="display:none;"></div>
-        <div class="modal-social" id="modal-social"></div>
-      </div>
+        <div class="modal-endorsements" id="modal-endorsements" style="display:none;margin-top:14px;"></div>
+        <div class="modal-social" id="modal-social" style="margin-top:10px;"></div>
     </div>
     <!-- BOTTOM: theme + rating + play -->
     <div class="modal-video-section">
@@ -872,7 +876,8 @@ function makeCard(w, i){
       ${w.title && !w.champion ? `<div class="w-subtitle">${w.title}</div>` : ''}
       ${w.nickname ? `<div class="w-nickname">"${w.nickname}"</div>` : ''}
       <div class="w-name">${w.name}</div>
-    </div>`;
+    </div>
+    ${w.rating ? `<div style="position:absolute;bottom:12px;right:12px;font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:${w.rating>=90?'#c8a84b':w.rating>=80?'#4ade80':'#e8e8e8'};line-height:1;z-index:3;opacity:.85;">${w.rating}</div>` : ''}`;
   return el;
 }
 
