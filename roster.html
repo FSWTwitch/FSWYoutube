@@ -187,7 +187,7 @@
   .modal-box.champ-modal{border-color:rgba(200,168,75,.3);}
 
   /* TOP SECTION */
-  .modal-top{display:flex;min-height:520px;}
+  .modal-top{position:relative;display:flex;min-height:520px;}
   .modal-photo-wrap{
     width:220px;flex-shrink:0;
     background:var(--surface2);overflow:hidden;
@@ -409,10 +409,10 @@
           <div style="font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:#fff;line-height:1;"></div>
           <div style="font-size:.55rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;">Rating</div>
         </div>
-        <a id="modal-yt-btn" href="#" target="_blank" class="modal-yt-btn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          Watch Entrance
-        </a>
+        <button id="modal-yt-btn" onclick="toggleEntrance()" class="modal-yt-btn">
+          <svg id="entrance-play-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span id="entrance-btn-text">Watch Entrance</span>
+        </button>
       </div>
     </div>
   </div>
@@ -845,7 +845,10 @@ function openModal(w){
   } else { ratingEl.style.display = 'none'; }
 
   // Watch button
-  document.getElementById('modal-yt-btn').href = w.videoUrl || `https://youtube.com/watch?v=${w.videoId}`;
+  currentVideoId = w.videoId || '';
+  const ytBtn = document.getElementById('modal-yt-btn');
+  if(!currentVideoId && !w.videoUrl){ ytBtn.style.display='none'; } else { ytBtn.style.display='inline-flex'; }
+  closeEntrance();
 
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow = 'hidden';
