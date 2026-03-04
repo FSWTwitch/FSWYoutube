@@ -316,6 +316,16 @@
   }
 
   /* FOOTER */
+  .title-history-wrap{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:14px 16px;margin-top:14px;}
+  .title-history-head{font-size:.55rem;color:var(--muted);letter-spacing:2.5px;text-transform:uppercase;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+  .title-history-head::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.07);}
+  .title-history-row{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+  .title-history-row:last-child{border-bottom:none;padding-bottom:0;}
+  .th-icon{width:28px;height:28px;border-radius:50%;background:rgba(200,168,75,.12);border:1px solid rgba(200,168,75,.25);display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;}
+  .th-info{flex:1;min-width:0;}
+  .th-belt{font-size:.8rem;font-weight:700;color:var(--gold);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .th-event{font-size:.65rem;color:rgba(255,255,255,.35);margin-top:2px;letter-spacing:.5px;}
+  .th-won{font-size:.6rem;color:rgba(255,255,255,.2);letter-spacing:1px;text-transform:uppercase;white-space:nowrap;flex-shrink:0;}
   footer{border-top:1px solid rgba(255,255,255,.05);padding:36px 56px;display:flex;align-items:center;justify-content:space-between;font-size:.76rem;color:var(--muted);position:relative;z-index:1;}
   .foot-logo{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:3px;color:rgba(255,255,255,.2);}
   footer a{color:var(--muted);text-decoration:none;margin-left:20px;transition:color .2s;}
@@ -417,6 +427,7 @@
         <div class="modal-stable" id="modal-stable"></div>
         <div class="modal-bio" id="modal-bio"></div>
         <div class="modal-moves" id="modal-moves"></div>
+        <div class="modal-title-history" id="modal-title-history" style="display:none;margin-top:14px;"></div>
         <div class="modal-endorsements" id="modal-endorsements" style="display:none;"></div>
         <div class="modal-social" id="modal-social"></div>
       </div>
@@ -468,7 +479,7 @@ const wrestlers = [
     location: "Los Angeles, CA",
     height: "5'11\"",
     weight: "228 lbs",
-    stable: "Leader of Umbra Collective · Longest Reigning FSW Champion in History",
+    stable: "Leader of Umbra Collective · Longest Reigning FSW Champion in History · Iron 50 Trophy Winner",
     rival: "Kendrick Montana · Anthony Ragone · Derrick Maximus · Aric Myers",
     allies: "Chris Jackson · Jeremiah Brown · Cola Davis · Ivy Page",
     social: "@fswyoutub.shibata",
@@ -479,7 +490,14 @@ const wrestlers = [
     bio: "Shibata Reyes is the reigning FSW Ultima Champion and the cold, commanding leader of the Umbra Collective. Methodical, ruthless, and always ten steps ahead — Shibata doesn't just win matches, he dismantles legacies.",
     finisher1: "Street Justice",
     finisher1Orig: "Judo Throw DDT",
-    signatures: [["Superkick","Mercy Kick"]],
+    finisher2: "Reyes Lock",
+    finisher2Orig: "Crossface",
+    signatures: [["Superkick","Mercy Kick"],["Coast to Coast","Tree of Woke"]],
+    titleHistory: [
+      { title: "FSW Ultima Championship", event: "FSW 51: Victory", date: "9.09.25" },
+      { title: "FSW Bloodsport Championship", event: "FSW 1: Maximum" },
+    ],
+    accolades: ["Iron 50 Trophy Winner"],
   },
   // ↓ Add more wrestlers below ↓
   {
@@ -573,6 +591,9 @@ const wrestlers = [
     finisher2Orig: "Footstomp",
     signatures: [["German Suplex", "Incoming!"], ["Butterfly DDT", "Snakebite"]],
     record: { singlesW:2, singlesL:1, multiW:1, multiL:0, titleWins:1, titleDefenses:0 },
+    titleHistory: [
+      { title: "FSW Supreme Championship", event: "FSW 37: Fight for Survival", date: "5.11.24" },
+    ],
   },
   {
     name: "Kyle Vance",
@@ -580,8 +601,8 @@ const wrestlers = [
     popupImg: "https://i.imgur.com/wtvvzLD.jpeg",
     bgImg: "https://i.imgur.com/UqZSVHC.jpeg",
     videoId: "scDk9revJKI",
-    champion: false,
-    title: "",
+    champion: true,
+    title: "FSW Mayhem Champion",
     nickname: "Next Level",
     alignment: "face",
     location: "Phoenix, AZ",
@@ -604,6 +625,11 @@ const wrestlers = [
     finisher2Orig: "Corkscrew Shooting Star Press",
     signatures: [["Twist of Fate", "Vance Verdict"], ["Da Shout Out", "Loudmouth Lariat"]],
     record: { singlesW:2, singlesL:0, multiW:0, multiL:0, titleWins:1, titleDefenses:0 },
+        titleHistory: [
+      { title: "FSW Mayhem Championship", event: "FSW 51: Victory", date: "9.09.25" },
+    ], titleHistory: [
+      { title: "FSW Mayhem Championship", event: "FSW 51: Victory", date: "9.09.25" },
+    ],
   },
   {
     name: "Derrick Maximus",
@@ -665,6 +691,9 @@ const wrestlers = [
     finisher2Orig: "End of Days",
     signatures: [["The Disasterpiece", "Lifting Double Underhook"], ["Jumping Complete Shot", "JCS"]],
     record: { singlesW:2, singlesL:1, multiW:2, multiL:3, titleWins:1, titleDefenses:1 },
+    titleHistory: [
+      { title: "FSW Tag Team Championship", event: "FSW 20: Thrilla in Manila (Night 1)", date: "8.23.23" },
+    ],
   },
   {
     name: "Alexa Rivera",
@@ -689,6 +718,12 @@ const wrestlers = [
     endorsements: ["State Farm"],
     bio: "Alexa Rivera moves with quiet intensity, the kind that doesn't need volume to command attention. She's calculated and emotionally controlled, but underneath that composure is a competitive fire that refuses to be overshadowed by alliances or expectations. Alexa doesn't beg for the spotlight — she positions herself so precisely that when the moment arrives, it feels inevitable.",
     record: { singlesW:2, singlesL:0, multiW:0, multiL:0, titleWins:1, titleDefenses:0 },
+    titleHistory: [
+      { title: "FSW Diamond Championship", event: "FSW 52: Maximum", date: "12.02.26" },
+    ],
+    titleHistory: [
+      { title: "FSW Mayhem Championship", event: "FSW 51: Victory", date: "9.09.25" },
+    ],
   },
 
   {
@@ -901,6 +936,38 @@ function openModal(w){
   if(stable){ stable.textContent = w.stable || ''; stable.style.display = w.stable ? 'block' : 'none'; }
 
   const bioEl = document.getElementById('modal-bio'); if(bioEl) bioEl.textContent = w.bio || '';
+
+  // Title History
+  const thEl = document.getElementById('modal-title-history');
+  if(thEl){
+    if(w.titleHistory && w.titleHistory.length){
+      const buildTitleHistory = (wrestler) => {
+        return wrestler.titleHistory.map((t, i) => {
+          let daysHtml = '';
+          if(i === 0 && wrestler.champion && t.date){
+            const parts = t.date.split('.');
+            const wonDate = new Date(`20${parts[2]}`, parts[1]-1, parts[0]);
+            const days = Math.floor((new Date() - wonDate) / (1000*60*60*24));
+            daysHtml = `<div style="font-size:.6rem;color:var(--gold);opacity:.7;margin-top:3px;letter-spacing:.5px;">⏱ ${days} day${days!==1?'s':''} as champion</div>`;
+          }
+          return `<div class="title-history-row">
+            <div class="th-icon">🏆</div>
+            <div class="th-info">
+              <div class="th-belt">${t.title}</div>
+              <div class="th-event">${t.event}${t.date ? ` · ${t.date}` : ''}</div>
+              ${daysHtml}
+            </div>
+            <div class="th-won">Won</div>
+          </div>`;
+        }).join('');
+      };
+      thEl.innerHTML = `<div class="title-history-wrap">
+        <div class="title-history-head">Title History</div>
+        ${buildTitleHistory(w)}
+      </div>`;
+      thEl.style.display = 'block';
+    } else { thEl.style.display = 'none'; }
+  }
 
   // Moves
   const movesEl = document.getElementById('modal-moves');
