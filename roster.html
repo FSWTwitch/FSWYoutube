@@ -455,6 +455,37 @@ const wrestlers = [
   },
   // ↓ Add more wrestlers below ↓
   {
+    name: "Kyle Vance",
+    img: "https://i.imgur.com/wtvvzLD.jpeg",
+    popupImg: "https://i.imgur.com/wtvvzLD.jpeg",
+    bgImg: "",
+    videoId: "scDk9revJKI",
+    champion: false,
+    title: "",
+    nickname: "Next Level",
+    alignment: "face",
+    location: "Phoenix, AZ",
+    height: "5'9\"",
+    weight: "174 lbs",
+    stable: "",
+    social: "@fswyoutub.kyle",
+    twitter: "",
+    instagram: "",
+    theme: "Harlem — New Politics",
+    rating: 87,
+    rival: "Derrick Maximus",
+    endorsements: ["Carl's Jr", "Skechers", "Vitamin Water"],
+    bio: "Kyle Vance is raw heart in a world full of politics. He fights with visible emotion, pushing through exhaustion and doubt because quitting simply is not in him. Kyle does not scheme or posture; he absorbs punishment, learns from it, and comes back harder, making him dangerous not because he is the loudest in the room, but because he refuses to stay down.",
+    superFinisher: "Fall of the Apex",
+    superFinisherOrig: "Phoenix 630 Senton",
+    finisher1: "Cyclone Crash",
+    finisher1Orig: "Corkscrew Forearm Smash",
+    finisher2: "Sky Vance Spiral",
+    finisher2Orig: "Corkscrew Shooting Star Press",
+    signatures: [["Twist of Fate", "Vance Verdict"], ["Da Shout Out", "Loudmouth Lariat"]],
+    record: { singlesW:2, singlesL:0, multiW:0, multiL:0, titleWins:1, titleDefenses:0 },
+  },
+  {
     name: "Derrick Maximus",
     img: "https://i.imgur.com/Y00Je4M.jpeg",
     popupImg: "https://i.imgur.com/Y00Je4M.jpeg",
@@ -626,7 +657,6 @@ function makeCard(w, i){
   el.innerHTML = `
     ${photo}
     <div class="w-grad"></div>
-    ${w.alignment ? `<span class="align-pill ${w.alignment}">${w.alignment === 'face' ? 'Face' : 'Heel'}</span>` : ''}
     <div class="w-play-overlay">
       <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
         <div class="view-profile-btn">View Profile</div>
@@ -669,10 +699,8 @@ function openModal(w){
   document.getElementById('modal-name').textContent = w.name;
   // Alignment badge
   const alignEl2 = document.getElementById('modal-alignment');
-  if(alignEl2 && w.alignment){
-    alignEl2.innerHTML = `<span class="align-pill ${w.alignment}">${w.alignment === 'face' ? 'Face' : 'Heel'}</span>`;
-    alignEl2.style.display = 'inline-block';
-  } else if(alignEl2){ alignEl2.style.display = 'none'; }
+  if(alignEl2){ alignEl2.style.display = 'none'; }
+
 
   const nickEl = document.getElementById('modal-nickname');
   if(w.nickname){ nickEl.textContent = `"${w.nickname}"`; nickEl.style.display='block'; }
