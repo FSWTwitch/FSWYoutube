@@ -164,6 +164,9 @@
     color:#fff;line-height:1;margin-bottom:3px;
     text-shadow:0 2px 12px rgba(0,0,0,.8);
   }
+  .w-nickname{
+    font-size:.6rem;color:var(--gold);font-style:italic;letter-spacing:.5px;margin-bottom:2px;
+  }
   .w-subtitle{font-size:.65rem;color:rgba(232,232,232,.35);letter-spacing:1.5px;text-transform:uppercase;}
 
   /* MODAL */
@@ -381,13 +384,14 @@
         <div class="modal-eyebrow" id="modal-eyebrow">Cinematic Wrestling Series</div>
         <div class="modal-name" id="modal-name"></div>
         <div id="modal-nickname" style="font-size:.78rem;color:var(--gold);font-style:italic;letter-spacing:1px;margin-top:-6px;display:none;"></div>
-        <div style="display:flex;align-items:center;gap:8px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
           <div class="modal-champ-badge" id="modal-champ-badge" style="display:none;"></div>
-          <div id="modal-alignment" style="display:none;"></div>
+          <div id="modal-alignment"></div>
         </div>
         <div class="modal-stats-grid" id="modal-stats-grid"></div>
         <div class="modal-record" id="modal-record"></div>
         <div id="modal-rival" style="display:none;align-items:center;gap:8px;font-size:.78rem;"></div>
+        <div id="modal-allies" style="display:none;align-items:center;gap:8px;font-size:.78rem;"></div>
         <div class="modal-stable" id="modal-stable"></div>
         <div class="modal-bio" id="modal-bio"></div>
         <div class="modal-moves" id="modal-moves"></div>
@@ -437,6 +441,8 @@ const wrestlers = [
     height: "5'11\"",
     weight: "228 lbs",
     stable: "Leader of Umbra Collective · Longest Reigning FSW Champion in History",
+    rival: "Kendrick Montana · Anthony Ragone · Derrick Maximus · Aric Myers",
+    allies: "Chris Jackson · Jeremiah Brown · Cola Davis · Ivy Page",
     social: "@fswyoutub.shibata",
     theme: "The Foundations of Decay — My Chemical Romance",
     rating: 93,
@@ -448,6 +454,67 @@ const wrestlers = [
     signatures: [["Superkick","Mercy Kick"]],
   },
   // ↓ Add more wrestlers below ↓
+  {
+    name: "Derrick Maximus",
+    img: "https://i.imgur.com/Y00Je4M.jpeg",
+    popupImg: "https://i.imgur.com/Y00Je4M.jpeg",
+    bgImg: "",
+    videoId: "PeA39_QONno",
+    champion: false,
+    title: "",
+    nickname: "The Unconquered, Self-Crowned Malefactor",
+    alignment: "heel",
+    location: "Beverly Hills, CA",
+    height: "6'0\"",
+    weight: "198 lbs",
+    stable: "",
+    social: "@fswyoutub.derrick",
+    twitter: "@der_maximus",
+    twitterUrl: "https://x.com/der_maximus",
+    instagram: "",
+    theme: "Sirius — Dartul",
+    rating: 88,
+    rival: "Kyle Vance · Shibata Reyes",
+    allies: "Jaelyn Garcia",
+    endorsements: ["Calvin Klein", "Cosmic Energy Drink", "Toyota", "Y by YSL", "Nike"],
+    bio: "Derrick Maximus is ambition wrapped in entitlement, a man who carries legacy on his shoulders whether he admits it or not. Sharp, composed, and calculating, he hides insecurity behind confidence, moving with the precision of someone who believes the spotlight was always meant for him. Derrick does not explode like others; he pressures, manipulates, and outthinks, proving that control can be more dangerous than rage.",
+    finisher1: "Maximum Odds",
+    finisher1Orig: "Eight Second Ride",
+    signatures: [["Dragon Slayer", "The Big Red"]],
+    record: { singlesW:1, singlesL:4, multiW:0, multiL:1, titleWins:0, titleDefenses:0 },
+  },
+  {
+    name: "Damian Rage",
+    img: "https://i.imgur.com/YcvmZnv.jpeg",
+    popupImg: "https://i.imgur.com/YcvmZnv.jpeg",
+    bgImg: "https://i.imgur.com/V896Syz.jpeg",
+    videoId: "-LuYgWiFvHk",
+    champion: false,
+    title: "",
+    nickname: "The Destroyer",
+    alignment: "heel",
+    location: "Milwaukee, WI",
+    height: "6'0\"",
+    weight: "245 lbs",
+    stable: "Leader of The Syndicate",
+    social: "@fswyoutube.damian",
+    twitter: "",
+    instagram: "",
+    theme: "Violence No Matter What",
+    rating: 86,
+    rival: "Travis Valentine · KJ Hunter",
+    allies: "Brittany Black · Vincent Omen",
+    endorsements: ["Hot Pockets"],
+    bio: "Damian Rage is controlled aggression barely held together by discipline. He does not talk much because he does not need to. The tension in his posture says enough. When he moves, it is direct and punishing, like every strike is personal, and once he locks onto a target, he does not stop until something breaks, physically or psychologically.",
+    superFinisher: "DevilDriver",
+    superFinisherOrig: "Electric Chair Driver",
+    finisher1: "Lucifer's Downfall",
+    finisher1Orig: "Pop Up Powerbomb 2",
+    finisher2: "End of Days",
+    finisher2Orig: "End of Days",
+    signatures: [["The Disasterpiece", "Lifting Double Underhook"], ["Jumping Complete Shot", "JCS"]],
+    record: { singlesW:2, singlesL:1, multiW:2, multiL:3, titleWins:1, titleDefenses:1 },
+  },
   {
     name: "Alexa Rivera",
     img: "https://i.imgur.com/kdvqxwt.jpeg",
@@ -559,6 +626,7 @@ function makeCard(w, i){
   el.innerHTML = `
     ${photo}
     <div class="w-grad"></div>
+    ${w.alignment ? `<span class="align-pill ${w.alignment}">${w.alignment === 'face' ? 'Face' : 'Heel'}</span>` : ''}
     <div class="w-play-overlay">
       <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
         <div class="view-profile-btn">View Profile</div>
@@ -566,8 +634,9 @@ function makeCard(w, i){
     </div>
     <div class="w-info">
       ${w.champion ? `<div class="w-champ-badge">👑 ${w.title}</div>` : ''}
-      <div class="w-name">${w.name}</div>
       ${w.title && !w.champion ? `<div class="w-subtitle">${w.title}</div>` : ''}
+      ${w.nickname ? `<div class="w-nickname">"${w.nickname}"</div>` : ''}
+      <div class="w-name">${w.name}</div>
     </div>`;
   return el;
 }
@@ -635,6 +704,13 @@ function openModal(w){
     `;
     recordEl.style.display = 'grid';
   } else { recordEl.style.display = 'none'; }
+
+  // Allies
+  const alliesEl = document.getElementById('modal-allies');
+  if(alliesEl){
+    if(w.allies){ alliesEl.innerHTML = `<span style="color:var(--muted);font-size:.6rem;letter-spacing:2px;text-transform:uppercase;">Allies</span> <span style="color:#4ade80;font-weight:600;">${w.allies}</span>`; alliesEl.style.display='flex'; }
+    else { alliesEl.style.display='none'; }
+  }
 
   // Rival
   const rivalEl = document.getElementById('modal-rival');
