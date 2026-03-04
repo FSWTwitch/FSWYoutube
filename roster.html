@@ -714,33 +714,33 @@ function renderRoster(){
     `${wrestlers.length} Superstar${wrestlers.length !== 1 ? 's' : ''}`;
 }
 
-  let currentVideoId = '';
+let currentVideoId = '';
 
-  function toggleEntrance(){
-    const player = document.getElementById('entrance-player');
-    const iframe = document.getElementById('entrance-iframe');
-    const btnText = document.getElementById('entrance-btn-text');
-    const playIcon = document.getElementById('entrance-play-icon');
-    if(player.style.display === 'none'){
-      if(!currentVideoId) return;
-      iframe.src = `https://www.youtube.com/embed/${currentVideoId}?autoplay=1&rel=0`;
-      player.style.display = 'block';
-      btnText.textContent = 'Close Video';
-      playIcon.style.display = 'none';
-    } else { closeEntrance(); }
-  }
+function toggleEntrance(){
+  const player = document.getElementById('entrance-player');
+  const iframe = document.getElementById('entrance-iframe');
+  const btnText = document.getElementById('entrance-btn-text');
+  const playIcon = document.getElementById('entrance-play-icon');
+  if(player.style.display === 'none'){
+    if(!currentVideoId) return;
+    iframe.src = `https://www.youtube.com/embed/${currentVideoId}?autoplay=1&rel=0`;
+    player.style.display = 'block';
+    btnText.textContent = 'Close Video';
+    playIcon.style.display = 'none';
+  } else { closeEntrance(); }
+}
 
-  function closeEntrance(){
-    const player = document.getElementById('entrance-player');
-    const iframe = document.getElementById('entrance-iframe');
-    const btnText = document.getElementById('entrance-btn-text');
-    const playIcon = document.getElementById('entrance-play-icon');
-    if(!player) return;
-    iframe.src = '';
-    player.style.display = 'none';
-    if(btnText) btnText.textContent = 'Watch Entrance';
-    if(playIcon) playIcon.style.display = 'inline';
-  }
+function closeEntrance(){
+  const player = document.getElementById('entrance-player');
+  const iframe = document.getElementById('entrance-iframe');
+  const btnText = document.getElementById('entrance-btn-text');
+  const playIcon = document.getElementById('entrance-play-icon');
+  if(!player) return;
+  iframe.src = '';
+  player.style.display = 'none';
+  if(btnText) btnText.textContent = 'Watch Entrance';
+  if(playIcon) playIcon.style.display = 'inline';
+}
 
 function openModal(w){
   document.getElementById('modal-box').className = `modal-box${w.champion ? ' champ-modal' : ''}`;
