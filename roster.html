@@ -313,9 +313,25 @@
     .modal-top{flex-direction:column;}
     .modal-photo-wrap{width:100%;height:220px;}
     .modal-stats-grid{grid-template-columns:repeat(3,1fr);}
+    /* When video plays on mobile - expand modal-top to 16:9 */
+    .modal-top.video-playing{height:56.25vw;min-height:unset;}
+    .modal-top.video-playing .modal-photo-wrap{display:none;}
+    .modal-top.video-playing .modal-profile{display:none;}
   }
 
   /* FOOTER */
+  .faction-wrap{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:14px 16px;margin-top:14px;}
+  .faction-head{font-size:.55rem;color:var(--muted);letter-spacing:2.5px;text-transform:uppercase;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+  .faction-head::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.07);}
+  .faction-body{display:flex;gap:16px;align-items:flex-start;}
+  .faction-logo{width:72px;height:72px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 0 8px rgba(255,255,255,.1));}
+  .faction-info{flex:1;min-width:0;}
+  .faction-name{font-size:.82rem;font-weight:700;color:#fff;letter-spacing:1px;margin-bottom:4px;}
+  .faction-role{display:inline-block;font-size:.58rem;color:var(--accent);border:1px solid rgba(192,0,14,.4);border-radius:20px;padding:2px 8px;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+  .faction-motto{font-size:.72rem;color:rgba(255,255,255,.4);font-style:italic;margin-bottom:8px;line-height:1.5;}
+  .faction-members{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;}
+  .faction-member{font-size:.68rem;color:rgba(255,255,255,.7);background:rgba(255,255,255,.06);border-radius:4px;padding:3px 8px;}
+  .faction-debut{font-size:.62rem;color:var(--muted);letter-spacing:.5px;}
   .title-history-wrap{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:14px 16px;margin-top:14px;}
   .title-history-head{font-size:.55rem;color:var(--muted);letter-spacing:2.5px;text-transform:uppercase;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
   .title-history-head::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.07);}
@@ -427,6 +443,7 @@
         <div class="modal-stable" id="modal-stable"></div>
         <div class="modal-bio" id="modal-bio"></div>
         <div class="modal-moves" id="modal-moves"></div>
+        <div class="modal-faction" id="modal-faction" style="display:none;margin-top:14px;"></div>
         <div class="modal-title-history" id="modal-title-history" style="display:none;margin-top:14px;"></div>
         <div class="modal-endorsements" id="modal-endorsements" style="display:none;"></div>
         <div class="modal-social" id="modal-social"></div>
@@ -481,7 +498,7 @@ const wrestlers = [
     height: "5'11\"",
     weight: "228 lbs",
     stable: "Leader of Umbra Collective · Longest Reigning FSW Champion in History · Iron 50 Trophy Winner",
-    rival: "Kendrick Montana · Anthony Ragone · Derrick Maximus · Aric Myers",
+    rival: "Kendrick Montana · Anthony Ragone · Derrick Maximus · Aric Myers · TJ Frost",
     allies: "Chris Jackson · Jeremiah Brown · Cola Davis · Ivy Page",
     social: "@fswyoutub.shibata",
     theme: "The Foundations of Decay — My Chemical Romance",
@@ -499,8 +516,43 @@ const wrestlers = [
       { title: "FSW Bloodsport Championship", event: "FSW 1: Maximum" },
     ],
     accolades: ["Iron 50 Trophy Winner"],
+    factions: [
+      {
+        name: "The Umbra Collective",
+        logo: "https://i.imgur.com/HdOBaGI.png",
+        role: "Leader",
+        members: ["Shibata Reyes", "CJ Moore", "Ivy Page"],
+        motto: "Umbra is only for those willing to abandon what once defined them.",
+        debut: "FSW 50: Nemesis",
+      }
+    ],
   },
   // ↓ Add more wrestlers below ↓
+  {
+    name: "Arnez Jackson",
+    img: "https://i.imgur.com/O1wRnvp.jpeg",
+    popupImg: "https://i.imgur.com/O1wRnvp.jpeg",
+    bgImg: "https://i.imgur.com/k8Fi3oU.jpeg",
+    videoId: "TdRYRQNu4Mk",
+    champion: false,
+    title: "",
+    nickname: "",
+    alignment: "face",
+    location: "Detroit, Michigan",
+    height: "6'0\"",
+    weight: "292 lbs",
+    stable: "",
+    social: "@fswoutub2.arnez",
+    twitter: "",
+    instagram: "arnezthegreatest",
+    instagramUrl: "https://www.instagram.com/arnezthegreatest",
+    theme: "Hail Mary — 2Pac",
+    rating: 88,
+    rival: "",
+    endorsements: ["Hennessy"],
+    bio: "Arnez Jackson brings controlled swagger backed by real toughness. He carries himself like someone who has had to earn every opportunity, blending athletic explosiveness with sharp instincts in the ring. Arnez feeds off pressure rather than shrinking from it, and when momentum swings his way, he turns it into a statement instead of just a win.",
+    record: { singlesW:1, singlesL:0, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
+  },
   {
     name: "Jaelyn Garcia",
     img: "https://i.imgur.com/3toE2OU.jpeg",
@@ -838,11 +890,13 @@ let currentVideoId = '';
 function toggleEntrance(){
   const player = document.getElementById('entrance-player');
   const iframe = document.getElementById('entrance-iframe');
+  const modalTop = document.querySelector('.modal-top');
   if(!player) return;
   if(player.style.display === 'none'){
     if(!currentVideoId) return;
     iframe.src = `https://www.youtube.com/embed/${currentVideoId}?autoplay=1&rel=0`;
     player.style.display = 'block';
+    if(modalTop) modalTop.classList.add('video-playing');
     const ytBtn = document.getElementById('modal-yt-btn');
     if(ytBtn) ytBtn.classList.add('playing');
     const pi = document.querySelector('.entrance-play-icon');
@@ -855,9 +909,11 @@ function toggleEntrance(){
 function closeEntrance(){
   const player = document.getElementById('entrance-player');
   const iframe = document.getElementById('entrance-iframe');
+  const modalTop = document.querySelector('.modal-top');
   if(!player) return;
   iframe.src = '';
   player.style.display = 'none';
+  if(modalTop) modalTop.classList.remove('video-playing');
   const ytBtn = document.getElementById('modal-yt-btn');
   if(ytBtn) ytBtn.classList.remove('playing');
   const pi = document.querySelector('.entrance-play-icon');
@@ -934,6 +990,28 @@ function openModal(w){
   if(stable){ stable.textContent = w.stable || ''; stable.style.display = w.stable ? 'block' : 'none'; }
 
   const bioEl = document.getElementById('modal-bio'); if(bioEl) bioEl.textContent = w.bio || '';
+
+  // Faction
+  const factionEl = document.getElementById('modal-faction');
+  if(factionEl){
+    if(w.factions && w.factions.length){
+      factionEl.innerHTML = w.factions.map(f => `
+        <div class="faction-wrap">
+          <div class="faction-head">Faction</div>
+          <div class="faction-body">
+            <img class="faction-logo" src="${f.logo}" alt="${f.name}">
+            <div class="faction-info">
+              <div class="faction-name">${f.name}</div>
+              <div class="faction-role">${f.role}</div>
+              <div class="faction-motto">"${f.motto}"</div>
+              <div class="faction-members">${f.members.map(m=>`<span class="faction-member">${m}</span>`).join('')}</div>
+              <div class="faction-debut">Debuted: ${f.debut}</div>
+            </div>
+          </div>
+        </div>`).join('');
+      factionEl.style.display = 'block';
+    } else { factionEl.style.display = 'none'; }
+  }
 
   // Title History
   const thEl = document.getElementById('modal-title-history');
