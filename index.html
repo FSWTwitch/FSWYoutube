@@ -70,7 +70,7 @@
   .btn-teaser .t-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:pulse 1.5s infinite;flex-shrink:0;}
 
   main{padding-bottom:80px;padding-top:40px;}
-  .section{margin-bottom:56px;}
+  .section{margin-bottom:48px;}
   .sec-head{display:flex;align-items:center;justify-content:space-between;padding:0 56px;margin-bottom:18px;}
   .sec-title{font-family:'Bebas Neue',sans-serif;font-size:1.45rem;letter-spacing:2.5px;display:flex;align-items:center;gap:10px;}
   .s-bar{width:3px;height:22px;background:var(--accent);border-radius:2px;}
@@ -129,7 +129,9 @@
 
   /* MOBILE RESPONSIVE */
   @media(max-width:768px){
-    .roster-banner-wrap{padding:0 20px 32px !important;}
+    .cosmic-tag{display:none !important;}
+    .cosmic-footer{display:flex !important;}
+    .roster-banner-wrap{padding:0 20px 0 !important;}
     nav{padding:14px 20px;}
     .logo-main{font-size:1.1rem;}
     .nav-r .nav-a{display:none;}
@@ -172,6 +174,7 @@
       <svg id="icon-sound" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
       <svg id="icon-mute" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
     </button>
+    <a href="roster.html" style="color:rgba(255,255,255,.45);text-decoration:none;font-size:.75rem;font-weight:500;letter-spacing:1px;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.45)'">Roster</a>
     <a href="https://www.youtube.com/@fsw_caw?sub_confirmation=1" target="_blank" class="sub-btn">Subscribe</a>
   </div>
 </nav>
@@ -247,7 +250,7 @@
     </div>
   </div>
   <!-- ROSTER BANNER -->
-  <div style="padding:0 56px 40px;" class="roster-banner-wrap">
+  <div style="padding:0 56px 0;" class="roster-banner-wrap">
     <a href="roster.html" style="
       display:flex;align-items:center;justify-content:space-between;
       background:transparent;
@@ -275,6 +278,7 @@
 </main>
 
 <footer>
+  <div class="cosmic-footer" style="display:none;align-items:center;gap:5px;margin-bottom:10px;"><span class="logo-top" style="font-size:.52rem;">Brought to you by</span><img src="https://i.imgur.com/ZalooKf.png" alt="Cosmic Energy Drink" style="height:12px;width:auto;opacity:.7;"></div>
   <div>
     <div class="foot-logo">FIRST STRIKE WRESTLING</div>
     <div style="margin-top:4px;">© 2026 Cinematic Wrestling Series. All rights reserved.</div>
@@ -283,6 +287,7 @@
     <a href="https://x.com/FSWYouTube" target="_blank">𝕏</a>
     <a href="https://www.instagram.com/fswyoutube/" target="_blank">Instagram</a>
     <a href="https://www.youtube.com/@fsw_caw" target="_blank">YouTube</a>
+    <a href="roster.html" style="color:rgba(255,255,255,.45);text-decoration:none;font-size:.75rem;font-weight:500;letter-spacing:1px;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.45)'">Roster</a>
     <a href="https://www.youtube.com/@fsw_caw?sub_confirmation=1" target="_blank" style="display:inline-flex;align-items:center;background:rgba(255,255,255,0.07);color:#888;padding:7px 16px;border-radius:5px;font-weight:500;font-size:.76rem;margin-left:16px;letter-spacing:.5px;border:1px solid rgba(255,255,255,0.1);transition:all .2s;" onmouseover="this.style.background='rgba(255,255,255,0.13)';this.style.color='#ccc'" onmouseout="this.style.background='rgba(255,255,255,0.07)';this.style.color='#888'">Subscribe</a>
   </div>
 </footer>
