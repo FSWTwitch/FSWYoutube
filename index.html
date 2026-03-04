@@ -101,6 +101,32 @@
   .card-title{font-size:.83rem;font-weight:600;color:var(--text);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
   .rank{position:absolute;bottom:-10px;left:-8px;font-family:'Bebas Neue',sans-serif;font-size:5rem;line-height:1;color:rgba(255,255,255,.07);pointer-events:none;z-index:0;}
 
+  /* JUKEBOX */
+  .jukebox-track{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:12px 16px;border-radius:6px;cursor:pointer;
+    transition:background .2s;border-bottom:1px solid rgba(255,255,255,.05);
+    gap:12px;
+  }
+  .jukebox-track:hover{background:rgba(255,255,255,.05);}
+  .jukebox-track.playing{background:rgba(192,0,14,.08);border-color:rgba(192,0,14,.2);}
+  .jukebox-left{display:flex;align-items:center;gap:14px;flex:1;min-width:0;}
+  .jukebox-num{font-size:.7rem;color:var(--muted);width:18px;text-align:center;flex-shrink:0;}
+  .jukebox-track.playing .jukebox-num{display:none;}
+  .jukebox-bars{display:none;width:18px;flex-shrink:0;align-items:flex-end;gap:2px;height:16px;}
+  .jukebox-track.playing .jukebox-bars{display:flex;}
+  .jukebox-bars span{display:block;width:3px;background:var(--accent);border-radius:1px;animation:bar-bounce .8s ease-in-out infinite;}
+  .jukebox-bars span:nth-child(2){animation-delay:.15s;}
+  .jukebox-bars span:nth-child(3){animation-delay:.3s;}
+  @keyframes bar-bounce{0%,100%{height:4px}50%{height:14px}}
+  .jukebox-info{min-width:0;}
+  .jukebox-song{font-size:.85rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .jukebox-track.playing .jukebox-song{color:var(--accent);}
+  .jukebox-artist{font-size:.7rem;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .jukebox-wrestler{font-size:.7rem;color:var(--gold);text-align:right;white-space:nowrap;flex-shrink:0;}
+  .jukebox-play-btn{width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:none;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .2s;}
+  .jukebox-play-btn:hover{background:rgba(255,255,255,.1);}
+  .jukebox-track.playing .jukebox-play-btn{border-color:var(--accent);color:var(--accent);}
   footer{border-top:1px solid rgba(255,255,255,.05);padding:36px 56px;display:flex;align-items:center;justify-content:space-between;font-size:.76rem;color:var(--muted);}
   .foot-logo{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:3px;color:rgba(255,255,255,.3);}
   footer a{color:var(--muted);text-decoration:none;margin-left:20px;transition:color .2s;}
@@ -150,7 +176,33 @@
     .sec-head{padding:0 20px;}
     .scroll-row{padding:8px 20px 16px;}
     :root{--card-w:200px;--card-h:112px;}
-    footer{padding:24px 20px;flex-direction:column;gap:12px;text-align:center;}
+    /* JUKEBOX */
+  .jukebox-track{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:12px 16px;border-radius:6px;cursor:pointer;
+    transition:background .2s;border-bottom:1px solid rgba(255,255,255,.05);
+    gap:12px;
+  }
+  .jukebox-track:hover{background:rgba(255,255,255,.05);}
+  .jukebox-track.playing{background:rgba(192,0,14,.08);border-color:rgba(192,0,14,.2);}
+  .jukebox-left{display:flex;align-items:center;gap:14px;flex:1;min-width:0;}
+  .jukebox-num{font-size:.7rem;color:var(--muted);width:18px;text-align:center;flex-shrink:0;}
+  .jukebox-track.playing .jukebox-num{display:none;}
+  .jukebox-bars{display:none;width:18px;flex-shrink:0;align-items:flex-end;gap:2px;height:16px;}
+  .jukebox-track.playing .jukebox-bars{display:flex;}
+  .jukebox-bars span{display:block;width:3px;background:var(--accent);border-radius:1px;animation:bar-bounce .8s ease-in-out infinite;}
+  .jukebox-bars span:nth-child(2){animation-delay:.15s;}
+  .jukebox-bars span:nth-child(3){animation-delay:.3s;}
+  @keyframes bar-bounce{0%,100%{height:4px}50%{height:14px}}
+  .jukebox-info{min-width:0;}
+  .jukebox-song{font-size:.85rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .jukebox-track.playing .jukebox-song{color:var(--accent);}
+  .jukebox-artist{font-size:.7rem;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .jukebox-wrestler{font-size:.7rem;color:var(--gold);text-align:right;white-space:nowrap;flex-shrink:0;}
+  .jukebox-play-btn{width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:none;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .2s;}
+  .jukebox-play-btn:hover{background:rgba(255,255,255,.1);}
+  .jukebox-track.playing .jukebox-play-btn{border-color:var(--accent);color:var(--accent);}
+  footer{padding:24px 20px;flex-direction:column;gap:12px;text-align:center;}
     footer a{margin-left:10px;}
   }
   @media(max-width:480px){
@@ -249,6 +301,21 @@
       <button class="arr R" onclick="slide(this,1)">›</button>
     </div>
   </div>
+
+  <!-- FSW JUKEBOX -->
+  <div class="section" id="jukebox" style="padding:0 56px 48px;">
+    <div class="sec-head" style="padding:0;margin-bottom:18px;">
+      <div class="sec-title"><div class="s-bar"></div>FSW Jukebox</div>
+    </div>
+    <div style="max-width:600px;">
+      <div id="jukebox-list">
+        <!-- tracks injected by JS -->
+      </div>
+      <!-- hidden YouTube player -->
+      <iframe id="jukebox-iframe" width="0" height="0" src="" frameborder="0" allow="autoplay;encrypted-media" style="position:absolute;opacity:0;pointer-events:none;"></iframe>
+    </div>
+  </div>
+
   <!-- ROSTER BANNER -->
   <div style="padding:0 56px 0;" class="roster-banner-wrap">
     <a href="roster.html" style="
@@ -373,6 +440,64 @@ const specialsVideos = [
   { id:"raPQD-uwWL8", ep:"FSW Films", title:"Street Fighter — FSW Edition", ple:false, isNew:true },
   { id:"MXVcmyIkg08", ep:"FSW Specials", title:"Goodyear Track Showcase", ple:false, isNew:false },
 ];
+
+
+const jukeboxTracks = [
+  { song: "The Foundations of Decay", artist: "My Chemical Romance", wrestler: "Shibata Reyes",   id: "TSKPLwFDaKI" },
+  { song: "Lies",                      artist: "Evanescence",          wrestler: "Jaelyn Garcia",   id: "gudHbKQOZXc" },
+  { song: "El Drip",                   artist: "Natanael Cano",         wrestler: "Javi Hernandez",  id: "UlNWt-SRIVQ" },
+  { song: "VERDE MENTA",               artist: "Rauw Alejandro",        wrestler: "St. Peter Reyes", id: "krhYuiqwPBQ" },
+  { song: "Harlem",                    artist: "New Politics",          wrestler: "Kyle Vance",      id: "scDk9revJKI" },
+  { song: "Sirius",                    artist: "Dartul",                wrestler: "Derrick Maximus", id: "PeA39_QONno" },
+  { song: "Violence No Matter What",   artist: "",                      wrestler: "Damian Rage",     id: "-LuYgWiFvHk" },
+  { song: "Queen",                     artist: "Loren Gray",            wrestler: "Alexa Rivera",    id: "45-UN44oRJo" },
+  { song: "Guiding Light",             artist: "Caskets",               wrestler: "Kendrick Montana",id: "tzmcSro1j00" },
+];
+
+let jukeboxPlaying = -1;
+
+function renderJukebox(){
+  const list = document.getElementById('jukebox-list');
+  list.innerHTML = jukeboxTracks.map((t,i) => `
+    <div class="jukebox-track" id="jtrack-${i}" onclick="playTrack(${i})">
+      <div class="jukebox-left">
+        <div class="jukebox-num">${i+1}</div>
+        <div class="jukebox-bars"><span></span><span></span><span></span></div>
+        <div class="jukebox-info">
+          <div class="jukebox-song">${t.song}</div>
+          <div class="jukebox-artist">${t.artist}</div>
+        </div>
+      </div>
+      <div class="jukebox-wrestler">${t.wrestler}</div>
+      <button class="jukebox-play-btn" onclick="event.stopPropagation();playTrack(${i})">
+        <svg id="jbtn-${i}" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </button>
+    </div>
+  `).join('');
+}
+
+function playTrack(i){
+  const iframe = document.getElementById('jukebox-iframe');
+  if(jukeboxPlaying === i){
+    // stop
+    iframe.src = '';
+    document.getElementById(`jtrack-${i}`).classList.remove('playing');
+    document.getElementById(`jbtn-${i}`).innerHTML = '<polygon points="5 3 19 12 5 21 5 3"/>';
+    jukeboxPlaying = -1;
+    return;
+  }
+  // stop previous
+  if(jukeboxPlaying >= 0){
+    document.getElementById(`jtrack-${jukeboxPlaying}`)?.classList.remove('playing');
+  }
+  jukeboxPlaying = i;
+  const t = jukeboxTracks[i];
+  iframe.src = `https://www.youtube.com/embed/${t.id}?autoplay=1&rel=0`;
+  document.getElementById(`jtrack-${i}`).classList.add('playing');
+  document.getElementById(`jbtn-${i}`).innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
+}
+
+renderJukebox();
 
 fill('lat-row',latestVideos,'lat-cnt',false);
 fill('pop-row',popularVideos,'pop-cnt',true);
