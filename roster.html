@@ -372,6 +372,10 @@
     <button class="modal-close" onclick="closeModal()">✕</button>
     <!-- TOP: photo + info side by side -->
     <div class="modal-top">
+    <div id="entrance-player" style="display:none;position:absolute;top:0;left:0;right:0;bottom:0;z-index:20;background:#000;border-radius:8px;overflow:hidden;">
+      <iframe id="entrance-iframe" width="100%" height="100%" src="" frameborder="0" allow="autoplay;encrypted-media" allowfullscreen style="display:block;"></iframe>
+      <button onclick="closeEntrance()" style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,.7);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1.1rem;z-index:21;">✕</button>
+    </div>
       <div class="modal-photo-wrap">
 
         <img id="modal-photo-1" class="modal-photo-single" src="" alt="" style="display:none;">
@@ -710,6 +714,34 @@ function renderRoster(){
     `${wrestlers.length} Superstar${wrestlers.length !== 1 ? 's' : ''}`;
 }
 
+  let currentVideoId = '';
+
+  function toggleEntrance(){
+    const player = document.getElementById('entrance-player');
+    const iframe = document.getElementById('entrance-iframe');
+    const btnText = document.getElementById('entrance-btn-text');
+    const playIcon = document.getElementById('entrance-play-icon');
+    if(player.style.display === 'none'){
+      if(!currentVideoId) return;
+      iframe.src = `https://www.youtube.com/embed/${currentVideoId}?autoplay=1&rel=0`;
+      player.style.display = 'block';
+      btnText.textContent = 'Close Video';
+      playIcon.style.display = 'none';
+    } else { closeEntrance(); }
+  }
+
+  function closeEntrance(){
+    const player = document.getElementById('entrance-player');
+    const iframe = document.getElementById('entrance-iframe');
+    const btnText = document.getElementById('entrance-btn-text');
+    const playIcon = document.getElementById('entrance-play-icon');
+    if(!player) return;
+    iframe.src = '';
+    player.style.display = 'none';
+    if(btnText) btnText.textContent = 'Watch Entrance';
+    if(playIcon) playIcon.style.display = 'inline';
+  }
+
 function openModal(w){
   document.getElementById('modal-box').className = `modal-box${w.champion ? ' champ-modal' : ''}`;
   
@@ -846,9 +878,9 @@ function openModal(w){
 
   // Watch button
   currentVideoId = w.videoId || '';
-  const ytBtn = document.getElementById('modal-yt-btn');
-  if(!currentVideoId && !w.videoUrl){ ytBtn.style.display='none'; } else { ytBtn.style.display='inline-flex'; }
   closeEntrance();
+  const ytBtn = document.getElementById('modal-yt-btn');
+  if(ytBtn){ if(!currentVideoId){ ytBtn.style.display='none'; } else { ytBtn.style.display='inline-flex'; } }
 
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow = 'hidden';
