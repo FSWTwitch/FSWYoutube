@@ -187,11 +187,12 @@
   .modal-box.champ-modal{border-color:rgba(200,168,75,.3);}
 
   /* TOP SECTION */
-  .modal-top{position:relative;display:flex;min-height:unset;}
-  .modal-extended{padding:0 28px 20px;border-top:1px solid rgba(255,255,255,.06);margin-top:0;}
+  .modal-top{position:relative;display:flex;min-height:0;}
+  .modal-extended{padding:0 24px 18px;border-top:1px solid rgba(255,255,255,.06);margin-top:0;}
   .modal-photo-wrap{
-    width:220px;flex-shrink:0;
+    width:220px;min-height:320px;flex-shrink:0;
     background:var(--surface2);overflow:hidden;
+    align-self:stretch;
   }
   .modal-photo-wrap .modal-photo-single{
     width:100%;height:100%;object-fit:cover;object-position:top center;display:block;
@@ -203,9 +204,11 @@
   }
   .modal-photo-wrap img,.modal-photo-ph{position:relative;z-index:1;}
   .modal-profile{
-    flex:1;padding:28px 26px;display:flex;flex-direction:column;gap:12px;
+    flex:1;padding:22px 24px;display:flex;flex-direction:column;gap:0;
     position:relative;overflow:hidden;
   }
+  .modal-profile .mp-row{margin-top:8px;}
+  .modal-profile .mp-row:empty{display:none !important;margin-top:0;}
   .modal-profile::before{
     content:'';position:absolute;inset:0;z-index:0;
     background-size:cover;background-position:center top;
@@ -214,7 +217,7 @@
   }
   .modal-profile > *{position:relative;z-index:1;}
   .modal-eyebrow{font-size:.6rem;color:var(--gold);letter-spacing:2.5px;text-transform:uppercase;font-weight:700;}
-  .modal-name{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:3px;color:#fff;line-height:.95;margin-top:-4px;}
+  .modal-name{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:3px;color:#fff;line-height:.95;margin-top:4px;}
   .modal-champ-badge{
     display:inline-flex;align-items:center;gap:6px;
     background:rgba(200,168,75,.1);border:1px solid rgba(200,168,75,.35);
@@ -249,9 +252,9 @@
   }
   .modal-bio{font-size:.82rem;line-height:1.65;color:rgba(232,232,232,.6);}
   .modal-moves{
-    display:flex;flex-direction:column;gap:5px;
+    display:none;flex-direction:column;gap:5px;
     border-top:1px solid rgba(255,255,255,.06);
-    padding-top:10px;
+    padding-top:10px;margin-top:4px;
   }
   .move-row{display:flex;align-items:baseline;gap:10px;padding:3px 0;}
   .move-type{font-size:.55rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);width:62px;flex-shrink:0;}
@@ -273,6 +276,13 @@
     padding:6px 12px;border-radius:4px;width:fit-content;
   }
 
+  /* TOGGLE SWITCH */
+  .vid-toggle{position:relative;display:inline-block;cursor:pointer;}
+  .vid-toggle input{opacity:0;width:0;height:0;position:absolute;}
+  .vid-toggle-track{display:block;width:34px;height:18px;background:rgba(255,255,255,.1);border-radius:20px;border:1px solid rgba(255,255,255,.12);transition:background .2s;position:relative;}
+  .vid-toggle-thumb{position:absolute;top:2px;left:2px;width:12px;height:12px;background:#fff;border-radius:50%;transition:transform .2s,background .2s;opacity:.4;}
+  .vid-toggle input:checked + .vid-toggle-track{background:var(--accent);border-color:var(--accent);}
+  .vid-toggle input:checked + .vid-toggle-track .vid-toggle-thumb{transform:translateX(16px);opacity:1;background:#fff;}
   /* VIDEO SECTION */
   .modal-video-section{border-top:1px solid rgba(255,255,255,.05);padding:18px 22px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
   .modal-video-label{font-size:.6rem;color:var(--muted);letter-spacing:2.5px;text-transform:uppercase;font-weight:700;}
@@ -314,10 +324,7 @@
     .modal-top{flex-direction:column;}
     .modal-photo-wrap{width:100%;height:200px;}
     .modal-stats-grid{grid-template-columns:repeat(3,1fr);}
-    /* When video plays on mobile - expand modal-top to 16:9 */
-    .modal-top.video-playing{height:56.25vw;min-height:unset;}
-    .modal-top.video-playing .modal-photo-wrap{display:none;}
-    .modal-top.video-playing .modal-profile{display:none;}
+
   }
 
   /* FOOTER */
@@ -416,12 +423,11 @@
 <div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
   <div class="modal-box" id="modal-box">
     <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="entrance-player" style="display:none;position:absolute;top:0;left:0;right:0;bottom:72px;z-index:20;background:#000;overflow:hidden;border-radius:8px 8px 0 0;">
+      <iframe id="entrance-iframe" width="100%" height="100%" src="" frameborder="0" allow="autoplay;encrypted-media" allowfullscreen style="display:block;"></iframe>
+    </div>
     <!-- TOP: photo + info side by side -->
     <div class="modal-top">
-    <div id="entrance-player" style="display:none;position:absolute;top:0;left:0;right:0;bottom:0;z-index:20;background:#000;border-radius:8px;overflow:hidden;">
-      <iframe id="entrance-iframe" width="100%" height="100%" src="" frameborder="0" allow="autoplay;encrypted-media" allowfullscreen style="display:block;"></iframe>
-      <button onclick="closeEntrance()" style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,.7);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1.1rem;z-index:21;">✕</button>
-    </div>
       <div class="modal-photo-wrap">
 
         <img id="modal-photo-1" class="modal-photo-single" src="" alt="" style="display:none;">
@@ -432,47 +438,59 @@
       <div class="modal-profile">
         <div class="modal-eyebrow" id="modal-eyebrow">Cinematic Wrestling Series</div>
         <div class="modal-name" id="modal-name"></div>
-        <div id="modal-nickname" style="font-size:.78rem;color:var(--gold);font-style:italic;letter-spacing:1px;margin-top:-6px;display:none;"></div>
         <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
           <div class="modal-champ-badge" id="modal-champ-badge" style="display:none;"></div>
           <div id="modal-alignment"></div>
         </div>
-        <div class="modal-stats-grid" id="modal-stats-grid"></div>
-        <div class="modal-record" id="modal-record"></div>
-        <div id="modal-rival" style="display:none;align-items:center;gap:8px;font-size:.78rem;"></div>
-        <div id="modal-allies" style="display:none;align-items:center;gap:8px;font-size:.78rem;"></div>
-        <div class="modal-stable" id="modal-stable"></div>
-        <div class="modal-bio" id="modal-bio"></div>
+        <div class="modal-stats-grid mp-row" id="modal-stats-grid"></div>
+        <div class="modal-record mp-row" id="modal-record"></div>
+        <div id="modal-rival" style="display:none;align-items:center;gap:8px;font-size:.78rem;margin-top:4px;"></div>
+        <div id="modal-allies" style="display:none;align-items:center;gap:8px;font-size:.78rem;margin-top:2px;"></div>
+        <div class="modal-stable mp-row" id="modal-stable"></div>
+        <div class="modal-bio mp-row" id="modal-bio"></div>
         <div class="modal-moves" id="modal-moves"></div>
+      </div>
+    </div>
+    <!-- VIDEO TOGGLE SWITCH -->
+    <div id="video-toggle-bar" style="display:none;padding:10px 28px;border-top:1px solid rgba(255,255,255,.05);display:none;align-items:center;justify-content:space-between;">
+      <span style="font-size:.68rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;">Entrance Video</span>
+      <div id="video-toggle-switch" onclick="toggleVideoVisibility()" style="width:44px;height:24px;border-radius:12px;background:var(--accent);cursor:pointer;position:relative;transition:background .2s;">
+        <div id="video-toggle-knob" style="position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;"></div>
       </div>
     </div>
     <!-- EXTENDED: full width section below photo -->
     <div class="modal-extended" id="modal-extended">
         <div class="modal-faction" id="modal-faction" style="display:none;margin-top:14px;"></div>
         <div class="modal-title-history" id="modal-title-history" style="display:none;margin-top:14px;"></div>
-        <div class="modal-endorsements" id="modal-endorsements" style="display:none;margin-top:14px;"></div>
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-top:14px;">
+          <div class="modal-endorsements" id="modal-endorsements" style="display:none;flex:1;"></div>
+          <div id="modal-rating" style="text-align:center;flex-shrink:0;"></div>
+        </div>
         <div class="modal-social" id="modal-social" style="margin-top:10px;"></div>
     </div>
     <!-- BOTTOM: theme + rating + play -->
     <div class="modal-video-section">
       <!-- LEFT: bars + song info -->
-      <div style="display:flex;align-items:center;gap:12px;flex:1;min-width:0;">
+      <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">
         <div class="entrance-bars"><span></span><span></span><span></span></div>
         <div style="min-width:0;">
-          <div id="modal-theme-song" style="font-size:.82rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
-          <div id="modal-theme-artist" style="font-size:.65rem;color:rgba(255,255,255,.35);margin-top:2px;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
-          <div style="font-size:.55rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:3px;">Theme Song</div>
+          <div id="modal-theme-song" style="font-size:.8rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
+          <div id="modal-theme-artist" style="font-size:.63rem;color:rgba(255,255,255,.35);margin-top:1px;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
+          <div style="font-size:.52rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:2px;">Theme Song</div>
         </div>
       </div>
-      <!-- RIGHT: rating + circle play button -->
-      <div style="display:flex;align-items:center;gap:16px;flex-shrink:0;">
-        <div id="modal-rating" style="text-align:center;">
-          <div style="font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:#fff;line-height:1;"></div>
-          <div style="font-size:.55rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;">Rating</div>
+      <!-- RIGHT: toggle (hidden until playing) + play button -->
+      <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+        <div id="vid-toggle-wrap" style="display:none;flex-direction:column;align-items:center;gap:3px;">
+          <label class="vid-toggle" id="vid-toggle-label">
+            <input type="checkbox" id="vid-toggle-input" onchange="hideShowVideo()">
+            <span class="vid-toggle-track"><span class="vid-toggle-thumb"></span></span>
+          </label>
+          <div style="font-size:.48rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;">Video</div>
         </div>
-        <button id="modal-yt-btn" onclick="toggleEntrance()" class="modal-yt-btn" style="width:48px;height:48px;border-radius:50%;background:var(--accent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;">
-          <svg class="entrance-play-icon" width="16" height="16" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          <svg class="entrance-pause-icon" style="display:none;" width="16" height="16" viewBox="0 0 24 24" fill="white"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+        <button id="modal-yt-btn" onclick="toggleEntrance()" class="modal-yt-btn" style="width:44px;height:44px;border-radius:50%;background:var(--accent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;">
+          <svg class="entrance-play-icon" width="15" height="15" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <svg class="entrance-pause-icon" style="display:none;" width="15" height="15" viewBox="0 0 24 24" fill="white"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
         </button>
       </div>
     </div>
@@ -683,9 +701,9 @@ const wrestlers = [
     signatures: [["Twist of Fate", "Vance Verdict"], ["Da Shout Out", "Loudmouth Lariat"]],
     record: { singlesW:2, singlesL:0, multiW:0, multiL:0, titleWins:1, titleDefenses:0 },
         titleHistory: [
-      { title: "FSW Mayhem Championship", event: "FSW 51: Victory", date: "19.12.25" },
+      { title: "FSW Mayhem Championship", event: "FSW 51: Victory", date: "19.12.25", label: "Claimed" },
     ], titleHistory: [
-      { title: "FSW Mayhem Championship", event: "FSW 51: Victory", date: "19.12.25" },
+      { title: "FSW Mayhem Championship", event: "FSW 51: Victory", date: "19.12.25", label: "Claimed" },
     ],
   },
   {
@@ -892,23 +910,46 @@ function renderRoster(){
 
 let currentVideoId = '';
 
+let videoVisible = true;
+
+function toggleVideoVisibility(){
+  const player = document.getElementById('entrance-player');
+  const knob = document.getElementById('video-toggle-knob');
+  const sw = document.getElementById('video-toggle-switch');
+  if(!player) return;
+  videoVisible = !videoVisible;
+  player.style.display = videoVisible ? 'block' : 'none';
+  knob.style.transform = videoVisible ? 'translateX(0)' : 'translateX(-20px)';
+  sw.style.background = videoVisible ? 'var(--accent)' : 'rgba(255,255,255,.15)';
+}
+
 function toggleEntrance(){
   const player = document.getElementById('entrance-player');
   const iframe = document.getElementById('entrance-iframe');
   const modalTop = document.querySelector('.modal-top');
+  const toggleInput = document.getElementById('vid-toggle-input');
   if(!player) return;
-  if(player.style.display === 'none'){
+  const isPlaying = window._audioPlaying === true;
+  if(!isPlaying){
+    // START
     if(!currentVideoId) return;
     iframe.src = `https://www.youtube.com/embed/${currentVideoId}?autoplay=1&rel=0`;
+    window._audioPlaying = true;
     player.style.display = 'block';
+    if(toggleInput) toggleInput.checked = true;
     if(modalTop) modalTop.classList.add('video-playing');
     const ytBtn = document.getElementById('modal-yt-btn');
     if(ytBtn) ytBtn.classList.add('playing');
+    const tw = document.getElementById('vid-toggle-wrap');
+    if(tw) tw.style.display = 'flex';
     const pi = document.querySelector('.entrance-play-icon');
     const pa = document.querySelector('.entrance-pause-icon');
     if(pi) pi.style.display = 'none';
     if(pa) pa.style.display = 'block';
-  } else { closeEntrance(); }
+  } else {
+    // STOP - regardless of whether video is visible or hidden
+    closeEntrance();
+  }
 }
 
 function closeEntrance(){
@@ -917,14 +958,32 @@ function closeEntrance(){
   const modalTop = document.querySelector('.modal-top');
   if(!player) return;
   iframe.src = '';
+  window._audioPlaying = false;
   player.style.display = 'none';
+  const toggleBar = document.getElementById('video-toggle-bar');
+  if(toggleBar) toggleBar.style.display = 'none';
   if(modalTop) modalTop.classList.remove('video-playing');
   const ytBtn = document.getElementById('modal-yt-btn');
   if(ytBtn) ytBtn.classList.remove('playing');
+  const ti = document.getElementById('vid-toggle-input');
+  if(ti) ti.checked = false;
+  const tw2 = document.getElementById('vid-toggle-wrap');
+  if(tw2) tw2.style.display = 'none';
   const pi = document.querySelector('.entrance-play-icon');
   const pa = document.querySelector('.entrance-pause-icon');
   if(pi) pi.style.display = 'block';
   if(pa) pa.style.display = 'none';
+}
+
+function hideShowVideo(){
+  const player = document.getElementById('entrance-player');
+  const toggleInput = document.getElementById('vid-toggle-input');
+  if(!player) return;
+  if(toggleInput && toggleInput.checked){
+    player.style.display = 'block';
+  } else {
+    player.style.display = 'none';
+  }
 }
 
 function openModal(w){
@@ -994,7 +1053,10 @@ function openModal(w){
   const stable = document.getElementById('modal-stable');
   if(stable){ stable.textContent = w.stable || ''; stable.style.display = w.stable ? 'block' : 'none'; }
 
-  const bioEl = document.getElementById('modal-bio'); if(bioEl) bioEl.textContent = w.bio || '';
+  const bioEl = document.getElementById('modal-bio');
+  if(bioEl){ bioEl.textContent = w.bio || ''; bioEl.style.display = w.bio ? '' : 'none'; }
+  const stableEl2 = document.getElementById('modal-stable');
+  if(stableEl2){ stableEl2.style.display = w.stable ? '' : 'none'; }
 
   // Faction
   const factionEl = document.getElementById('modal-faction');
@@ -1038,7 +1100,7 @@ function openModal(w){
               <div class="th-event">${t.event}${t.date ? ` · ${t.date}` : ''}</div>
               ${daysHtml}
             </div>
-            <div class="th-won">Won</div>
+            <div class="th-won">${t.label || "Won"}</div>
           </div>`;
         }).join('');
       };
@@ -1074,8 +1136,11 @@ function openModal(w){
     if(w.finisher2) rightHtml += moveRow('Finisher','is-finisher', w.finisher2Orig||'', w.finisher2);
     html = `<div style="display:flex;gap:16px;"><div style="flex:1;">${leftHtml}</div><div style="flex:1;border-left:1px solid rgba(255,255,255,.06);padding-left:16px;">${rightHtml}</div></div>`;
     movesEl.innerHTML = html;
-    movesEl.style.display = 'block';
-  } else { movesEl.style.display = 'none'; }
+    movesEl.style.display = 'flex';
+    movesEl.style.marginTop = '4px';
+    movesEl.style.paddingTop = '10px';
+    movesEl.style.borderTop = '1px solid rgba(255,255,255,.06)';
+  } else { movesEl.style.display = 'none'; movesEl.style.marginTop = '0'; movesEl.style.paddingTop = '0'; movesEl.style.borderTop = 'none'; }
 
   // Endorsements
   const endorseEl = document.getElementById('modal-endorsements');
@@ -1127,6 +1192,10 @@ function openModal(w){
   currentVideoId = w.videoId || '';
   closeEntrance();
   const ytBtn = document.getElementById('modal-yt-btn');
+  const toggleInp = document.getElementById('vid-toggle-input');
+  if(toggleInp) toggleInp.checked = false;
+  const tw3 = document.getElementById('vid-toggle-wrap');
+  if(tw3) tw3.style.display = 'none';
   if(ytBtn){ if(!currentVideoId){ ytBtn.style.display='none'; } else { ytBtn.style.display='inline-flex'; } }
 
   document.getElementById('modal').classList.add('open');
