@@ -135,9 +135,7 @@
     .nav-r .nav-a{display:none;}
     .nav-r a.nav-a[href='roster.html']{display:inline-flex;}
     .sub-btn{padding:7px 14px;font-size:.75rem;}
-    .hero{padding:0 20px 50px;min-height:auto;}
-    .hero-video{display:none;}
-    .hero{background:linear-gradient(180deg,#0a0a0d 0%,#12050a 100%);}
+    .hero{padding:0 20px 50px;min-height:50vh;}
     .hero-title{font-size:2.4rem;}
     .hero-sub{font-size:.9rem;letter-spacing:3px;}
     .hero-desc{font-size:.82rem;}
@@ -185,9 +183,7 @@
   <div class="hero-vignette"></div>
   <div class="hero-grain"></div>
   <!-- AUTOPLAY BG VIDEO -->
-  <div class="hero-video">
-    <iframe src="https://www.youtube.com/embed/LFV9xmdWJUY?autoplay=1&mute=1&loop=1&playlist=LFV9xmdWJUY&controls=0&disablekb=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&enablejsapi=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-  </div>
+  <div class="hero-video" id="hero-video-wrap"></div>
   <div class="hero-content">
     <div class="era-tag"><span class="pulse"></span> Cinematic Era</div>
     <h1 class="hero-title">First Strike<br>Wrestling</h1>
@@ -405,7 +401,7 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeM(); closeTe
 
 let _muted = true;
 function toggleMute(){
-  const iframe = document.querySelector('.hero-video iframe');
+  const iframe = document.getElementById('hero-iframe');
   _muted = !_muted;
   document.getElementById('icon-sound').style.display = _muted ? 'none' : 'block';
   document.getElementById('icon-mute').style.display = _muted ? 'block' : 'none';
