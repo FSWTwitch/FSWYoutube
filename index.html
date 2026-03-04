@@ -312,7 +312,9 @@
         <!-- tracks injected by JS -->
       </div>
       <!-- hidden YouTube player -->
-      <iframe id="jukebox-iframe" width="0" height="0" src="" frameborder="0" allow="autoplay;encrypted-media" style="position:absolute;opacity:0;pointer-events:none;"></iframe>
+      <div id="jukebox-player" style="display:none;margin-top:12px;border-radius:6px;overflow:hidden;">
+        <iframe id="jukebox-iframe" width="100%" height="80" src="" frameborder="0" allow="autoplay;encrypted-media" allowfullscreen></iframe>
+      </div>
     </div>
   </div>
 
@@ -481,6 +483,7 @@ function playTrack(i){
   if(jukeboxPlaying === i){
     // stop
     iframe.src = '';
+    document.getElementById('jukebox-player').style.display='none';
     document.getElementById(`jtrack-${i}`).classList.remove('playing');
     document.getElementById(`jbtn-${i}`).innerHTML = '<polygon points="5 3 19 12 5 21 5 3"/>';
     jukeboxPlaying = -1;
@@ -492,6 +495,7 @@ function playTrack(i){
   }
   jukeboxPlaying = i;
   const t = jukeboxTracks[i];
+  document.getElementById('jukebox-player').style.display='block';
   iframe.src = `https://www.youtube.com/embed/${t.id}?autoplay=1&rel=0`;
   document.getElementById(`jtrack-${i}`).classList.add('playing');
   document.getElementById(`jbtn-${i}`).innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
