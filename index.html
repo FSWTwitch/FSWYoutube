@@ -113,7 +113,20 @@
   .modal-bg.open .modal-box{transform:scale(1);}
   .modal-vid{width:100%;aspect-ratio:16/9;background:#000;}
   .modal-vid iframe{width:100%;height:100%;border:none;}
-  .modal-body{padding:18px 22px 22px;}
+  .modal-body{padding:14px 22px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .modal-body-left{flex:1;min-width:0;}
+  .m-bars{display:flex;align-items:flex-end;gap:2px;height:16px;flex-shrink:0;}
+  .m-bars span{display:block;width:3px;background:var(--accent);border-radius:1px;animation:bar-bounce .8s ease-in-out infinite;}
+  .m-bars span:nth-child(2){animation-delay:.15s;}
+  .m-bars span:nth-child(3){animation-delay:.3s;}
+  @keyframes bar-bounce{0%,100%{height:3px}50%{height:14px}}
+  .m-play-btn{width:44px;height:44px;border-radius:50%;background:var(--accent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}
+  .m-play-btn:hover{background:#e0000f;}
+  .m-play-btn.playing{background:rgba(192,0,14,.1);border:1px solid rgba(192,0,14,.25);}
+  .m-play-btn.playing .m-play-icon{display:none;}
+  .m-play-btn.playing .m-pause-icon{display:block !important;}
+  .modal-body .m-bars{opacity:0;transition:opacity .2s;}
+  .modal-body.playing .m-bars{opacity:1;}
   .modal-ep{font-size:.65rem;color:var(--gold);letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:5px;}
   .modal-title{font-size:1.05rem;font-weight:600;margin-bottom:5px;}
   .modal-meta{font-size:.78rem;color:var(--muted);margin-bottom:14px;}
@@ -325,10 +338,16 @@
     <button class="modal-close" onclick="closeM()">✕</button>
     <div class="modal-vid"><iframe id="m-frame" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
     <div class="modal-body">
-      <div class="modal-ep" id="m-ep"></div>
-      <div class="modal-title" id="m-title"></div>
-      <div class="modal-meta" id="m-meta"></div>
-      <a id="m-link" href="#" target="_blank" class="btn-r" style="font-size:.8rem;padding:9px 18px;">Open on YouTube ↗</a>
+      <div class="m-bars"><span></span><span></span><span></span></div>
+      <div class="modal-body-left">
+        <div class="modal-ep" id="m-ep"></div>
+        <div class="modal-title" id="m-title"></div>
+        <div class="modal-meta" id="m-meta"></div>
+      </div>
+      <button id="m-play-btn" onclick="toggleM()" class="m-play-btn">
+        <svg class="m-play-icon" width="15" height="15" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        <svg class="m-pause-icon" style="display:none;" width="15" height="15" viewBox="0 0 24 24" fill="white"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+      </button>
     </div>
   </div>
 </div>
@@ -409,19 +428,48 @@ fill('spec-row',specialsVideos,'spec-cnt',false);
 
 function slide(btn,dir){ btn.parentElement.querySelector('.scroll-row').scrollBy({left:dir*600,behavior:'smooth'}); }
 
+let _mPlaying = false;
+let _mCurrentId = '';
 function openM(id,ep,title,epLabel,date){
+  _mCurrentId = id;
+  _mPlaying = true;
   document.getElementById('m-frame').src=`https://www.youtube.com/embed/${id}?autoplay=1`;
   document.getElementById('m-ep').textContent=epLabel||ep;
   document.getElementById('m-title').textContent=title;
   document.getElementById('m-meta').textContent=date||'';
-  document.getElementById('m-link').href=`https://youtube.com/watch?v=${id}`;
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow='hidden';
+  const btn = document.getElementById('m-play-btn');
+  const body = document.querySelector('#modal .modal-body');
+  if(btn) btn.classList.add('playing');
+  if(body) body.classList.add('playing');
+}
+function toggleM(){
+  const iframe = document.getElementById('m-frame');
+  const btn = document.getElementById('m-play-btn');
+  const body = document.querySelector('#modal .modal-body');
+  if(_mPlaying){
+    iframe.src='';
+    _mPlaying=false;
+    if(btn) btn.classList.remove('playing');
+    if(body) body.classList.remove('playing');
+  } else {
+    if(_mCurrentId){ iframe.src=`https://www.youtube.com/embed/${_mCurrentId}?autoplay=1`; }
+    _mPlaying=true;
+    if(btn) btn.classList.add('playing');
+    if(body) body.classList.add('playing');
+  }
 }
 function closeM(){
+  _mPlaying=false;
+  _mCurrentId='';
   document.getElementById('modal').classList.remove('open');
   document.getElementById('m-frame').src='';
   document.body.style.overflow='';
+  const btn = document.getElementById('m-play-btn');
+  const body = document.querySelector('#modal .modal-body');
+  if(btn) btn.classList.remove('playing');
+  if(body) body.classList.remove('playing');
 }
 
 function openTeaser(){
