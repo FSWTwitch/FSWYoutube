@@ -262,7 +262,7 @@
   .move-original{font-size:.68rem;color:rgba(232,232,232,.25);font-style:italic;}
   .move-row.is-super .move-type,.move-row.is-super .move-new{color:var(--gold);}
   .move-row.is-finisher .move-new{color:var(--accent);}
-  .move-row.is-sig .move-new{color:var(--text);}
+  .move-row.is-sig .move-new{color:var(--text);font-weight:400;}
   .modal-endorsements{border-top:1px solid rgba(255,255,255,.06);padding-top:10px;}
   .modal-endorse-title{font-size:.58rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;display:flex;align-items:center;gap:8px;}
   .modal-endorse-title::after{content:'Fictional · Entertainment Only';font-size:.52rem;color:rgba(255,255,255,.2);letter-spacing:1px;font-weight:400;}
@@ -343,6 +343,24 @@
   }
 
   /* FOOTER */
+  .movies-wrap{margin-top:14px;}
+  .movies-head{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:#fff;letter-spacing:2px;margin-bottom:10px;display:flex;align-items:center;gap:10px;border-left:3px solid var(--gold);padding-left:10px;}
+  .movies-scroll-wrap{position:relative;padding:0 20px;}
+  .movies-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none;}
+  .movies-row::-webkit-scrollbar{display:none;}
+  .movie-item{flex-shrink:0;width:180px;cursor:pointer;}
+  .movie-thumb{position:relative;width:180px;aspect-ratio:16/9;border-radius:6px;overflow:hidden;background:#000;transition:transform .2s;}
+  .movie-item:hover .movie-thumb{transform:scale(1.04);}
+  .movie-thumb img{width:100%;height:100%;object-fit:cover;opacity:.75;transition:opacity .2s;}
+  .movie-item:hover .movie-thumb img{opacity:1;}
+  .movie-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+  .movie-title{font-size:.75rem;font-weight:600;color:rgba(255,255,255,.8);margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .movie-released{font-size:.62rem;color:var(--muted);margin-top:2px;}
+  .mov-arrow{position:absolute;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.85);border:1px solid rgba(255,255,255,.15);color:#fff;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:5;transition:background .2s;font-size:.9rem;line-height:1;}
+  .mov-arrow:hover{background:var(--gold);}
+  .movies-scroll-wrap:hover .mov-arrow.needed{display:flex;}
+  .mov-arrow-left{left:0;}
+  .mov-arrow-right{right:0;}
   .commercials-wrap{margin-top:14px;}
   .commercials-head{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:#fff;letter-spacing:2px;margin-bottom:10px;display:flex;align-items:center;gap:10px;border-left:3px solid var(--accent);padding-left:10px;}
   .commercials-scroll-wrap{position:relative;padding:0 20px;}
@@ -403,9 +421,9 @@
 <body>
 
 <nav id="nav">
-  <a href="index.html" class="logo" style="flex-direction:column;align-items:flex-start;gap:3px;">
-    <img src="https://i.imgur.com/LdEOjkv.png" alt="FSW" style="height:30px;width:auto;display:block;filter:brightness(1.1);">
-    <div class="cosmic-tag" style="display:flex;align-items:center;gap:5px;"><span class="logo-top" style="font-size:.52rem;">Brought to you by</span><img src="https://i.imgur.com/ZalooKf.png" alt="Cosmic Energy Drink" style="height:12px;width:auto;opacity:.7;"></div>
+  <a href="index.html" class="logo" style="flex-direction:row;align-items:center;gap:14px;">
+    <img src="https://i.imgur.com/LdEOjkv.png" alt="FSW" style="height:32px;width:auto;display:block;filter:brightness(1.1);">
+    <div class="cosmic-tag" style="display:flex;align-items:center;gap:8px;"><span class="logo-top">Brought to you by</span><img src="https://i.imgur.com/ZalooKf.png" alt="Cosmic Energy Drink" style="height:16px;width:auto;"></div>
   </a>
   <div class="nav-r">
     <a href="https://www.youtube.com/@fsw_caw?sub_confirmation=1" target="_blank" class="sub-btn">Subscribe</a>
@@ -500,6 +518,7 @@
           <div id="modal-rating" style="text-align:center;flex-shrink:0;"></div>
         </div>
         <div class="modal-commercials" id="modal-commercials" style="display:none;margin-top:14px;"></div>
+        <div class="modal-movies" id="modal-movies" style="display:none;margin-top:14px;"></div>
         <div class="modal-social" id="modal-social" style="margin-top:10px;"></div>
     </div>
     <!-- MOBILE VIDEO FRAME -->
@@ -567,6 +586,9 @@ const wrestlers = [
     commercials: [
       { brand: "GEICO", videoId: "KOBAqcMw2nU" },
     ],
+    movies: [
+      { title: "Street Fighter", released: "March 2026", videoId: "raPQD-uwWL8" },
+    ],
     record: { singlesW:7, singlesL:1, multiW:3, multiL:0, titleWins:2, titleDefenses:2 },
     bio: "Shibata Reyes is the reigning FSW Ultima Champion and the cold, commanding leader of the Umbra Collective. Methodical, ruthless, and always ten steps ahead — Shibata doesn't just win matches, he dismantles legacies.",
     finisher1: "Street Justice",
@@ -619,6 +641,9 @@ const wrestlers = [
     finisher1Orig: "TKO",
     finisher2: "Lights Out",
     finisher2Orig: "Kross Hammer",
+    movies: [
+      { title: "Street Fighter", released: "March 2026", videoId: "raPQD-uwWL8" },
+    ],
     record: { singlesW:6, singlesL:4, multiW:1, multiL:5, titleWins:1, titleDefenses:1 },
     titleHistory: [
       { title: "FSW Mayhem Championship", event: "FSW 28: Sin City Slam", date: "21.01.24" },
@@ -647,6 +672,9 @@ const wrestlers = [
     rival: "",
     endorsements: ["Tag Heuer", "Dr. Martens"],
     bio: "J1 competes with quiet dominance and absolute control. He wastes no movement, imposes his pace on every match, and forces opponents to fight on his terms. J1 does not chase moments or reactions; he simply takes over, making victories feel less like surprises and more like inevitabilities.",
+    movies: [
+      { title: "Street Fighter", released: "March 2026", videoId: "raPQD-uwWL8" },
+    ],
     record: { singlesW:2, singlesL:0, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
   },
   {
@@ -672,6 +700,9 @@ const wrestlers = [
     rival: "",
     endorsements: ["Hennessy"],
     bio: "Arnez Jackson brings controlled swagger backed by real toughness. He carries himself like someone who has had to earn every opportunity, blending athletic explosiveness with sharp instincts in the ring. Arnez feeds off pressure rather than shrinking from it, and when momentum swings his way, he turns it into a statement instead of just a win.",
+    movies: [
+      { title: "Street Fighter", released: "March 2026", videoId: "raPQD-uwWL8" },
+    ],
     record: { singlesW:1, singlesL:0, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
   },
   {
@@ -699,6 +730,9 @@ const wrestlers = [
     allies: "Derrick Maximus",
     endorsements: ["Chili's"],
     bio: "Jaelyn Garcia moves with quiet confidence and sharp awareness. He studies opponents carefully, rarely wasting motion or emotion, and strikes with precision when the opening presents itself. Jaelyn does not rely on noise or theatrics; his composure and preparation make him especially dangerous in high-pressure moments where others start to unravel.",
+    movies: [
+      { title: "Street Fighter", released: "March 2026", videoId: "raPQD-uwWL8" },
+    ],
     record: { singlesW:0, singlesL:1, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
   },
   {
@@ -735,6 +769,9 @@ const wrestlers = [
     finisher2: "Frog Splash 8",
     finisher2Orig: "Frog Splash 8",
     signatures: ["Basement Dropkick", "Superkick 13"],
+    movies: [
+      { title: "Street Fighter", released: "March 2026", videoId: "raPQD-uwWL8" },
+    ],
     record: { singlesW:1, singlesL:1, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
   },
   {
@@ -807,6 +844,9 @@ const wrestlers = [
     finisher2: "Sky Vance Spiral",
     finisher2Orig: "Corkscrew Shooting Star Press",
     signatures: [["Twist of Fate", "Vance Verdict"], ["Da Shout Out", "Loudmouth Lariat"]],
+    movies: [
+      { title: "Street Fighter", released: "March 2026", videoId: "raPQD-uwWL8" },
+    ],
     record: { singlesW:2, singlesL:0, multiW:0, multiL:0, titleWins:1, titleDefenses:0 },
         titleHistory: [
       { title: "FSW Mayhem Championship", event: "FSW 51: Victory", date: "19.12.25", label: "Claimed" },
@@ -837,6 +877,11 @@ const wrestlers = [
     rival: "Kyle Vance · Shibata Reyes",
     allies: "Jaelyn Garcia",
     endorsements: ["Calvin Klein", "Cosmic Energy Drink", "Toyota", "Y by YSL", "Nike", "Crocs"],
+    movies: [
+      { title: "Street Reckoning", released: "January 2026", videoId: "xbF1zY0OJMM" },
+      { title: "Black Hawk Dawn", released: "September 2025", videoId: "mUGRFSlRdlc" },
+      { title: "Street Fighter", released: "March 2026", videoId: "raPQD-uwWL8" },
+    ],
     commercials: [
       { brand: "Y by YSL", videoId: "7BWUwQ8IupE" },
       { brand: "Y by YSL", videoId: "um5KZT9KWOs" },
@@ -943,6 +988,9 @@ const wrestlers = [
     rating: 89,
     rival: "St. Peter Reyes",
     endorsements: ["Adidas", "Rolex"],
+    commercials: [
+      { brand: "Adidas", videoId: "XLKFHC9JY1I" },
+    ],
     bio: "William Kennedy carries himself like a man who already knows the ending — and assumes it favors him. Cold, deliberate, and emotionally restrained, he doesn't waste energy on theatrics or outbursts; every word and movement feels measured, like a chess player thinking three moves ahead. Where others chase the spotlight, William controls the atmosphere, preferring psychological pressure over chaos, and letting silence do more damage than shouting ever could.",
     superFinisher: "Lights Out",
     superFinisherOrig: "Cyclone Suplex",
@@ -951,6 +999,9 @@ const wrestlers = [
     finisher2: "RDS (Real Deal Sault)",
     finisher2Orig: "Diving Moonsault 3",
     signatures: [["Sit-Out Gourdbuster","Dealbreaker"], ["Wendy Bomb","Will Bomb"]],
+    movies: [
+      { title: "Street Fighter", released: "March 2026", videoId: "raPQD-uwWL8" },
+    ],
     record: { singlesW:2, singlesL:2, multiW:0, multiL:1, titleWins:0, titleDefenses:0 },
   },
   {
@@ -985,6 +1036,9 @@ const wrestlers = [
     finisher2: "FTH V2",
     finisher2Orig: "Burning Hammer",
     signatures: [["The Devil Inside","Naibu no Akuma"], ["Flying Knee","Deadeye"]],
+    movies: [
+      { title: "Street Fighter", released: "March 2026", videoId: "raPQD-uwWL8" },
+    ],
     record: { singlesW:1, singlesL:1, multiW:0, multiL:2, titleWins:0, titleDefenses:0 },
   },
   // { name:"Kyle Vance", img:"", videoId:"ID", champion:false, title:"", location:"", height:"", weight:"", stable:"", social:"", bio:"" },
@@ -1121,6 +1175,11 @@ function closeEntrance(){
   if(pa) pa.style.display = 'none';
 }
 
+function scrollMov(btn, dir){
+  const row = btn.parentElement.querySelector('.movies-row');
+  if(row) row.scrollBy({ left: dir * 400, behavior: 'smooth' });
+}
+
 function scrollCom(btn, dir){
   const row = btn.parentElement.querySelector('.commercials-row');
   if(row) row.scrollBy({ left: dir * 400, behavior: 'smooth' });
@@ -1249,6 +1308,34 @@ function openModal(w){
   if(bioEl){ bioEl.textContent = w.bio || ''; bioEl.style.display = w.bio ? '' : 'none'; }
   const stableEl2 = document.getElementById('modal-stable');
   if(stableEl2){ stableEl2.style.display = w.stable ? '' : 'none'; }
+
+  // Movies
+  const moviesEl = document.getElementById('modal-movies');
+  if(moviesEl){
+    if(w.movies && w.movies.length){
+      moviesEl.innerHTML = `<div class="movies-wrap">
+        <div class="movies-head">Movie Trailers <span style="font-family:'DM Sans',sans-serif;font-size:.7rem;color:var(--muted);letter-spacing:0;font-weight:400;">· ${w.movies.length} trailer${w.movies.length!==1?'s':''}</span></div>
+        <div class="movies-scroll-wrap">
+          <button class="mov-arrow mov-arrow-left ${w.movies.length > 3 ? 'needed' : ''}" onclick="scrollMov(this,-1)">‹</button>
+          <div class="movies-row">
+            ${w.movies.map(m => `
+              <div class="movie-item" onclick="playCommercial('${m.videoId}', '${m.title}')">
+                <div class="movie-thumb">
+                  <img src="https://i.ytimg.com/vi/${m.videoId}/hqdefault.jpg" alt="${m.title}">
+                  <div class="movie-play">
+                    <svg width="44" height="44" viewBox="0 0 44 44"><circle cx="22" cy="22" r="22" fill="rgba(0,0,0,.55)"/><polygon points="18 14 32 22 18 30 18 14" fill="white"/></svg>
+                  </div>
+                </div>
+                <div class="movie-title">${m.title}</div>
+                <div class="movie-released">${m.released}</div>
+              </div>`).join('')}
+          </div>
+          <button class="mov-arrow mov-arrow-right ${w.movies.length > 3 ? 'needed' : ''}" onclick="scrollMov(this,1)">›</button>
+        </div>
+      </div>`;
+      moviesEl.style.display = 'block';
+    } else { moviesEl.style.display = 'none'; }
+  }
 
   // Commercials
   const comEl = document.getElementById('modal-commercials');
