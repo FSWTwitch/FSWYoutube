@@ -162,6 +162,7 @@
     .hero-stat-num{font-size:1.3rem;}
     .sec-head{padding:0 20px;}
     .scroll-row{padding:8px 20px 16px;}
+    .pill-nav{padding:0 20px 32px !important;}
     :root{--card-w:200px;--card-h:112px;}
     /* JUKEBOX */
   .jukebox-track{
@@ -214,6 +215,7 @@
       <svg id="icon-mute" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
     </button>
     <a href="roster.html" style="color:rgba(255,255,255,.45);text-decoration:none;font-size:.75rem;font-weight:500;letter-spacing:1px;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.45)'">Roster</a>
+    <a href="power-rankings.html" style="color:rgba(255,255,255,.45);text-decoration:none;font-size:.75rem;font-weight:500;letter-spacing:1px;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.45)'">Rankings</a>
     <a href="https://www.youtube.com/@fsw_caw?sub_confirmation=1" target="_blank" class="sub-btn">Subscribe</a>
   </div>
 </nav>
@@ -251,6 +253,22 @@
 
 <!-- MAIN -->
 <main>
+  <!-- PILL NAV ROW -->
+  <div style="padding:0 56px 40px;display:flex;gap:12px;flex-wrap:wrap;">
+    <a href="roster.html" style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#fff;text-decoration:none;font-size:.75rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:10px 20px;border-radius:30px;transition:all .2s;" onmouseover="this.style.background='rgba(255,255,255,.12)';this.style.borderColor='rgba(255,255,255,.25)'" onmouseout="this.style.background='rgba(255,255,255,.06)';this.style.borderColor='rgba(255,255,255,.1)'">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+      Roster
+    </a>
+    <a href="power-rankings.html" style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#fff;text-decoration:none;font-size:.75rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:10px 20px;border-radius:30px;transition:all .2s;" onmouseover="this.style.background='rgba(255,255,255,.12)';this.style.borderColor='rgba(255,255,255,.25)'" onmouseout="this.style.background='rgba(255,255,255,.06)';this.style.borderColor='rgba(255,255,255,.1)'">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M7.5 21H2V9h5.5v12zm7.25-18h-5.5v18h5.5V3zM22 11h-5.5v10H22V11z"/></svg>
+      Rankings
+    </a>
+    <a href="bst.html" style="display:inline-flex;align-items:center;gap:8px;background:rgba(192,0,14,.12);border:1px solid rgba(192,0,14,.35);color:#ff6b6b;text-decoration:none;font-size:.75rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:10px 20px;border-radius:30px;transition:all .2s;" onmouseover="this.style.background='rgba(192,0,14,.22)';this.style.borderColor='rgba(192,0,14,.6)'" onmouseout="this.style.background='rgba(192,0,14,.12)';this.style.borderColor='rgba(192,0,14,.35)'">
+      <span style="width:6px;height:6px;border-radius:50%;background:#ff6b6b;animation:pulse 1.8s infinite;display:inline-block;"></span>
+      Blood, Sweat & Tears
+    </a>
+  </div>
+
   <div class="section" id="latest">
     <div class="sec-head">
       <div class="sec-title"><div class="s-bar"></div>Latest Episodes<span class="s-cnt" id="lat-cnt"></span></div>
@@ -328,6 +346,7 @@
     <a href="https://www.instagram.com/fswyoutube/" target="_blank">Instagram</a>
     <a href="https://www.youtube.com/@fsw_caw" target="_blank">YouTube</a>
     <a href="roster.html" style="color:rgba(255,255,255,.45);text-decoration:none;font-size:.75rem;font-weight:500;letter-spacing:1px;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.45)'">Roster</a>
+    <a href="power-rankings.html" style="color:rgba(255,255,255,.45);text-decoration:none;font-size:.75rem;font-weight:500;letter-spacing:1px;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.45)'">Rankings</a>
     <a href="https://www.youtube.com/@fsw_caw?sub_confirmation=1" target="_blank" style="display:inline-flex;align-items:center;background:rgba(255,255,255,0.07);color:#888;padding:7px 16px;border-radius:5px;font-weight:500;font-size:.76rem;margin-left:16px;letter-spacing:.5px;border:1px solid rgba(255,255,255,0.1);transition:all .2s;" onmouseover="this.style.background='rgba(255,255,255,0.13)';this.style.color='#ccc'" onmouseout="this.style.background='rgba(255,255,255,0.07)';this.style.color='#888'">Subscribe</a>
   </div>
 </footer>

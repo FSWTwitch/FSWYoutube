@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FSW: Blood, Sweat & Tears — United Center, Chicago</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #06060a;
+    --surface: #0e0e14;
+    --surface2: #14141c;
+    --accent: #c0000e;
+    --gold: #c8a84b;
+    --blood: #8b0000;
+    --muted: #52525e;
+    --text: #e8e8f0;
+    --border: rgba(255,255,255,.05);
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; overflow-x:hidden; }
+
+  /* GRAIN OVERLAY */
+  body::before{ content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); opacity:.4; pointer-events:none; z-index:999; }
+
+  /* NAV */
+  nav{ position:fixed; top:0; left:0; right:0; z-index:100; padding:20px 56px; display:flex; align-items:center; justify-content:space-between; background:linear-gradient(to bottom,rgba(6,6,10,.97) 0%,transparent 100%); transition:background .3s; }
+  .logo{ display:flex; flex-direction:row; align-items:center; gap:14px; text-decoration:none; }
+  .logo img{ height:32px; width:auto; filter:brightness(1.1); }
+  .nav-links{ display:flex; gap:28px; align-items:center; }
+  .nav-links a{ color:rgba(255,255,255,.45); text-decoration:none; font-size:.75rem; font-weight:500; letter-spacing:1px; transition:color .2s; }
+  .nav-links a:hover, .nav-links a.active{ color:#fff; }
+
+  /* HERO */
+  .hero{ position:relative; min-height:100vh; display:flex; flex-direction:column; justify-content:flex-end; overflow:hidden; }
+  .hero-video{ position:absolute; inset:0; z-index:0; }
+  .hero-video iframe{ width:100%; height:100%; border:none; pointer-events:none; transform:scale(1.08); }
+  .hero-overlay{ position:absolute; inset:0; background:linear-gradient(to top, #06060a 0%, rgba(6,6,10,.7) 40%, rgba(6,6,10,.2) 100%); z-index:1; }
+  .hero-overlay2{ position:absolute; inset:0; background:linear-gradient(135deg, rgba(139,0,0,.15) 0%, transparent 60%); z-index:1; }
+
+  .hero-content{ position:relative; z-index:2; padding:0 56px 80px; max-width:780px; }
+  .hero-eyebrow{ display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+  .eyebrow-line{ width:40px; height:1px; background:var(--accent); }
+  .eyebrow-text{ font-family:'Barlow Condensed',sans-serif; font-size:.72rem; letter-spacing:4px; color:var(--accent); text-transform:uppercase; font-weight:700; }
+  .hero-title{ font-family:'Bebas Neue',sans-serif; font-size:clamp(4rem,10vw,8rem); letter-spacing:2px; line-height:.9; color:#fff; margin-bottom:8px; }
+  .hero-title .blood{ color:var(--accent); }
+  .hero-title .amp{ color:var(--gold); font-size:clamp(3rem,7vw,6rem); }
+  .hero-subtitle{ font-family:'Barlow Condensed',sans-serif; font-size:1.1rem; letter-spacing:6px; color:rgba(255,255,255,.5); text-transform:uppercase; font-weight:400; margin-bottom:28px; }
+  .hero-meta{ display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+  .meta-item{ display:flex; align-items:center; gap:8px; font-size:.78rem; color:rgba(255,255,255,.6); }
+  .meta-item svg{ opacity:.5; }
+  .meta-dot{ width:4px; height:4px; border-radius:50%; background:var(--muted); }
+  .live-badge{ display:inline-flex; align-items:center; gap:6px; background:rgba(192,0,14,.15); border:1px solid rgba(192,0,14,.4); border-radius:3px; padding:5px 12px; font-family:'Barlow Condensed',sans-serif; font-size:.7rem; letter-spacing:3px; color:#ff6b6b; text-transform:uppercase; font-weight:700; }
+  .live-dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); animation:blink 1.4s infinite; }
+  @keyframes blink{ 0%,100%{opacity:1} 50%{opacity:.2} }
+
+  /* MATCHCARD SECTION */
+  .matches-section{ padding:80px 56px; position:relative; }
+  .matches-section::before{ content:''; position:absolute; top:0; left:56px; right:56px; height:1px; background:linear-gradient(to right, transparent, rgba(192,0,14,.4), transparent); }
+  .section-label{ font-family:'Barlow Condensed',sans-serif; font-size:.65rem; letter-spacing:5px; color:var(--muted); text-transform:uppercase; margin-bottom:10px; }
+  .section-title{ font-family:'Bebas Neue',sans-serif; font-size:2.8rem; letter-spacing:3px; color:#fff; margin-bottom:48px; }
+  .section-title span{ color:var(--accent); }
+
+  /* MATCH CARD */
+  .match-card{ background:var(--surface); border:1px solid var(--border); border-radius:8px; margin-bottom:16px; overflow:hidden; position:relative; transition:border-color .3s; }
+  .match-card:hover{ border-color:rgba(255,255,255,.1); }
+  .match-card.championship{ border-color:rgba(200,168,75,.15); }
+  .match-card.championship:hover{ border-color:rgba(200,168,75,.3); }
+  .match-card.main-event{ border-color:rgba(192,0,14,.2); }
+  .match-card.main-event:hover{ border-color:rgba(192,0,14,.4); }
+
+  /* gold left bar for championship */
+  .match-card.championship::before{ content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:linear-gradient(to bottom, var(--gold), rgba(200,168,75,.3)); }
+  .match-card.main-event::before{ content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--accent); }
+
+  .match-inner{ display:flex; align-items:center; padding:24px 28px; gap:20px; }
+  .match-num{ font-family:'Bebas Neue',sans-serif; font-size:3rem; color:rgba(255,255,255,.06); line-height:1; flex-shrink:0; width:44px; text-align:center; }
+
+  .match-fighters{ flex:1; }
+  .match-type{ font-family:'Barlow Condensed',sans-serif; font-size:.6rem; letter-spacing:3px; color:var(--muted); text-transform:uppercase; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+  .type-badge{ background:rgba(200,168,75,.1); border:1px solid rgba(200,168,75,.2); border-radius:2px; padding:2px 8px; color:var(--gold); font-size:.55rem; letter-spacing:2px; }
+  .type-badge.red{ background:rgba(192,0,14,.1); border-color:rgba(192,0,14,.25); color:#ff6b6b; }
+  .type-badge.white{ background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.1); color:rgba(255,255,255,.5); }
+
+  .fighters-row{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+  .fighter-name{ font-family:'Bebas Neue',sans-serif; font-size:1.7rem; letter-spacing:2px; color:#fff; line-height:1; }
+  .match-card.championship .fighter-name{ font-size:1.9rem; }
+  .match-card.main-event .fighter-name{ font-size:2rem; }
+  .vs-text{ font-family:'Barlow Condensed',sans-serif; font-size:.75rem; letter-spacing:3px; color:var(--muted); font-weight:700; flex-shrink:0; }
+  .fighter-name.challenger{ color:rgba(255,255,255,.7); }
+
+  .match-note{ font-size:.68rem; color:rgba(255,255,255,.3); margin-top:8px; font-style:italic; }
+
+  .match-right{ flex-shrink:0; text-align:right; }
+  .champ-label{ font-family:'Barlow Condensed',sans-serif; font-size:.6rem; letter-spacing:2.5px; color:var(--gold); text-transform:uppercase; margin-bottom:4px; }
+  .champ-name{ font-family:'Bebas Neue',sans-serif; font-size:1rem; letter-spacing:1.5px; color:rgba(200,168,75,.6); line-height:1.1; max-width:160px; text-align:right; }
+
+  /* TRIPLE THREAT */
+  .triple-row{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+
+  /* VENUE SECTION */
+  .venue-section{ padding:60px 56px 80px; border-top:1px solid var(--border); }
+  .venue-inner{ display:flex; align-items:center; gap:60px; flex-wrap:wrap; }
+  .venue-left{ flex:1; min-width:260px; }
+  .venue-eyebrow{ font-family:'Barlow Condensed',sans-serif; font-size:.62rem; letter-spacing:4px; color:var(--muted); text-transform:uppercase; margin-bottom:10px; }
+  .venue-name{ font-family:'Bebas Neue',sans-serif; font-size:3rem; letter-spacing:2px; color:#fff; line-height:1; margin-bottom:6px; }
+  .venue-city{ font-family:'Barlow Condensed',sans-serif; font-size:1.1rem; letter-spacing:4px; color:var(--gold); text-transform:uppercase; }
+  .venue-desc{ font-size:.78rem; color:rgba(255,255,255,.35); margin-top:14px; line-height:1.7; max-width:380px; }
+  .venue-right{ display:flex; flex-direction:column; gap:16px; }
+  .venue-stat{ display:flex; flex-direction:column; }
+  .stat-val{ font-family:'Bebas Neue',sans-serif; font-size:2.2rem; letter-spacing:2px; color:#fff; line-height:1; }
+  .stat-val span{ color:var(--accent); }
+  .stat-lbl{ font-size:.6rem; letter-spacing:2px; color:var(--muted); text-transform:uppercase; margin-top:2px; }
+
+  /* FOOTER */
+  .bst-footer{ text-align:center; padding:30px; font-size:.62rem; color:var(--muted); letter-spacing:1px; border-top:1px solid var(--border); }
+  .bst-footer .cosmic{ display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:10px; }
+  .bst-footer .cosmic span{ font-style:italic; font-weight:300; color:var(--muted); }
+
+  @media(max-width:768px){
+    nav{ padding:14px 20px; }
+    .hero-content{ padding:0 20px 60px; }
+    .matches-section{ padding:60px 20px; }
+    .matches-section::before{ left:20px; right:20px; }
+    .match-inner{ padding:18px 20px; gap:14px; }
+    .match-num{ display:none; }
+    .fighter-name{ font-size:1.3rem !important; }
+    .match-right{ display:none; }
+    .venue-section{ padding:40px 20px 60px; }
+    .venue-inner{ gap:30px; }
+    .venue-name{ font-size:2rem; }
+  }
+</style>
+</head>
+<body>
+  <div style="padding:100px 56px 0;margin-bottom:-24px;">
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:8px;color:rgba(255,255,255,.5);text-decoration:none;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;font-weight:600;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.5)'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+      Home
+    </a>
+  </div>
+
+<nav>
+  <a href="index.html" class="logo">
+    <img src="https://i.imgur.com/LdEOjkv.png" alt="FSW">
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="roster.html">Roster</a>
+    <a href="power-rankings.html">Rankings</a>
+    <a href="bst.html" class="active" style="color:#fff;">BST</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-video">
+    <iframe src="https://www.youtube.com/embed/ZN113WpJrk4?autoplay=1&mute=1&loop=1&playlist=ZN113WpJrk4&controls=0&rel=0&modestbranding=1&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-overlay2"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="eyebrow-line"></div>
+      <div class="eyebrow-text">FSW Premium Live Event</div>
+    </div>
+    <div class="hero-title">
+      <div>Blood,</div>
+      <div><span class="blood">Sweat</span></div>
+      <div><span class="amp">&</span> Tears</div>
+    </div>
+    <div class="hero-subtitle">United Center · Chicago, Illinois</div>
+    <div class="hero-meta">
+      <div class="live-badge"><span class="live-dot"></span>Confirmed</div>
+      <div class="meta-dot"></div>
+      <div class="meta-item">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        United Center, Chicago, IL
+      </div>
+      <div class="meta-dot"></div>
+      <div class="meta-item">9 Matches · Date TBA</div>
+    </div>
+  </div>
+</div>
+
+<!-- PRE-SHOW -->
+<div class="matches-section" style="padding-bottom:0;">
+  <div class="section-label">Pre-Show</div>
+  <div class="section-title" style="margin-bottom:24px;">Before The <span>Storm</span></div>
+
+  <!-- PRE-SHOW MATCH 1 — GODSON VS JASON -->
+  <div class="match-card">
+    <div class="match-inner">
+      <div class="match-num">P1</div>
+      <div class="match-fighters">
+        <div class="match-type">
+          <span class="type-badge white">Pre-Show · Singles Match</span>
+        </div>
+        <div class="fighters-row">
+          <div class="fighter-name">The Godson</div>
+          <div class="vs-text">VS</div>
+          <div class="fighter-name challenger">Jason Prince</div>
+        </div>
+        <div class="match-note">The pre-show opener. Both looking to make a statement before the lights get brighter.</div>
+      </div>
+      <div class="match-right"></div>
+    </div>
+  </div>
+
+  <!-- PRE-SHOW MATCH 2 — TAG TITLE -->
+  <div class="match-card championship">
+    <div class="match-inner">
+      <div class="match-num">P2</div>
+      <div class="match-fighters">
+        <div class="match-type">
+          <span class="type-badge">FSW Tag Team Championship</span>
+          <span class="type-badge white">Pre-Show</span>
+        </div>
+        <div class="fighters-row">
+          <div class="fighter-name" style="font-size:1.4rem;">The Syndicate</div>
+          <div class="vs-text">VS</div>
+          <div class="fighter-name challenger" style="font-size:1.4rem;">Travis &amp; KJ Hunter</div>
+        </div>
+        <div class="match-note">Damian Rage &amp; Vincent Omen defend The Syndicate's gold. Burn the order. Build the Syndicate.</div>
+      </div>
+      <div class="match-right">
+        <div class="champ-label">Champions</div>
+        <div class="champ-name">The Syndicate</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DIVIDER -->
+<div style="margin:0 56px;padding:20px 0;display:flex;align-items:center;gap:16px;">
+  <div style="flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(192,0,14,.4));"></div>
+  <div style="font-family:'Barlow Condensed',sans-serif;font-size:.65rem;letter-spacing:4px;color:var(--accent);text-transform:uppercase;font-weight:700;flex-shrink:0;">Main Card</div>
+  <div style="flex:1;height:1px;background:linear-gradient(to left,transparent,rgba(192,0,14,.4));"></div>
+</div>
+
+<!-- MATCH CARD -->
+<div class="matches-section">
+  <div class="section-label">Official Match Card</div>
+  <div class="section-title">The Card <span>Is Set</span></div>
+
+  <!-- MATCH 1 — ULTIMA CHAMPIONSHIP (Main Event) -->
+  <div class="match-card main-event">
+    <div class="match-inner">
+      <div class="match-num">1</div>
+      <div class="match-fighters">
+        <div class="match-type">
+          <span class="type-badge red">FSW Ultima Championship</span>
+          <span class="type-badge white">Main Event</span>
+        </div>
+        <div class="fighters-row">
+          <div class="fighter-name">Kendrick Montana</div>
+          <div class="vs-text">VS</div>
+          <div class="fighter-name challenger">Shibata Reyes</div>
+        </div>
+        <div class="match-note">The rooftop wasn't enough. Now they finish it.</div>
+      </div>
+      <div class="match-right">
+        <div class="champ-label">Champion</div>
+        <div class="champ-name">Kendrick Montana</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MATCH 2 — SUPREME CHAMPIONSHIP -->
+  <div class="match-card championship">
+    <div class="match-inner">
+      <div class="match-num">2</div>
+      <div class="match-fighters">
+        <div class="match-type">
+          <span class="type-badge">FSW Supreme Championship</span>
+        </div>
+        <div class="fighters-row">
+          <div class="fighter-name">St. Peter Reyes</div>
+          <div class="vs-text">VS</div>
+          <div class="fighter-name challenger">William Kennedy</div>
+        </div>
+        <div class="match-note">"If you need me to sell it, William isn't ready." — St. Peter Reyes</div>
+      </div>
+      <div class="match-right">
+        <div class="champ-label">Champion</div>
+        <div class="champ-name">St. Peter Reyes</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MATCH 3 — MAYHEM CHAMPIONSHIP -->
+  <div class="match-card championship">
+    <div class="match-inner">
+      <div class="match-num">3</div>
+      <div class="match-fighters">
+        <div class="match-type">
+          <span class="type-badge">FSW Mayhem Championship</span>
+        </div>
+        <div class="fighters-row">
+          <div class="fighter-name">Derrick Maximus</div>
+          <div class="vs-text">VS</div>
+          <div class="fighter-name challenger">Kyle Vance</div>
+        </div>
+        <div class="match-note">Maximus claims the title was stolen. Vance says he earned it. Chicago will decide.</div>
+      </div>
+      <div class="match-right">
+        <div class="champ-label">Champion</div>
+        <div class="champ-name">Kyle Vance</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MATCH 4 — GENESIS CHAMPIONSHIP -->
+  <div class="match-card championship">
+    <div class="match-inner">
+      <div class="match-num">4</div>
+      <div class="match-fighters">
+        <div class="match-type">
+          <span class="type-badge">FSW Genesis Championship</span>
+        </div>
+        <div class="fighters-row">
+          <div class="fighter-name">J1</div>
+          <div class="vs-text">VS</div>
+          <div class="fighter-name challenger">Smoove Marino</div>
+        </div>
+        <div class="match-note">Both earned their spot. One becomes champion. The Genesis era begins in Chicago.</div>
+      </div>
+      <div class="match-right">
+        <div class="champ-label">Vacant</div>
+        <div class="champ-name">FSW Genesis Title</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MATCH 5 — DIAMOND CHAMPIONSHIP OPEN CHALLENGE -->
+  <div class="match-card championship">
+    <div class="match-inner">
+      <div class="match-num">5</div>
+      <div class="match-fighters">
+        <div class="match-type">
+          <span class="type-badge">FSW Diamond Championship</span>
+          <span class="type-badge white">Open Challenge</span>
+        </div>
+        <div class="fighters-row">
+          <div class="fighter-name">Alexa Rivera</div>
+          <div class="vs-text">VS</div>
+          <div class="fighter-name challenger" style="color:var(--muted);letter-spacing:1px;font-size:1.1rem;">???</div>
+        </div>
+        <div class="match-note">The new Diamond Champion issues an open challenge. Anyone. Anytime. Answer it.</div>
+      </div>
+      <div class="match-right">
+        <div class="champ-label">Champion</div>
+        <div class="champ-name">Alexa Rivera</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MATCH 6 — ARNEZ VS JAELYN -->
+  <div class="match-card">
+    <div class="match-inner">
+      <div class="match-num">6</div>
+      <div class="match-fighters">
+        <div class="match-type">
+          <span class="type-badge white">Singles Match</span>
+        </div>
+        <div class="fighters-row">
+          <div class="fighter-name">Arnez Jackson</div>
+          <div class="vs-text">VS</div>
+          <div class="fighter-name challenger">Jaelyn Garcia</div>
+        </div>
+        <div class="match-note">Two rising stars. One statement win in Chicago.</div>
+      </div>
+      <div class="match-right"></div>
+    </div>
+  </div>
+
+  <!-- MATCH 7 — FIRST CLASS #1 CONTENDER TRIPLE THREAT -->
+  <div class="match-card">
+    <div class="match-inner">
+      <div class="match-num">7</div>
+      <div class="match-fighters">
+        <div class="match-type">
+          <span class="type-badge white">Triple Threat</span>
+          <span class="type-badge">#1 Contender — FSW First Class Championship</span>
+        </div>
+        <div class="triple-row">
+          <div class="fighter-name">Henry Carter</div>
+          <div class="vs-text">VS</div>
+          <div class="fighter-name challenger">Javi Hernandez</div>
+          <div class="vs-text">VS</div>
+          <div class="fighter-name challenger">Matheo</div>
+        </div>
+        <div class="match-note">Winner faces CJ Moore for the FSW First Class Championship. One night, one chance.</div>
+      </div>
+      <div class="match-right">
+        <div class="champ-label">Champion</div>
+        <div class="champ-name">CJ Moore</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- VENUE -->
+<div class="venue-section">
+  <div class="venue-inner">
+    <div class="venue-left">
+      <div class="venue-eyebrow">Event Location</div>
+      <div class="venue-name">United Center</div>
+      <div class="venue-city">Chicago, Illinois</div>
+      <div class="venue-desc">Home to some of the greatest sporting moments in American history. On this night, it becomes the stage for FSW's biggest Premium Live Event.</div>
+    </div>
+    <div class="venue-right">
+      <div class="venue-stat">
+        <div class="stat-val">9</div>
+        <div class="stat-lbl">Confirmed Matches</div>
+      </div>
+      <div class="venue-stat">
+        <div class="stat-val"><span>6</span></div>
+        <div class="stat-lbl">Championship Matches</div>
+      </div>
+      <div class="venue-stat">
+        <div class="stat-val">20<span>K</span></div>
+        <div class="stat-lbl">Capacity</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bst-footer">
+  <div class="cosmic">
+    <span>Brought to you by</span>
+    <img src="https://i.imgur.com/ZalooKf.png" alt="Cosmic Energy Drink" style="height:14px;width:auto;opacity:.7;">
+  </div>
+  FSW: Blood, Sweat & Tears · United Center, Chicago, IL · © 2026 First Strike Wrestling
+</div>
+
+</body>
+</html>
