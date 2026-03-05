@@ -245,6 +245,7 @@
   .rec-item{background:var(--surface2);padding:8px 10px;text-align:center;}
   .rec-val{font-family:'Bebas Neue',sans-serif;font-size:1rem;color:#fff;letter-spacing:1px;}
   .rec-lbl{font-size:.55rem;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-top:1px;}
+  #modal-debut{padding-left:2px;}
   .modal-stable{
     font-size:.72rem;color:rgba(232,232,232,.45);
     letter-spacing:1px;text-transform:uppercase;
@@ -525,6 +526,7 @@
         <div id="modal-rival" style="display:none;align-items:center;gap:8px;font-size:.78rem;margin-top:4px;"></div>
         <div id="modal-allies" style="display:none;align-items:center;gap:8px;font-size:.78rem;margin-top:2px;"></div>
         <div class="modal-stable mp-row" id="modal-stable"></div>
+        <div id="modal-debut" style="display:none;font-size:.7rem;color:var(--muted);margin-top:3px;letter-spacing:.5px;"></div>
         <div class="modal-bio mp-row" id="modal-bio"></div>
         <div class="modal-moves" id="modal-moves"></div>
       </div>
@@ -619,6 +621,7 @@ const wrestlers = [
     movies: [
       { title: "Street Fighter", released: "March 2026", videoId: "raPQD-uwWL8" },
     ],
+    debut: "FSW 1: Maximum",
     record: { singlesW:7, singlesL:1, multiW:3, multiL:0, titleWins:2, titleDefenses:2 },
     bio: "Shibata Reyes is the reigning FSW Ultima Champion and the cold, commanding leader of the Umbra Collective. Methodical, ruthless, and always ten steps ahead — Shibata doesn't just win matches, he dismantles legacies.",
     finisher1: "Street Justice",
@@ -666,6 +669,17 @@ const wrestlers = [
     finisher1: "Rabbit Hole", finisher1Orig: "Last Shot 2",
     finisher2: "Dead Man's Wonderland", finisher2Orig: "Dragon Twist Cutter",
     superFinisher: "VKO", superFinisherOrig: "Avalanche RKO",
+    factions: [
+      {
+        name: "The Syndicate",
+        logo: "",
+        role: "Member",
+        members: ["Damian Rage", "Vincent Omen", "Brittany Black"],
+        motto: "",
+        debut: "",
+      }
+    ],
+    debut: "FSW 19: Nemesis",
     record: { singlesW:2, singlesL:1, multiW:2, multiL:1, titleWins:1, titleDefenses:1 },
   },
   {
@@ -687,6 +701,7 @@ const wrestlers = [
     signatures: ["Superkick", "Small Package Piledriver"],
     finisher1: "BFT", finisher1Orig: "BFT",
     superFinisher: "World's Strongest Slam", superFinisherOrig: "World's Strongest Slam",
+    debut: "FSW 51: Victory",
     record: { singlesW:0, singlesL:2, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
   },
   {
@@ -708,6 +723,7 @@ const wrestlers = [
     signatures: ["Calf Crusher", "Springboard 630 Senton"],
     finisher1: "Juggernaut Driver", finisher1Orig: "Juggernaut Driver",
     finisher2: "Lo Down", finisher2Orig: "Lo Down",
+    debut: "FSW 51: Victory",
     record: { singlesW:0, singlesL:2, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
   },
   {
@@ -722,10 +738,24 @@ const wrestlers = [
     alignment: "heel",
     location: "Green Bay, WI",
     height: "5'4\"", weight: "123 lbs",
-    stable: "", social: "@fswyoutub.brittany", instagram: "",
+    stable: "The Syndicate", social: "@fswyoutub.brittany", instagram: "",
     theme: "B.M.F. — Upon a Burning Body", rating: 85, rival: "",
     endorsements: ["Amiri", "Versace"],
+    commercials: [
+      { brand: "Amiri", videoId: "7ZbUjsWeB3U" },
+    ],
+    factions: [
+      {
+        name: "The Syndicate",
+        logo: "",
+        role: "Member",
+        members: ["Damian Rage", "Vincent Omen", "Brittany Black"],
+        motto: "",
+        debut: "",
+      }
+    ],
     bio: "Brittany Black is a rebel at heart, carrying a punk, anarchist attitude that refuses to follow anyone else's rules. She thrives on disruption, turning chaos into momentum while feeding off the energy of the crowd and the tension of the moment. Brittany does not fight for approval or tradition; she fights to tear down expectations and prove that unpredictability can be just as powerful as discipline.",
+    debut: "FSW 37: Fight for Survival",
     record: { singlesW:0, singlesL:1, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
   },
   {
@@ -743,6 +773,9 @@ const wrestlers = [
     stable: "Umbra Collective", social: "@fswyoutub.cj", twitter: "@I_Cyoung", instagram: "",
     theme: "Onna Come Up (Remix ft. G Herbo) — Lil Eazzyy", rating: 87, rival: "",
     endorsements: ["Carnival Cruise", "Doritos"],
+    commercials: [
+      { brand: "Carnival Cruise", videoId: "59R3kXSWgjs" },
+    ],
     bio: "CJ Moore found himself pulled into the Umbra Collective before fully understanding what it demanded. Manipulated into joining a dangerous circle where loyalty is tested and choices carry consequences, CJ now walks a difficult line between ambition and survival. Whether he ultimately embraces Umbra's ruthless philosophy or finds a way out remains one of the most unpredictable stories unfolding in FSW.",
     titleHistory: [
       { title: "FSW First Class Championship", event: "FSW 51: Victory", date: "19.12.25", label: "Won" },
@@ -757,6 +790,7 @@ const wrestlers = [
         debut: "FSW 50: Nemesis",
       }
     ],
+    debut: "FSW 19: Nemesis",
     record: { singlesW:3, singlesL:4, multiW:1, multiL:3, titleWins:1, titleDefenses:0 },
   },
   {
@@ -793,6 +827,7 @@ const wrestlers = [
     theme: "", rating: 85, rival: "",
     endorsements: ["Jack Daniel's"],
     bio: "Henry Carter carries himself with composed confidence and old-school toughness. He approaches every match with discipline and patience, preferring steady control over reckless aggression. Henry Carter is the kind of competitor who stays grounded under pressure, relying on experience and resilience to outlast opponents when the fight gets difficult.",
+    debut: "FSW 52: Maximum",
     record: { singlesW:1, singlesL:0, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
   },
   {
@@ -826,11 +861,17 @@ const wrestlers = [
     location: "Montgomery, Alabama",
     height: "6'1\"", weight: "190 lbs",
     stable: "", social: "@fswyoutub.kj", instagram: "",
-    theme: "", rating: 85, rival: "",
+    theme: "", rating: 85, rival: "The Syndicate",
+    allies: ["Travis Valentine"],
     endorsements: ["Caesar's Rewards", "DraftKings", "Ignite Wireless"],
     bio: "KJ Hunter carries a carefree attitude that hides a dangerous secret. A natural risk-taker with a love for gambling, he treats life and competition the same way, trusting instinct and luck more than discipline. Many around him believe his talent is being wasted because he refuses to take things as seriously as he could, yet the flashes of brilliance he shows make it clear that KJ Hunter possesses far more potential than he chooses to reveal.",
     signatures: [["Air Raid Crash Neckbreaker 4", "Equalizer"]],
     finisher1: "Hunter Clash", finisher1Orig: "Styles Clash 1",
+    commercials: [
+      { brand: "Caesar's Rewards", videoId: "KlDu_5Mnq3g" },
+      { brand: "Ignite Wireless", videoId: "FeGkDz8n0LU" },
+      { brand: "DraftKings", videoId: "kJ-0lyvYdrw" },
+    ],
     movies: [
       { title: "Street Fighter", released: "March 2026", videoId: "raPQD-uwWL8", role: "Dee Jay" },
     ],
@@ -862,6 +903,7 @@ const wrestlers = [
     movies: [
       { title: "Street Fighter", released: "March 2026", videoId: "raPQD-uwWL8", role: "Guile" },
     ],
+    debut: "FSW 52: Maximum",
     record: { singlesW:1, singlesL:0, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
   },
   {
@@ -880,6 +922,7 @@ const wrestlers = [
     theme: "Out Of My Hands — Future & Metro Boomin", rating: 87, rival: "",
     endorsements: ["Hennessy"],
     bio: "Smoove Marino walks back into FSW with a reputation that only grew while he was gone. Recently released from jail, he carries the same swagger and street-hardened confidence that made him dangerous before, but now with even more to prove. Smoove Marino does not just want his place back; he wants everyone to remember why his name still carries weight the moment he steps into the arena.",
+    debut: "FSW Underground",
     record: { singlesW:2, singlesL:1, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
   },
   {
@@ -913,8 +956,12 @@ const wrestlers = [
     location: "Chicago, IL",
     height: "6'3\"", weight: "260 lbs",
     stable: "", social: "@fswyoutub.travis", twitter: "@Kingofcarnage_", twitterUrl: "https://x.com/Kingofcarnage_", instagram: "",
-    theme: "Worked Up — PHIX", rating: 86, rival: "",
+    theme: "Worked Up — PHIX", rating: 86, rival: "The Syndicate",
+    allies: ["KJ Hunter"],
     endorsements: ["Budweiser", "Old Spice"],
+    commercials: [
+      { brand: "Budweiser", videoId: "NguNLcB4_78" },
+    ],
     bio: "Travis Valentine carries a quiet menace that makes people uneasy the moment he appears. Calculated and unpredictable, he rarely wastes words, preferring to let tension build before choosing the exact moment to strike. Travis Valentine does not fight for attention or approval; he moves on his own terms, turning every encounter into a psychological battle where opponents often realize too late that they were being controlled all along.",
     finisher1: "Hollow Tip", finisher1Orig: "Bicycle Knee Strike 5",
     finisher2: "Head Tap", finisher2Orig: "Basement Back Kick",
@@ -1006,6 +1053,7 @@ const wrestlers = [
     movies: [
       { title: "Street Fighter", released: "March 2026", videoId: "raPQD-uwWL8" },
     ],
+    debut: "FSW 18: New Revolution",
     record: { singlesW:6, singlesL:4, multiW:1, multiL:5, titleWins:1, titleDefenses:1 },
     titleHistory: [
       { title: "FSW Mayhem Championship", event: "FSW 28: Sin City Slam", date: "21.01.24" },
@@ -1038,6 +1086,7 @@ const wrestlers = [
     movies: [
       { title: "Street Fighter", released: "March 2026", videoId: "raPQD-uwWL8" },
     ],
+    debut: "FSW 51: Victory",
     record: { singlesW:2, singlesL:0, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
   },
   {
@@ -1067,6 +1116,7 @@ const wrestlers = [
     movies: [
       { title: "Street Fighter", released: "March 2026", videoId: "raPQD-uwWL8" },
     ],
+    debut: "FSW 52: Maximum",
     record: { singlesW:1, singlesL:0, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
   },
   {
@@ -1094,6 +1144,10 @@ const wrestlers = [
     rival: "",
     allies: "Derrick Maximus",
     endorsements: ["Chili's"],
+    commercials: [
+      { brand: "Chili's", videoId: "DfG5a4r8Gog" },
+      { brand: "Skechers", videoId: "3R7rg6YelGI" },
+    ],
     bio: "Jaelyn Garcia moves with quiet confidence and sharp awareness. He studies opponents carefully, rarely wasting motion or emotion, and strikes with precision when the opening presents itself. Jaelyn does not rely on noise or theatrics; his composure and preparation make him especially dangerous in high-pressure moments where others start to unravel.",
     movies: [
       { title: "Street Fighter", released: "March 2026", videoId: "raPQD-uwWL8" },
@@ -1171,6 +1225,7 @@ const wrestlers = [
     finisher2: "SanDeVistan",
     finisher2Orig: "Footstomp",
     signatures: [["German Suplex", "Incoming!"], ["Butterfly DDT", "Snakebite"]],
+    debut: "FSW 37: Fight for Survival",
     record: { singlesW:2, singlesL:1, multiW:1, multiL:0, titleWins:1, titleDefenses:0 },
     titleHistory: [
       { title: "FSW Supreme Championship", event: "FSW 37: Fight for Survival", date: "5.11.24" },
@@ -1262,7 +1317,11 @@ const wrestlers = [
     finisher1: "Maximum Odds",
     finisher1Orig: "Eight Second Ride",
     signatures: [["Dragon Slayer", "The Big Red"]],
-    record: { singlesW:1, singlesL:4, multiW:0, multiL:1, titleWins:0, titleDefenses:0 },
+    debut: "FSW 1: Maximum",
+    titleHistory: [
+      { title: "FSW Mayhem Championship", event: "FSW 48: Unfinished Business", date: "29.12.24" },
+    ],
+    record: { singlesW:1, singlesL:4, multiW:0, multiL:1, titleWins:1, titleDefenses:0 },
   },
   {
     name: "Damian Rage",
@@ -1298,6 +1357,7 @@ const wrestlers = [
     finisher2: "End of Days",
     finisher2Orig: "End of Days",
     signatures: [["The Disasterpiece", "Lifting Double Underhook"], ["Jumping Complete Shot", "JCS"]],
+    debut: "FSW 19: Nemesis",
     record: { singlesW:2, singlesL:1, multiW:2, multiL:3, titleWins:1, titleDefenses:1 },
     titleHistory: [
       { title: "FSW Tag Team Championship", event: "FSW 20: Thrilla in Manila (Night 1)", date: "8.23.23" },
@@ -1329,6 +1389,7 @@ const wrestlers = [
       { brand: "State Farm", videoId: "QshZDbNOYlk" },
     ],
     bio: "Alexa Rivera moves with quiet intensity, the kind that doesn't need volume to command attention. She's calculated and emotionally controlled, but underneath that composure is a competitive fire that refuses to be overshadowed by alliances or expectations. Alexa doesn't beg for the spotlight — she positions herself so precisely that when the moment arrives, it feels inevitable.",
+    debut: "FSW 51: Victory",
     record: { singlesW:2, singlesL:0, multiW:0, multiL:0, titleWins:1, titleDefenses:0 },
     titleHistory: [
       { title: "FSW Diamond Championship", event: "FSW 52: Maximum", date: "12.02.26" },
@@ -1362,6 +1423,9 @@ const wrestlers = [
     endorsements: ["Adidas", "Rolex"],
     commercials: [
       { brand: "Adidas", videoId: "XLKFHC9JY1I" },
+    ],
+    tv: [
+      { show: "Twisted Metal", videoId: "55E5bESt1d4", network: "Peacock" },
     ],
     bio: "William Kennedy carries himself like a man who already knows the ending — and assumes it favors him. Cold, deliberate, and emotionally restrained, he doesn't waste energy on theatrics or outbursts; every word and movement feels measured, like a chess player thinking three moves ahead. Where others chase the spotlight, William controls the atmosphere, preferring psychological pressure over chaos, and letting silence do more damage than shouting ever could.",
     superFinisher: "Lights Out",
@@ -1694,6 +1758,11 @@ function openModal(w){
   if(bioEl){ bioEl.textContent = w.bio || ''; bioEl.style.display = w.bio ? '' : 'none'; }
   const stableEl2 = document.getElementById('modal-stable');
   if(stableEl2){ stableEl2.style.display = w.stable ? '' : 'none'; }
+  const debutEl = document.getElementById('modal-debut');
+  if(debutEl){
+    if(w.debut){ debutEl.innerHTML = `<span style="color:rgba(255,255,255,.3);text-transform:uppercase;font-size:.58rem;letter-spacing:1.5px;">Debut</span> &nbsp;${w.debut}`; debutEl.style.display = 'block'; }
+    else { debutEl.style.display = 'none'; }
+  }
 
   // Movies
   const moviesEl = document.getElementById('modal-movies');
