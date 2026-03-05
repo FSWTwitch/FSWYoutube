@@ -374,6 +374,15 @@ const tagColors = {
   "show-ending moment": "tag-segment", "semifinal": "tag-debut",
   "mid card": "tag-loss"
 };
+const tagIcons = {
+  "win": "●", "debut win": "★", "loss": "",
+  "promo": "🎤", "interview": "🎤", "title": "👑",
+  "title defense": "👑", "title change": "👑", "title contender": "👑",
+  "main event": "👑", "segment": "⚡", "cutscene": "⚡",
+  "storyline catalyst": "⚡", "intangibles": "⚡",
+  "show-ending moment": "⚡", "semifinal": "★",
+  "mid card": ""
+};
 
 const moveLabel = { new: "NEW", up: "▲", down: "▼", same: "—" };
 const moveClass = { new: "move-new", up: "move-up", down: "move-same", same: "move-same" };
@@ -583,7 +592,7 @@ top10.forEach((r, i) => {
       <div class="rank-name">${r.name}</div>
       <div class="rank-reason">${r.reason}</div>
       <div class="rank-tags">
-        ${r.tags.map(t => `<span class="tag ${tagColors[t]||'tag-loss'}">${t}</span>`).join('')}
+        ${r.tags.map(t => `<span class="tag ${tagColors[t]||'tag-loss'}">${tagIcons[t]?'<span style="font-size:.6rem">'+(tagIcons[t])+'</span> ':''  }${t}</span>`).join('')}
       </div>
     </div>
     <div class="rank-score">
