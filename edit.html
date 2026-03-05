@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FSW Profile Edit Request</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07070a; --surface: #111116; --surface2: #18181f;
+    --accent: #c0000e; --gold: #c8a84b; --text: #e8e8e8;
+    --muted: #5a5a6a; --border: rgba(255,255,255,.07);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'DM Sans', sans-serif; min-height: 100vh;
+    background-image:
+      repeating-linear-gradient(135deg, rgba(192,0,14,.025) 0px, rgba(192,0,14,.025) 1px, transparent 1px, transparent 48px),
+      repeating-linear-gradient(45deg, rgba(255,255,255,.012) 0px, rgba(255,255,255,.012) 1px, transparent 1px, transparent 48px);
+  }
+
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 60px;
+    background: rgba(7,7,10,.95); border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px);
+  }
+  .logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+  .logo img { height: 30px; width: auto; filter: brightness(1.1); }
+  .nav-back { color: rgba(255,255,255,.45); text-decoration: none; font-size: .75rem; font-weight: 500; letter-spacing: 1px; transition: color .2s; }
+  .nav-back:hover { color: #fff; }
+
+  .page-header { text-align: center; padding: 52px 24px 32px; }
+  .eyebrow { font-size: .6rem; letter-spacing: 4px; color: var(--accent); text-transform: uppercase; margin-bottom: 10px; }
+  .page-header h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.2rem, 6vw, 3.6rem); letter-spacing: 4px; color: #fff; line-height: 1; }
+
+  .notice {
+    max-width: 660px; margin: 0 auto 24px;
+    background: rgba(200,168,75,.06); border: 1px solid rgba(200,168,75,.2);
+    border-radius: 6px; padding: 13px 18px;
+    font-size: .78rem; color: rgba(255,255,255,.5); line-height: 1.7;
+    text-align: center;
+  }
+  .notice strong { color: var(--gold); }
+
+  .form-wrap { max-width: 660px; margin: 0 auto 80px; padding: 0 20px; }
+
+  /* SECTION */
+  .form-section {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; margin-bottom: 14px; overflow: hidden;
+  }
+  .section-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 22px; border-bottom: 1px solid var(--border);
+  }
+  .section-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .dot-red { background: var(--accent); box-shadow: 0 0 6px rgba(192,0,14,.5); }
+  .dot-gold { background: var(--gold); }
+  .dot-blue { background: #4a9eff; }
+  .dot-white { background: rgba(255,255,255,.3); }
+  .section-header h3 { font-family: 'Bebas Neue', sans-serif; font-size: .9rem; letter-spacing: 2.5px; color: #fff; }
+  .section-body { padding: 20px 22px; }
+
+  /* FIELDS */
+  .field { margin-bottom: 15px; }
+  .field:last-child { margin-bottom: 0; }
+  .field label {
+    display: block; font-size: .62rem; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 7px; font-weight: 500;
+  }
+  .field label .req { color: var(--accent); margin-left: 3px; }
+  .field label .opt { color: rgba(255,255,255,.18); font-size: .58rem; letter-spacing: 0; text-transform: none; margin-left: 6px; font-weight: 400; }
+
+  input[type="text"], input[type="url"], textarea {
+    width: 100%; background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 6px; padding: 11px 14px; color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-size: .85rem;
+    transition: border-color .2s, background .2s; outline: none;
+  }
+  input:focus, textarea:focus { border-color: rgba(192,0,14,.4); background: rgba(20,20,28,.9); }
+  input::placeholder, textarea::placeholder { color: rgba(90,90,106,.7); }
+
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media(max-width: 500px) { .field-row { grid-template-columns: 1fr; } }
+
+  /* MOVE ROW */
+  .move-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: end; margin-bottom: 12px; }
+  .move-pair:last-child { margin-bottom: 0; }
+  .move-pair .arrow { display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: .8rem; padding-top: 22px; }
+  .move-trio { display: grid; grid-template-columns: 1fr 20px 1fr; gap: 0 10px; align-items: end; margin-bottom: 12px; }
+  .move-trio:last-child { margin-bottom: 0; }
+  .move-arrow-center { display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: .75rem; padding-bottom: 11px; }
+
+  /* ENDORSEMENT PILLS */
+  .endorse-row { display: flex; gap: 10px; }
+  .endorse-row input { flex: 1; }
+  .add-btn {
+    background: rgba(192,0,14,.12); border: 1px solid rgba(192,0,14,.35);
+    color: var(--accent); padding: 0 16px; border-radius: 6px;
+    cursor: pointer; font-size: .8rem; font-weight: 600; transition: all .2s; white-space: nowrap;
+  }
+  .add-btn:hover { background: rgba(192,0,14,.25); }
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .pill {
+    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+    border-radius: 20px; padding: 4px 10px 4px 13px;
+    font-size: .72rem; display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,.65);
+  }
+  .pill button { background: none; border: none; color: var(--muted); cursor: pointer; font-size: .75rem; padding: 0; transition: color .2s; }
+  .pill button:hover { color: var(--accent); }
+  .pills-empty { font-size: .72rem; color: var(--muted); font-style: italic; padding: 4px 0; }
+
+  /* SUBMIT */
+  .submit-wrap { margin-top: 22px; }
+  .submit-btn {
+    width: 100%; background: var(--accent); border: none; color: #fff;
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 3px;
+    padding: 16px; border-radius: 6px; cursor: pointer; transition: all .2s;
+  }
+  .submit-btn:hover { background: #df0010; transform: translateY(-1px); }
+  .submit-btn:disabled { background: var(--muted); cursor: not-allowed; transform: none; }
+
+  /* SUCCESS */
+  .success-screen { display: none; text-align: center; padding: 80px 24px; }
+  .success-screen.show { display: block; }
+  .success-icon { font-size: 3rem; margin-bottom: 20px; }
+  .success-screen h2 { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; letter-spacing: 3px; color: var(--gold); margin-bottom: 10px; }
+  .success-screen p { color: var(--muted); font-size: .85rem; line-height: 1.7; }
+  .back-link { display: inline-block; margin-top: 28px; color: var(--accent); text-decoration: none; font-size: .78rem; letter-spacing: 1px; border-bottom: 1px solid rgba(192,0,14,.3); padding-bottom: 2px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo"><img src="https://i.imgur.com/LdEOjkv.png" alt="FSW"></a>
+  <a href="roster.html" class="nav-back">← Roster</a>
+</nav>
+
+<div class="page-header">
+  <div class="eyebrow">First Strike Wrestling</div>
+  <h1>Profile Edit Request</h1>
+</div>
+
+<div class="notice">
+  <strong>Only fill in the fields you want updated.</strong><br>
+  If you leave a field blank, that info will not be changed.
+</div>
+
+<div class="form-wrap" id="form-wrap">
+
+  <!-- IDENTITY -->
+  <div class="form-section">
+    <div class="section-header">
+      <div class="section-dot dot-red"></div>
+      <h3>Identity <span style="font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:1px;color:var(--muted);font-weight:400;text-transform:uppercase;margin-left:8px;">Required</span></h3>
+    </div>
+    <div class="section-body">
+      <div class="field">
+        <label>Wrestler Name <span class="req">*</span></label>
+        <input type="text" id="f-name" placeholder="Your ring name">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>X (Twitter) <span class="opt">optional</span></label>
+          <input type="text" id="f-x" placeholder="@YourHandle">
+        </div>
+        <div class="field">
+          <label>Instagram <span class="opt">optional</span></label>
+          <input type="text" id="f-ig" placeholder="@YourHandle">
+        </div>
+      </div>
+      <div class="field">
+        <label>2K Community Creations # <span class="opt">hashtag to find your character in WWE 2K</span></label>
+        <input type="text" id="f-cc" placeholder="e.g. #YourCreatorTag">
+      </div>
+    </div>
+  </div>
+
+  <!-- PHYSICAL STATS -->
+  <div class="form-section">
+    <div class="section-header">
+      <div class="section-dot dot-white"></div>
+      <h3>Physical Stats</h3>
+    </div>
+    <div class="section-body">
+      <div class="field-row">
+        <div class="field">
+          <label>Height <span class="opt">leave blank to keep</span></label>
+          <input type="text" id="f-height" placeholder='e.g. 6&apos;2"'>
+        </div>
+        <div class="field">
+          <label>Weight <span class="opt">leave blank to keep</span></label>
+          <input type="text" id="f-weight" placeholder="e.g. 235 lbs">
+        </div>
+      </div>
+      <div class="field">
+        <label>Hometown / Location <span class="opt">leave blank to keep</span></label>
+        <input type="text" id="f-location" placeholder="e.g. Los Angeles, CA">
+      </div>
+    </div>
+  </div>
+
+  <!-- MOVES -->
+  <div class="form-section">
+    <div class="section-header">
+      <div class="section-dot dot-gold"></div>
+      <h3>Signature & Finisher Moves</h3>
+    </div>
+    <div class="section-body">
+
+      <div class="field" style="margin-bottom:18px;">
+        <label>Signature Move 1</label>
+        <div class="move-trio">
+          <div class="field" style="margin-bottom:0;">
+            <label style="margin-bottom:6px;">Original Name</label>
+            <input type="text" id="f-sig1-orig" placeholder="Original move name">
+          </div>
+          <div class="move-arrow-center">→</div>
+          <div class="field" style="margin-bottom:0;">
+            <label style="margin-bottom:6px;">New Name</label>
+            <input type="text" id="f-sig1-new" placeholder="Your name for it">
+          </div>
+        </div>
+      </div>
+
+      <div class="field" style="margin-bottom:18px;">
+        <label>Signature Move 2</label>
+        <div class="move-trio">
+          <div class="field" style="margin-bottom:0;">
+            <label style="margin-bottom:6px;">Original Name</label>
+            <input type="text" id="f-sig2-orig" placeholder="Original move name">
+          </div>
+          <div class="move-arrow-center">→</div>
+          <div class="field" style="margin-bottom:0;">
+            <label style="margin-bottom:6px;">New Name</label>
+            <input type="text" id="f-sig2-new" placeholder="Your name for it">
+          </div>
+        </div>
+      </div>
+
+      <div class="field" style="margin-bottom:18px;">
+        <label>Finisher 1</label>
+        <div class="move-trio">
+          <div class="field" style="margin-bottom:0;">
+            <label style="margin-bottom:6px;">Original Name</label>
+            <input type="text" id="f-fin1-orig" placeholder="Original move name">
+          </div>
+          <div class="move-arrow-center">→</div>
+          <div class="field" style="margin-bottom:0;">
+            <label style="margin-bottom:6px;">New Name</label>
+            <input type="text" id="f-fin1-new" placeholder="Your finisher name">
+          </div>
+        </div>
+      </div>
+
+      <div class="field" style="margin-bottom:18px;">
+        <label>Finisher 2</label>
+        <div class="move-trio">
+          <div class="field" style="margin-bottom:0;">
+            <label style="margin-bottom:6px;">Original Name</label>
+            <input type="text" id="f-fin2-orig" placeholder="Original move name">
+          </div>
+          <div class="move-arrow-center">→</div>
+          <div class="field" style="margin-bottom:0;">
+            <label style="margin-bottom:6px;">New Name</label>
+            <input type="text" id="f-fin2-new" placeholder="Your finisher name">
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Super Finisher</label>
+        <div class="move-trio">
+          <div class="field" style="margin-bottom:0;">
+            <label style="margin-bottom:6px;">Original Name</label>
+            <input type="text" id="f-sfin-orig" placeholder="Original move name">
+          </div>
+          <div class="move-arrow-center">→</div>
+          <div class="field" style="margin-bottom:0;">
+            <label style="margin-bottom:6px;">New Name</label>
+            <input type="text" id="f-sfin-new" placeholder="Your super finisher name">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ENDORSEMENTS -->
+  <div class="form-section">
+    <div class="section-header">
+      <div class="section-dot dot-white"></div>
+      <h3>Endorsement Request <span style="font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:1px;color:var(--muted);font-weight:400;text-transform:uppercase;margin-left:8px;">Add Only</span></h3>
+    </div>
+    <div class="section-body">
+      <div class="field">
+        <div class="endorse-row">
+          <input type="text" id="f-endorse-input" placeholder="Brand name..." onkeydown="if(event.key==='Enter'){event.preventDefault();addEndorsement();}">
+          <button class="add-btn" onclick="addEndorsement()">+ Add</button>
+        </div>
+        <div class="pills" id="endorsement-pills">
+          <span class="pills-empty">No endorsements added yet</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENTRANCE -->
+  <div class="form-section">
+    <div class="section-header">
+      <div class="section-dot dot-blue"></div>
+      <h3>Entrance</h3>
+    </div>
+    <div class="section-body">
+      <div class="field">
+        <label>Theme Song — YouTube Link <span class="opt">leave blank to keep</span></label>
+        <input type="url" id="f-theme-link" placeholder="https://youtu.be/...">
+      </div>
+      <div class="field">
+        <label>Theme Song Name & Artist <span class="opt">if changing theme</span></label>
+        <input type="text" id="f-theme-name" placeholder='e.g. "Song Name" — Artist'>
+      </div>
+      <div class="field" style="margin-top:6px;">
+        <label>Entrance Titantron Video — YouTube Link <span class="opt">leave blank to keep</span></label>
+        <input type="url" id="f-video-link" placeholder="https://youtu.be/...">
+      </div>
+    </div>
+  </div>
+
+  <div class="submit-wrap">
+    <button class="submit-btn" id="submit-btn" onclick="submitForm()">Submit Request</button>
+  </div>
+
+</div>
+
+<div class="success-screen" id="success-screen">
+  <div class="success-icon">✅</div>
+  <h2>Request Received</h2>
+  <p>Your profile edit request has been submitted.<br>FSW staff will review and apply your changes shortly.</p>
+  <a href="roster.html" class="back-link">← Back to Roster</a>
+</div>
+
+<script>
+const endorsements = [];
+
+function addEndorsement(){
+  const input = document.getElementById('f-endorse-input');
+  const val = input.value.trim();
+  if(!val || endorsements.includes(val)){ input.value=''; return; }
+  endorsements.push(val);
+  renderPills();
+  input.value='';
+  input.focus();
+}
+
+function removeEndorsement(i){
+  endorsements.splice(i,1);
+  renderPills();
+}
+
+function renderPills(){
+  const c = document.getElementById('endorsement-pills');
+  c.innerHTML = '';
+  if(!endorsements.length){
+    c.innerHTML = '<span class="pills-empty">No endorsements added yet</span>';
+    return;
+  }
+  endorsements.forEach((e,i) => {
+    const p = document.createElement('div');
+    p.className = 'pill';
+    p.innerHTML = `${e}<button onclick="removeEndorsement(${i})">✕</button>`;
+    c.appendChild(p);
+  });
+}
+
+async function submitForm(){
+  const name = document.getElementById('f-name').value.trim();
+  if(!name){ alert('Please enter your Wrestler Name.'); return; }
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  const payload = {
+    wrestler_name: name,
+    x_account: document.getElementById('f-x').value.trim(),
+    instagram: document.getElementById('f-ig').value.trim(),
+    cc_hashtag: document.getElementById('f-cc').value.trim(),
+    height: document.getElementById('f-height').value.trim(),
+    weight: document.getElementById('f-weight').value.trim(),
+    location: document.getElementById('f-location').value.trim(),
+    signature_1_original: document.getElementById('f-sig1-orig').value.trim(),
+    signature_1_new: document.getElementById('f-sig1-new').value.trim(),
+    signature_2_original: document.getElementById('f-sig2-orig').value.trim(),
+    signature_2_new: document.getElementById('f-sig2-new').value.trim(),
+    finisher_1_original: document.getElementById('f-fin1-orig').value.trim(),
+    finisher_1_new: document.getElementById('f-fin1-new').value.trim(),
+    finisher_2_original: document.getElementById('f-fin2-orig').value.trim(),
+    finisher_2_new: document.getElementById('f-fin2-new').value.trim(),
+    super_finisher_original: document.getElementById('f-sfin-orig').value.trim(),
+    super_finisher_new: document.getElementById('f-sfin-new').value.trim(),
+    endorsements_to_add: endorsements.join(', '),
+    theme_song_youtube: document.getElementById('f-theme-link').value.trim(),
+    theme_song_name_artist: document.getElementById('f-theme-name').value.trim(),
+    titantron_video_youtube: document.getElementById('f-video-link').value.trim(),
+    submitted_at: new Date().toLocaleString(),
+  };
+
+  try {
+    const res = await fetch('https://formspree.io/f/xlgprgnk', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if(res.ok){
+      const wrap = document.getElementById('form-wrap');
+      wrap.style.transition = 'opacity .35s';
+      wrap.style.opacity = '0';
+      setTimeout(() => {
+        wrap.style.display = 'none';
+        document.getElementById('success-screen').classList.add('show');
+      }, 380);
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Submit Request';
+      alert('Something went wrong. Please try again.');
+    }
+  } catch(e) {
+    btn.disabled = false;
+    btn.textContent = 'Submit Request';
+    alert('Network error. Please try again.');
+  }
+}
+</script>
+</body>
+</html>
