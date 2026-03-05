@@ -1591,10 +1591,12 @@ window.onYouTubeIframeAPIReady = function(){
 function setEntranceBtn(playing){
   const ytBtn = document.getElementById('modal-yt-btn');
   const editBtn = document.getElementById('modal-edit-btn');
+  const tw = document.getElementById('vid-toggle-wrap');
   const pi = document.querySelector('.entrance-play-icon');
   const pa = document.querySelector('.entrance-pause-icon');
   if(ytBtn){ playing ? ytBtn.classList.add('playing') : ytBtn.classList.remove('playing'); }
   if(editBtn) editBtn.style.display = playing ? 'none' : 'flex';
+  if(tw) tw.style.display = playing ? 'flex' : 'none';
   if(pi) pi.style.display = playing ? 'none' : 'block';
   if(pa) pa.style.display = playing ? 'block' : 'none';
 }
