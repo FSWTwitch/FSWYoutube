@@ -678,7 +678,7 @@ const wrestlers = [
         role: "Member",
         members: ["Damian Rage", "Vincent Omen", "Brittany Black"],
         motto: "Burn the order. Build the Syndicate.",
-        debut: "",
+        debut: "FSW 19: Nemesis",
       }
     ],
     debut: "FSW 19: Nemesis",
@@ -753,7 +753,7 @@ const wrestlers = [
         role: "Member",
         members: ["Damian Rage", "Vincent Omen", "Brittany Black"],
         motto: "Burn the order. Build the Syndicate.",
-        debut: "",
+        debut: "FSW 19: Nemesis",
       }
     ],
     bio: "Brittany Black is a rebel at heart, carrying a punk, anarchist attitude that refuses to follow anyone else's rules. She thrives on disruption, turning chaos into momentum while feeding off the energy of the crowd and the tension of the moment. Brittany does not fight for approval or tradition; she fights to tear down expectations and prove that unpredictability can be just as powerful as discipline.",
@@ -1592,11 +1592,13 @@ function setEntranceBtn(playing){
   const ytBtn = document.getElementById('modal-yt-btn');
   const editBtn = document.getElementById('modal-edit-btn');
   const tw = document.getElementById('vid-toggle-wrap');
+  const ti = document.getElementById('vid-toggle-input');
   const pi = document.querySelector('.entrance-play-icon');
   const pa = document.querySelector('.entrance-pause-icon');
   if(ytBtn){ playing ? ytBtn.classList.add('playing') : ytBtn.classList.remove('playing'); }
   if(editBtn) editBtn.style.display = playing ? 'none' : 'flex';
   if(tw) tw.style.display = playing ? 'flex' : 'none';
+  if(ti && playing) ti.checked = true;
   if(pi) pi.style.display = playing ? 'none' : 'block';
   if(pa) pa.style.display = playing ? 'block' : 'none';
 }
@@ -1718,17 +1720,17 @@ function playCommercial(videoId, brand, type){
 
 function hideShowVideo(){
   const toggleInput = document.getElementById('vid-toggle-input');
+  const editBtn = document.getElementById('modal-edit-btn');
+  const isShowing = toggleInput && toggleInput.checked;
+  if(editBtn) editBtn.style.display = isShowing ? 'none' : 'flex';
   if(isMobile()){
     const mbox = document.getElementById('modal-box');
-    if(toggleInput && toggleInput.checked){
-      if(mbox) mbox.classList.add('mobile-playing');
-    } else {
-      if(mbox) mbox.classList.remove('mobile-playing');
-    }
+    if(isShowing){ if(mbox) mbox.classList.add('mobile-playing'); }
+    else { if(mbox) mbox.classList.remove('mobile-playing'); }
   } else {
     const player = document.getElementById('entrance-player');
     if(!player) return;
-    player.style.display = (toggleInput && toggleInput.checked) ? 'block' : 'none';
+    player.style.display = isShowing ? 'block' : 'none';
   }
 }
 
