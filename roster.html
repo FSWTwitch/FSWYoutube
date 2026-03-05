@@ -504,7 +504,7 @@
     <button class="modal-close" onclick="closeModal()">✕</button>
     <a id="modal-edit-btn" href="edit-request.html" title="Request Profile Edit" style="position:absolute;top:12px;right:54px;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;z-index:10;transition:all .2s;text-decoration:none;" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,.3)'" onmouseout="this.style.color='rgba(255,255,255,.5)';this.style.borderColor='rgba(255,255,255,.1)'">✏️</a>
     <div id="entrance-player" style="display:none;position:absolute;top:0;left:0;right:0;bottom:72px;z-index:20;background:#000;overflow:hidden;border-radius:8px 8px 0 0;">
-      <iframe id="entrance-iframe" width="100%" height="100%" src="" frameborder="0" allow="autoplay;encrypted-media" allowfullscreen style="display:block;"></iframe>
+      <div id="entrance-iframe" style="width:100%;height:100%;"></div>
     </div>
     <!-- TOP: photo + info side by side -->
     <div class="modal-top">
@@ -1592,9 +1592,9 @@ function toggleEntrance(){
 
 function closeEntrance(){
   const player = document.getElementById('entrance-player');
-  const iframe = document.getElementById('entrance-iframe');
   const modalTop = document.querySelector('.modal-top');
   window._audioPlaying = false;
+  _eVideoPlaying = false;
   // Restore theme info if commercial was playing
   if(window._isCommercial && window._currentThemeSong !== undefined){
     const songEl = document.getElementById('modal-theme-song');
@@ -1604,7 +1604,7 @@ function closeEntrance(){
     window._isCommercial = false;
   }
   // Desktop
-  if(iframe) iframe.src = '';
+  if(ePlayerReady) ePlayer.stopVideo();
   if(player) player.style.display = 'none';
   // Mobile
   const mf = document.getElementById('mobile-video-iframe');
@@ -1615,9 +1615,7 @@ function closeEntrance(){
   if(toggleBar) toggleBar.style.display = 'none';
   if(modalTop) modalTop.classList.remove('video-playing');
   const ytBtn = document.getElementById('modal-yt-btn');
-  if(ytBtn) ytBtn.classList.remove('playing');
-  const editBtnR = document.getElementById('modal-edit-btn');
-  if(editBtnR) editBtnR.style.display = 'flex';
+  setEntranceBtn(false);
   const ti = document.getElementById('vid-toggle-input');
   if(ti) ti.checked = false;
   const tw2 = document.getElementById('vid-toggle-wrap');
@@ -1645,38 +1643,32 @@ function scrollCom(btn, dir){
 
 function playCommercial(videoId, brand, type){
   const player = document.getElementById('entrance-player');
-  const iframe = document.getElementById('entrance-iframe');
   const mbox = document.getElementById('modal-box');
-  if(!player || !iframe) return;
-  iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+  if(!player) return;
   window._audioPlaying = true;
+  _eVideoPlaying = true;
 
   // Update bottom bar to show commercial info
   const songEl = document.getElementById('modal-theme-song');
   const artistEl = document.getElementById('modal-theme-artist');
-  const labelEl = songEl ? songEl.nextElementSibling : null;
   if(songEl) songEl.textContent = brand;
   if(artistEl) artistEl.textContent = type || 'Commercial';
-  // Store original theme so we can restore it on close
   window._isCommercial = true;
 
   if(isMobile()){
     const mf = document.getElementById('mobile-video-iframe');
-    if(mf) mf.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&playsinline=1`;
+    if(mf) mf.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&playsinline=1&controls=0`;
     if(mbox) mbox.classList.add('mobile-playing');
   } else {
     player.style.display = 'block';
+    if(ePlayerReady){ ePlayer.loadVideoById(videoId); }
+    else { ePendingId = videoId; }
   }
-  const ytBtn = document.getElementById('modal-yt-btn');
-  if(ytBtn) ytBtn.classList.add('playing');
+  setEntranceBtn(true);
   const tw = document.getElementById('vid-toggle-wrap');
   if(tw) tw.style.display = 'flex';
   const toggleInput = document.getElementById('vid-toggle-input');
   if(toggleInput) toggleInput.checked = true;
-  const pi = document.querySelector('.entrance-play-icon');
-  const pa = document.querySelector('.entrance-pause-icon');
-  if(pi) pi.style.display = 'none';
-  if(pa) pa.style.display = 'block';
 }
 
 function hideShowVideo(){
