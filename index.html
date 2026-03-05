@@ -213,7 +213,7 @@
   <div class="hero-grain"></div>
   <!-- AUTOPLAY BG VIDEO -->
   <div class="hero-video" id="hero-video-wrap">
-    <iframe id="hero-iframe" src="https://www.youtube.com/embed/LFV9xmdWJUY?autoplay=1&mute=1&loop=1&playlist=LFV9xmdWJUY&controls=0&disablekb=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <div id="hero-iframe"></div>
   </div>
   <div class="hero-content">
     <div class="era-tag"><span class="pulse"></span> Cinematic Era</div>
@@ -437,11 +437,28 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeM(); closeTe
 
 const HERO_ID = 'LFV9xmdWJUY';
 let _muted = true;
+
+function buildSrc(muted){
+  return `https://www.youtube.com/embed/${HERO_ID}?autoplay=1&mute=${muted?1:0}&loop=1&playlist=${HERO_ID}&controls=0&disablekb=1&modestbranding=1&rel=0&iv_load_policy=3&playsinline=1`;
+}
+
+// Inject iframe muted on load
+window.addEventListener('DOMContentLoaded', () => {
+  const wrap = document.getElementById('hero-iframe');
+  const iframe = document.createElement('iframe');
+  iframe.id = 'hero-yt';
+  iframe.src = buildSrc(true);
+  iframe.setAttribute('frameborder','0');
+  iframe.setAttribute('allow','autoplay; encrypted-media');
+  iframe.setAttribute('allowfullscreen','');
+  wrap.appendChild(iframe);
+});
+
 function toggleMute(){
   _muted = !_muted;
-  const iframe = document.getElementById('hero-iframe');
-  // Reload iframe with or without mute — most reliable cross-browser method
-  iframe.src = `https://www.youtube.com/embed/${HERO_ID}?autoplay=1&mute=${_muted?1:0}&loop=1&playlist=${HERO_ID}&controls=0&disablekb=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&enablejsapi=1`;
+  // Replace iframe src to toggle mute — cleanest cross-browser approach
+  const iframe = document.getElementById('hero-yt');
+  if(iframe) iframe.src = buildSrc(_muted);
   document.getElementById('icon-sound').style.display = _muted ? 'none' : 'block';
   document.getElementById('icon-mute').style.display = _muted ? 'block' : 'none';
   document.getElementById('mute-btn').style.borderColor = _muted ? 'rgba(192,0,14,.6)' : 'rgba(255,255,255,.2)';
