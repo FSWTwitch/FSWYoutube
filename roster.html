@@ -1562,14 +1562,14 @@ function toggleEntrance(){
     if(isMobile()){
       // Mobile: use dedicated full-width frame, compress modal
       const mf = document.getElementById('mobile-video-iframe');
-      if(mf) mf.src = `https://www.youtube.com/embed/${currentVideoId}?autoplay=1&rel=0&playsinline=1`;
+      if(mf) mf.src = `https://www.youtube.com/embed/${currentVideoId}?autoplay=1&rel=0&playsinline=1&modestbranding=1`;
       const mbox = document.getElementById('modal-box');
       if(mbox) mbox.classList.add('mobile-playing');
     } else {
       // Desktop: use absolute overlay
       const player = document.getElementById('entrance-player');
       const iframe = document.getElementById('entrance-iframe');
-      if(iframe) iframe.src = `https://www.youtube.com/embed/${currentVideoId}?autoplay=1&rel=0`;
+      if(iframe) iframe.src = `https://www.youtube.com/embed/${currentVideoId}?autoplay=1&rel=0&modestbranding=1`;
       if(player) player.style.display = 'block';
     }
 
@@ -2009,27 +2009,6 @@ function openModal(w){
 
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow = 'hidden';
-
-  // Auto-play entrance video
-  if(currentVideoId){
-    setTimeout(() => {
-      const isMobile = window.innerWidth <= 768;
-      if(isMobile){
-        const mf = document.getElementById('mobile-video-iframe');
-        const mbox = document.getElementById('modal-box');
-        if(mf){ mf.src = `https://www.youtube.com/embed/${currentVideoId}?autoplay=1&rel=0&playsinline=1`; }
-        if(mbox) mbox.classList.add('mobile-playing');
-      } else {
-        const player = document.getElementById('entrance-player');
-        const iframe = document.getElementById('entrance-iframe');
-        if(iframe) iframe.src = `https://www.youtube.com/embed/${currentVideoId}?autoplay=1&rel=0`;
-        if(player) player.style.display = 'flex';
-        if(ytBtn) ytBtn.classList.add('playing');
-        const modalTop = document.querySelector('.modal-top');
-        if(modalTop) modalTop.classList.add('video-playing');
-      }
-    }, 300);
-  }
 }
 
 function closeModal(){
