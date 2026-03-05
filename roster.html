@@ -436,6 +436,22 @@
     footer{padding:24px 20px;flex-direction:column;gap:12px;text-align:center;}
     footer a{margin-left:10px;}
   }
+
+  /* RECENT MATCHES */
+  .recent-matches-wrap{ margin-top:14px; border-top:1px solid rgba(255,255,255,.06); padding-top:14px; }
+  .recent-matches-head{ font-size:.58rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px; }
+  .recent-match-row{ display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04); }
+  .recent-match-row:last-child{ border-bottom:none; }
+  .rm-result{ font-family:'Bebas Neue',sans-serif;font-size:1.1rem;width:22px;flex-shrink:0;text-align:center; }
+  .rm-result.W{ color:#4ade80; }
+  .rm-result.L{ color:var(--accent); }
+  .rm-result.dash{ color:rgba(255,255,255,.2); }
+  .rm-info{ flex:1;min-width:0; }
+  .rm-show{ font-size:.6rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase; }
+  .rm-opponent{ font-size:.8rem;font-weight:600;color:var(--text);margin-top:1px; }
+  .rm-type{ font-size:.62rem;color:rgba(255,255,255,.3);margin-top:1px; }
+  .rm-champ{ font-size:.58rem;color:var(--gold);margin-top:2px; }
+  .rm-ranked{ display:inline-flex;align-items:center;gap:4px;background:rgba(200,168,75,.1);border:1px solid rgba(200,168,75,.2);color:var(--gold);font-size:.52rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:2px 7px;border-radius:2px;flex-shrink:0; }
 </style>
 </head>
 <body>
@@ -551,6 +567,7 @@
         <div class="modal-movies" id="modal-movies" style="display:none;margin-top:14px;"></div>
         <div class="modal-tv" id="modal-tv" style="display:none;margin-top:14px;"></div>
 
+        <div class="modal-recent-matches" id="modal-recent-matches" style="display:none;"></div>
         <div class="modal-social" id="modal-social" style="margin-top:10px;"></div>
     </div>
     <!-- MOBILE VIDEO FRAME -->
@@ -647,6 +664,11 @@ const wrestlers = [
         debut: "FSW 50: Nemesis",
       }
     ],
+    recentMatches:[
+      {show:"FSW 52: Maximum",opponent:"Kendrick Montana",result:"L",type:"Singles — Ultima Championship",championship:"FSW Ultima Championship",ranked:true,rankPos:4},
+      {show:"FSW 51: Victory",opponent:"Derrick Maximus",result:"W",type:"Singles — DQ",championship:"FSW Ultima Championship",ranked:true,rankPos:1},
+      {show:"FSW 50: Nemesis",opponent:"Anthony Ragone",result:"W",type:"Singles — Ultima Championship",championship:"FSW Ultima Championship",ranked:true,rankPos:1}
+    ],
   },
   // ↓ Add more wrestlers below ↓
   {
@@ -705,6 +727,11 @@ const wrestlers = [
     superFinisher: "World's Strongest Slam", superFinisherOrig: "World's Strongest Slam",
     debut: "FSW 51: Victory",
     record: { singlesW:0, singlesL:2, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
+    recentMatches:[
+      {show:"FSW 52: Maximum",opponent:"Matheo",result:"L",type:"Singles",championship:null,ranked:false,rankPos:null},
+      {show:"FSW 50: Nemesis",opponent:"—",result:"—",type:"—",championship:null,ranked:false,rankPos:null},
+      {show:"FSW 50: Nemesis",opponent:"—",result:"—",type:"—",championship:null,ranked:false,rankPos:null}
+    ],
   },
   {
     name: "Blade Rivera",
@@ -794,6 +821,11 @@ const wrestlers = [
     ],
     debut: "FSW 19: Nemesis",
     record: { singlesW:3, singlesL:4, multiW:1, multiL:3, titleWins:1, titleDefenses:0 },
+    recentMatches:[
+      {show:"FSW 52: Maximum",opponent:"Damian Rage",result:"L",type:"Singles — First-Class Championship",championship:"FSW First-Class Championship",ranked:false,rankPos:null},
+      {show:"FSW 51: Victory",opponent:"—",result:"W",type:"Title Win",championship:"FSW First-Class Championship",ranked:true,rankPos:3},
+      {show:"FSW 50: Nemesis",opponent:"—",result:"—",type:"—",championship:null,ranked:false,rankPos:null}
+    ],
   },
   {
     name: "Dean Ivy",
@@ -831,6 +863,11 @@ const wrestlers = [
     bio: "Henry Carter carries himself with composed confidence and old-school toughness. He approaches every match with discipline and patience, preferring steady control over reckless aggression. Henry Carter is the kind of competitor who stays grounded under pressure, relying on experience and resilience to outlast opponents when the fight gets difficult.",
     debut: "FSW 52: Maximum",
     record: { singlesW:1, singlesL:0, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
+    recentMatches:[
+      {show:"FSW 52: Maximum",opponent:"Javi Hernandez",result:"W",type:"Singles — Show opener",championship:null,ranked:false,rankPos:null},
+      {show:"FSW 50: Nemesis",opponent:"—",result:"—",type:"—",championship:null,ranked:false,rankPos:null},
+      {show:"FSW 50: Nemesis",opponent:"—",result:"—",type:"—",championship:null,ranked:false,rankPos:null}
+    ],
   },
   {
     name: "JB Hayes",
@@ -907,6 +944,11 @@ const wrestlers = [
     ],
     debut: "FSW 52: Maximum",
     record: { singlesW:1, singlesL:0, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
+    recentMatches:[
+      {show:"FSW 52: Maximum",opponent:"Axel Hernandez",result:"W",type:"Singles debut",championship:null,ranked:false,rankPos:null},
+      {show:"FSW 50: Nemesis",opponent:"—",result:"—",type:"—",championship:null,ranked:false,rankPos:null},
+      {show:"FSW 50: Nemesis",opponent:"—",result:"—",type:"—",championship:null,ranked:false,rankPos:null}
+    ],
   },
   {
     name: "Smoove Marino",
@@ -926,6 +968,11 @@ const wrestlers = [
     bio: "Smoove Marino walks back into FSW with a reputation that only grew while he was gone. Recently released from jail, he carries the same swagger and street-hardened confidence that made him dangerous before, but now with even more to prove. Smoove Marino does not just want his place back; he wants everyone to remember why his name still carries weight the moment he steps into the arena.",
     debut: "FSW Underground",
     record: { singlesW:2, singlesL:1, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
+    recentMatches:[
+      {show:"FSW 52: Maximum",opponent:"Jay Cole",result:"W",type:"Singles",championship:null,ranked:true,rankPos:10},
+      {show:"FSW Underground",opponent:"—",result:"W",type:"Singles",championship:null,ranked:false,rankPos:null},
+      {show:"FSW Underground",opponent:"—",result:"L",type:"Singles",championship:null,ranked:false,rankPos:null}
+    ],
   },
   {
     name: "TJG",
@@ -996,6 +1043,11 @@ const wrestlers = [
     ],
     bio: "Jason Prince carries himself with polished confidence and natural star presence. Charismatic and composed, he understands how to control the spotlight while backing it up with smooth, disciplined in-ring ability. Jason Prince competes with the mindset that excellence is expected, blending style and skill to prove he belongs among the elite.",
     record: { singlesW:1, singlesL:1, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
+    recentMatches:[
+      {show:"FSW 52: Maximum",opponent:"The Godson",result:"W",type:"Pre-Show",championship:null,ranked:false,rankPos:null},
+      {show:"FSW 50: Nemesis",opponent:"—",result:"—",type:"—",championship:null,ranked:false,rankPos:null},
+      {show:"FSW 50: Nemesis",opponent:"—",result:"—",type:"—",championship:null,ranked:false,rankPos:null}
+    ],
   },
   {
     name: "The Godson",
@@ -1022,6 +1074,11 @@ const wrestlers = [
       { brand: "Kit Kat", videoId: "todpvYk-2ec" },
     ],    bio: "The Godson brings an easygoing charisma that instantly connects with the crowd. Carefree and naturally entertaining, he thrives on the energy of the arena, turning every moment into a show. Beneath that playful confidence is serious athletic ability, allowing him to back up the fun with explosive speed, agility, and highlight-reel performances when the match truly heats up.",
     record: { singlesW:0, singlesL:1, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
+    recentMatches:[
+      {show:"FSW 52: Maximum",opponent:"Jason Prince",result:"L",type:"Pre-Show debut",championship:null,ranked:false,rankPos:null},
+      {show:"FSW 50: Nemesis",opponent:"—",result:"—",type:"—",championship:null,ranked:false,rankPos:null},
+      {show:"FSW 50: Nemesis",opponent:"—",result:"—",type:"—",championship:null,ranked:false,rankPos:null}
+    ],
   },
   {
     name: "Motor Hunter",
@@ -1090,6 +1147,11 @@ const wrestlers = [
     ],
     debut: "FSW 51: Victory",
     record: { singlesW:2, singlesL:0, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
+    recentMatches:[
+      {show:"FSW 52: Maximum",opponent:"Javi Hernandez",result:"W",type:"Genesis Tournament Final",championship:null,ranked:true,rankPos:9},
+      {show:"FSW 51: Victory",opponent:"—",result:"W",type:"Debut — Genesis R1",championship:null,ranked:true,rankPos:9},
+      {show:"FSW 50: Nemesis",opponent:"—",result:"—",type:"—",championship:null,ranked:false,rankPos:null}
+    ],
   },
   {
     name: "Arnez Jackson",
@@ -1120,6 +1182,11 @@ const wrestlers = [
     ],
     debut: "FSW 52: Maximum",
     record: { singlesW:1, singlesL:0, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
+    recentMatches:[
+      {show:"FSW 52: Maximum",opponent:"Jaelyn Garcia",result:"W",type:"Singles",championship:null,ranked:true,rankPos:8},
+      {show:"FSW 50: Nemesis",opponent:"—",result:"—",type:"—",championship:null,ranked:false,rankPos:null},
+      {show:"FSW 50: Nemesis",opponent:"—",result:"—",type:"—",championship:null,ranked:false,rankPos:null}
+    ],
   },
   {
     name: "Jaelyn Garcia",
@@ -1155,6 +1222,11 @@ const wrestlers = [
       { title: "Street Fighter", released: "March 2026", videoId: "raPQD-uwWL8", role: "Sean" },
     ],
     record: { singlesW:0, singlesL:1, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
+    recentMatches:[
+      {show:"FSW 52: Maximum",opponent:"Arnez Jackson",result:"L",type:"Singles",championship:null,ranked:false,rankPos:null},
+      {show:"FSW 51: Victory",opponent:"—",result:"—",type:"Storyline",championship:null,ranked:false,rankPos:null},
+      {show:"FSW 50: Nemesis",opponent:"—",result:"—",type:"—",championship:null,ranked:false,rankPos:null}
+    ],
   },
   {
     name: "Javi Hernandez",
@@ -1195,6 +1267,11 @@ const wrestlers = [
       { title: "Street Fighter", released: "March 2026", videoId: "raPQD-uwWL8", role: "Ryu" },
     ],
     record: { singlesW:1, singlesL:1, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
+    recentMatches:[
+      {show:"FSW 52: Maximum",opponent:"J1",result:"L",type:"Genesis Tournament Final",championship:null,ranked:false,rankPos:null},
+      {show:"FSW 51: Victory",opponent:"—",result:"W",type:"Debut — Genesis R1",championship:null,ranked:false,rankPos:null},
+      {show:"FSW 50: Nemesis",opponent:"—",result:"—",type:"—",championship:null,ranked:false,rankPos:null}
+    ],
   },
   {
     name: "St. Peter Reyes",
@@ -1231,6 +1308,11 @@ const wrestlers = [
     record: { singlesW:2, singlesL:1, multiW:1, multiL:0, titleWins:1, titleDefenses:0 },
     titleHistory: [
       { title: "FSW Supreme Championship", event: "FSW 37: Fight for Survival", date: "5.11.24" },
+    ],
+    recentMatches:[
+      {show:"FSW 52: Maximum",opponent:"Aries Santiago",result:"W",type:"Singles",championship:null,ranked:true,rankPos:5},
+      {show:"FSW 51: Victory",opponent:"William Kennedy",result:"W",type:"Singles — #1 Contender",championship:null,ranked:true,rankPos:2},
+      {show:"FSW 50: Nemesis",opponent:"—",result:"—",type:"—",championship:null,ranked:false,rankPos:null}
     ],
   },
   {
@@ -1277,6 +1359,11 @@ const wrestlers = [
       { title: "FSW Mayhem Championship", event: "FSW 51: Victory", date: "19.12.25", label: "Claimed" },
     ], titleHistory: [
       { title: "FSW Mayhem Championship", event: "FSW 51: Victory", date: "19.12.25", label: "Claimed" },
+    ],
+    recentMatches:[
+      {show:"FSW 52: Maximum",opponent:"Derrick Maximus",result:"W",type:"Singles — Mayhem Championship",championship:"FSW Mayhem Championship",ranked:true,rankPos:6},
+      {show:"FSW 51: Victory",opponent:"Max Milli",result:"W",type:"Singles — Title debut",championship:"FSW Mayhem Championship",ranked:true,rankPos:5},
+      {show:"FSW 50: Nemesis",opponent:"—",result:"—",type:"—",championship:null,ranked:false,rankPos:null}
     ],
   },
   {
@@ -1326,6 +1413,11 @@ const wrestlers = [
       { title: "FSW Mayhem Championship", event: "FSW 48: Unfinished Business", date: "29.12.24" },
     ],
     record: { singlesW:1, singlesL:4, multiW:0, multiL:1, titleWins:1, titleDefenses:0 },
+    recentMatches:[
+      {show:"FSW 52: Maximum",opponent:"Kyle Vance",result:"L",type:"Singles — Mayhem Championship",championship:"FSW Mayhem Championship",ranked:true,rankPos:1},
+      {show:"FSW 51: Victory",opponent:"Shibata Reyes",result:"L",type:"Singles — DQ",championship:null,ranked:true,rankPos:7},
+      {show:"FSW 50: Nemesis",opponent:"—",result:"—",type:"Return segment",championship:null,ranked:false,rankPos:null}
+    ],
   },
   {
     name: "Damian Rage",
@@ -1366,6 +1458,11 @@ const wrestlers = [
     titleHistory: [
       { title: "FSW Tag Team Championship", event: "FSW 20: Thrilla in Manila (Night 1)", date: "8.23.23" },
     ],
+    recentMatches:[
+      {show:"FSW 52: Maximum",opponent:"CJ Moore",result:"W",type:"Singles — First-Class Championship",championship:"FSW First-Class Championship",ranked:false,rankPos:null},
+      {show:"FSW 51: Victory",opponent:"—",result:"—",type:"—",championship:null,ranked:false,rankPos:null},
+      {show:"FSW 50: Nemesis",opponent:"—",result:"—",type:"—",championship:null,ranked:false,rankPos:null}
+    ],
   },
   {
     name: "Alexa Rivera",
@@ -1397,6 +1494,11 @@ const wrestlers = [
     record: { singlesW:2, singlesL:0, multiW:0, multiL:0, titleWins:1, titleDefenses:0 },
     titleHistory: [
       { title: "FSW Diamond Championship", event: "FSW 52: Maximum", date: "12.02.26" },
+    ],
+    recentMatches:[
+      {show:"FSW 52: Maximum",opponent:"Ivy Page",result:"W",type:"Singles — Diamond Championship",championship:"FSW Diamond Championship",ranked:true,rankPos:3},
+      {show:"FSW 51: Victory",opponent:"—",result:"—",type:"Debut",championship:null,ranked:false,rankPos:null},
+      {show:"FSW 50: Nemesis",opponent:"—",result:"—",type:"—",championship:null,ranked:false,rankPos:null}
     ],
   },
 
@@ -1443,6 +1545,11 @@ const wrestlers = [
       { title: "Street Fighter", released: "March 2026", videoId: "raPQD-uwWL8" , role: "T. Hawk" },
     ],
     record: { singlesW:2, singlesL:2, multiW:0, multiL:1, titleWins:0, titleDefenses:0 },
+    recentMatches:[
+      {show:"FSW 52: Maximum",opponent:"Aries Santiago",result:"L",type:"Singles — #1 Contender",championship:null,ranked:false,rankPos:null},
+      {show:"FSW 51: Victory",opponent:"St. Peter Reyes",result:"L",type:"Singles",championship:null,ranked:true,rankPos:4},
+      {show:"FSW 50: Nemesis",opponent:"—",result:"—",type:"—",championship:null,ranked:false,rankPos:null}
+    ],
   },
   {
     name: "Kendrick Montana",
@@ -1481,6 +1588,11 @@ const wrestlers = [
       { title: "Street Fighter", released: "March 2026", videoId: "raPQD-uwWL8", role: "Akuma" },
     ],
     record: { singlesW:1, singlesL:1, multiW:0, multiL:2, titleWins:0, titleDefenses:0 },
+    recentMatches:[
+      {show:"FSW 52: Maximum",opponent:"Shibata Reyes",result:"W",type:"Singles — Ultima Championship",championship:"FSW Ultima Championship",ranked:true,rankPos:2},
+      {show:"FSW 51: Victory",opponent:"—",result:"—",type:"Storyline segment",championship:null,ranked:true,rankPos:6},
+      {show:"FSW 50: Nemesis",opponent:"Aric Myers",result:"L",type:"Multi-Man",championship:null,ranked:true,rankPos:5}
+    ],
   },
   // { name:"Kyle Vance", img:"", videoId:"ID", champion:false, title:"", location:"", height:"", weight:"", stable:"", social:"", bio:"" },
 ];
@@ -2013,6 +2125,32 @@ function openModal(w){
   }
   if(social && socialHTML){ social.innerHTML = socialHTML; social.style.display='inline-flex';social.style.flexWrap='wrap';social.style.gap='4px';social.style.alignItems='center'; }
   else if(social){ social.style.display='none'; }
+
+
+  // Recent Matches
+  const rmEl = document.getElementById('modal-recent-matches');
+  if(rmEl){
+    if(w.recentMatches && w.recentMatches.length){
+      const rows = w.recentMatches.slice(0,3).map(m => {
+        const resultCls = m.result === 'W' ? 'W' : m.result === 'L' ? 'L' : 'dash';
+        const resultDisplay = m.result === '—' ? '—' : m.result;
+        return `<div class="recent-match-row">
+          <div class="rm-result ${resultCls}">${resultDisplay}</div>
+          <div class="rm-info">
+            <div class="rm-show">${m.show}</div>
+            <div class="rm-opponent">${m.opponent !== '—' ? 'vs ' + m.opponent : '—'}</div>
+            ${m.type && m.type !== '—' ? `<div class="rm-type">${m.type}</div>` : ''}
+            ${m.championship ? `<div class="rm-champ">👑 ${m.championship}</div>` : ''}
+          </div>
+          ${m.ranked ? `<div class="rm-ranked">📊 #${m.rankPos}</div>` : ''}
+        </div>`;
+      }).join('');
+      rmEl.innerHTML = `<div class="recent-matches-wrap"><div class="recent-matches-head">Recent Matches</div>${rows}</div>`;
+      rmEl.style.display = 'block';
+    } else {
+      rmEl.style.display = 'none';
+    }
+  }
 
   // Silent bg video
   // Theme song
