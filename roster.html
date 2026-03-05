@@ -501,7 +501,6 @@
 
 <div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
   <div class="modal-box" id="modal-box">
-    <a href="edit-request.html" title="Request Profile Edit" style="position:absolute;top:12px;right:54px;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;z-index:10;transition:all .2s;text-decoration:none;" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,.3)'" onmouseout="this.style.color='rgba(255,255,255,.5)';this.style.borderColor='rgba(255,255,255,.1)'">✏️</a>
     <button class="modal-close" onclick="closeModal()">✕</button>
     <div id="entrance-player" style="display:none;position:absolute;top:0;left:0;right:0;bottom:72px;z-index:20;background:#000;overflow:hidden;border-radius:8px 8px 0 0;">
       <iframe id="entrance-iframe" width="100%" height="100%" src="" frameborder="0" allow="autoplay;encrypted-media" allowfullscreen style="display:block;"></iframe>
@@ -1428,8 +1427,8 @@ const wrestlers = [
     commercials: [
       { brand: "Adidas", videoId: "XLKFHC9JY1I" },
     ],
-    tv: [
-      { show: "Twisted Metal", videoId: "55E5bESt1d4", network: "Peacock" },
+    movies: [
+      { title: "Twisted Metal", released: "July 2023", videoId: "55E5bESt1d4", role: "Agent Stone" },
     ],
     bio: "William Kennedy carries himself like a man who already knows the ending — and assumes it favors him. Cold, deliberate, and emotionally restrained, he doesn't waste energy on theatrics or outbursts; every word and movement feels measured, like a chess player thinking three moves ahead. Where others chase the spotlight, William controls the atmosphere, preferring psychological pressure over chaos, and letting silence do more damage than shouting ever could.",
     superFinisher: "Lights Out",
@@ -2010,6 +2009,27 @@ function openModal(w){
 
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow = 'hidden';
+
+  // Auto-play entrance video
+  if(currentVideoId){
+    setTimeout(() => {
+      const isMobile = window.innerWidth <= 768;
+      if(isMobile){
+        const mf = document.getElementById('mobile-video-iframe');
+        const mbox = document.getElementById('modal-box');
+        if(mf){ mf.src = `https://www.youtube.com/embed/${currentVideoId}?autoplay=1&rel=0&playsinline=1`; }
+        if(mbox) mbox.classList.add('mobile-playing');
+      } else {
+        const player = document.getElementById('entrance-player');
+        const iframe = document.getElementById('entrance-iframe');
+        if(iframe) iframe.src = `https://www.youtube.com/embed/${currentVideoId}?autoplay=1&rel=0`;
+        if(player) player.style.display = 'flex';
+        if(ytBtn) ytBtn.classList.add('playing');
+        const modalTop = document.querySelector('.modal-top');
+        if(modalTop) modalTop.classList.add('video-playing');
+      }
+    }, 300);
+  }
 }
 
 function closeModal(){
