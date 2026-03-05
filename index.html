@@ -121,7 +121,7 @@
 
   /* HERO BG VIDEO */
   .hero-video{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;}
-  #hero-yt{position:absolute;top:50%;left:50%;width:177.78vh;height:100vh;min-width:100%;min-height:56.25vw;transform:translate(-50%,-50%);opacity:.4;pointer-events:none;border:none;}
+  .hero-video iframe{position:absolute;top:50%;left:50%;width:177.78vh;height:100vh;min-width:100%;min-height:56.25vw;transform:translate(-50%,-50%);opacity:.4;pointer-events:none;border:none;}
 
   /* Teaser modal gold accent */
   .teaser-body{background:linear-gradient(135deg,rgba(200,168,75,.07) 0%,transparent 60%);}
@@ -213,7 +213,7 @@
   <div class="hero-grain"></div>
   <!-- AUTOPLAY BG VIDEO -->
   <div class="hero-video" id="hero-video-wrap">
-    <div id="hero-yt"></div>
+    <iframe id="hero-iframe" src="https://www.youtube.com/embed/LFV9xmdWJUY?autoplay=1&mute=1&loop=1&playlist=LFV9xmdWJUY&controls=0&disablekb=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
   </div>
   <div class="hero-content">
     <div class="era-tag"><span class="pulse"></span> Cinematic Era</div>
@@ -437,26 +437,10 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeM(); closeTe
 
 const HERO_ID = 'LFV9xmdWJUY';
 let _muted = true;
-let _player = null;
-
-var ytScript = document.createElement('script');
-ytScript.src = 'https://www.youtube.com/iframe_api';
-document.head.appendChild(ytScript);
-
-window.onYouTubeIframeAPIReady = function(){
-  _player = new YT.Player('hero-yt', {
-    videoId: HERO_ID,
-    playerVars: { autoplay:1, mute:1, loop:1, playlist:HERO_ID, controls:0, disablekb:1, modestbranding:1, rel:0, iv_load_policy:3, playsinline:1 },
-    events: {
-      onReady: function(e){ e.target.mute(); e.target.playVideo(); }
-    }
-  });
-};
-
 function toggleMute(){
-  if(!_player) return;
   _muted = !_muted;
-  _muted ? _player.mute() : _player.unMute();
+  const iframe = document.getElementById('hero-iframe');
+  iframe.src = `https://www.youtube.com/embed/${HERO_ID}?autoplay=1&mute=${_muted?1:0}&loop=1&playlist=${HERO_ID}&controls=0&disablekb=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&enablejsapi=1`;
   document.getElementById('icon-sound').style.display = _muted ? 'none' : 'block';
   document.getElementById('icon-mute').style.display = _muted ? 'block' : 'none';
   document.getElementById('mute-btn').style.borderColor = _muted ? 'rgba(192,0,14,.6)' : 'rgba(255,255,255,.2)';
