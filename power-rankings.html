@@ -80,6 +80,7 @@
   .tag-title{ background:rgba(192,0,14,.1); color:#ff6b6b; border:1px solid rgba(192,0,14,.25); }
   .tag-debut{ background:rgba(74,144,226,.1); color:#74b0ff; border:1px solid rgba(74,144,226,.2); }
   .tag-segment{ background:rgba(168,85,247,.1); color:#c084fc; border:1px solid rgba(168,85,247,.2); }
+  .tag-focal{ background:linear-gradient(135deg,rgba(200,168,75,.15),rgba(192,0,14,.15)); color:#e8c96a; border:1px solid rgba(200,168,75,.5); font-weight:800; letter-spacing:2px; box-shadow:0 0 8px rgba(200,168,75,.2); }
 
   /* SCORE */
   .rank-score{ padding:14px 20px 14px 10px; text-align:right; flex-shrink:0; }
@@ -262,91 +263,91 @@ const top10 = [
     rank: 1,
     name: "Derrick Maximus",
     img: "https://i.imgur.com/Y00Je4M.jpeg",
-    score: 95,
+    score: 89,
     move: "up", moveAmt: 6,
-    reason: "Opened the show with a devastating cutscene — overheard his own father blaming him to President Michael Hammond for wrestlers leaving FSW. That betrayal fueled everything that followed. Ring promo declaring he's done playing by the rules. Stole the president's roster list. Confrontation with Kyle Vance. Suspension angle set up the Mayhem title match for Blood, Sweat & Tears.",
-    tags: ["promo","segment","storyline catalyst"]
+    reason: "Overheard his father blaming him for talent walkouts. Attacked Kyle Vance backstage. Hit the ring, declared he is Max Milli and demanded his title back. Claimed he was held back for the new generation — and he is done. Walked out with a document. FSW 52 revolved around him.",
+    tags: ["pre show","segment","in-ring promo","interview","storyline catalyst","focal point","character moment","post show"]
   },
   {
     rank: 2,
     name: "Kendrick Montana",
     img: "https://i.imgur.com/5kqtFWZ.jpeg",
-    score: 66,
+    score: 77,
     move: "up", moveAmt: 4,
-    reason: "Opened the show with a powerful promo laying out his championship ambitions. Won the main event by DQ after Shibata's interference. Closed the show on the rooftop in the rain — face to face with Shibata.",
-    tags: ["promo","win","main event","show-ending moment"]
+    reason: "Opened the show with an in-ring promo — laid out exactly why he attacked Shibata and why he's done waiting. Won the main event by DQ when Shibata stormed in with a chair. The show ended on the rooftop in the rain, face to face with Shibata.",
+    tags: ["opener","in-ring promo","compete","win","show closer","segment","focal point"]
   },
   {
     rank: 3,
-    name: "Alexa Rivera",
-    img: "https://i.imgur.com/kdvqxwt.jpeg",
-    score: 55,
-    move: "new", moveAmt: 0,
-    reason: "Became the NEW FSW Diamond Champion in the only championship match of the night, positioned before the main event. Upper mid card slot, title change, and the biggest in-ring moment of FSW 52. She didn't just win — she arrived.",
-    tags: ["win","title change","upper mid card","storyline catalyst"]
+    name: "Shibata Reyes",
+    img: "https://i.imgur.com/8sYtF4l.jpeg",
+    score: 75,
+    move: "down", moveAmt: 2,
+    reason: "Appeared backstage and ordered Ivy Page to put the Diamond Championship on the line and lose it — a loyalty test. Stormed the main event with a steel chair, attacked Kendrick, William Kennedy, and St. Peter Reyes. Closed the show face to face with Kendrick on a rain-soaked rooftop.",
+    tags: ["segment","interference","weapon","show closer","champion"]
   },
   {
     rank: 4,
-    name: "Shibata Reyes",
-    img: "https://i.imgur.com/8sYtF4l.jpeg",
-    score: 55,
-    move: "down", moveAmt: 3,
-    reason: "Attacked Kendrick, William Kennedy, and St. Peter Reyes across the main event. Delivered the final image of the night on the rooftop in the rain. Made Kendrick want it.",
-    tags: ["segment","intangibles","show-ending moment"]
+    name: "Alexa Rivera",
+    img: "https://i.imgur.com/kdvqxwt.jpeg",
+    score: 45,
+    move: "new", moveAmt: 0,
+    reason: "Won the FSW Diamond Championship. The only title change of the night.",
+    tags: ["compete","win","championship match"]
   },
   {
     rank: 5,
-    name: "St. Peter Reyes",
-    img: "https://i.imgur.com/XTIZE4a.jpeg",
-    score: 50,
-    move: "down", moveAmt: 3,
-    reason: "Bar cutscene set the tone — was asked to show up at the main event to hype his Supreme Championship match with William Kennedy. He questioned it: 'If you need me to sell it, William isn't ready.' Showed up anyway. That one line told the whole story.",
-    tags: ["segment","promo","storyline catalyst","main event"]
+    name: "Kyle Vance",
+    img: "https://i.imgur.com/wtvvzLD.jpeg",
+    score: 43,
+    move: "same", moveAmt: 0,
+    reason: "Non-title win over Jaelyn Garcia. When Derrick attacked him backstage, he didn't retaliate. Heading into BST as Mayhem Champion.",
+    tags: ["compete","win","champion","character moment","segment"]
   },
   {
     rank: 6,
-    name: "Kyle Vance",
-    img: "https://i.imgur.com/wtvvzLD.jpeg",
+    name: "J1",
+    img: "https://i.imgur.com/opQQ1P2.jpeg",
     score: 40,
-    move: "down", moveAmt: 1,
-    reason: "Won a non-title upper mid card match against Jaelyn Garcia despite being attacked backstage by Derrick Maximus before the match. Kept composure. Backstage interview added fuel to the Mayhem title rivalry.",
-    tags: ["win","interview","upper mid card"]
+    move: "up", moveAmt: 3,
+    reason: "Won his Genesis Tournament Semi-Final against Javi Hernandez. Controlled the match completely. BST bound for the vacant Genesis Championship.",
+    tags: ["compete","win","tournament","contender"]
   },
   {
     rank: 7,
-    name: "Ivy Page",
-    img: "https://i.imgur.com/HnEiuCq.jpeg",
+    name: "Smoove Marino",
+    img: "https://i.imgur.com/SubN4je.jpeg",
     score: 40,
-    move: "up", moveAmt: 1,
-    reason: "The Umbra Collective backstage segment revealed the depth of her loyalty test — Sheba forced her to lay down the Diamond Championship. She did it. The sacrifice showed just how far the Umbra's grip goes.",
-    tags: ["segment","loss","title","storyline catalyst"]
+    move: "new", moveAmt: 0,
+    reason: "Won his Genesis Tournament Semi-Final against Jay Cole. Will face J1 at BST for the vacant Genesis Championship.",
+    tags: ["compete","win","tournament","contender"]
   },
   {
     rank: 8,
-    name: "Arnez Jackson",
-    img: "https://i.imgur.com/O1wRnvp.jpeg",
-    score: 35,
-    move: "new", moveAmt: 0,
-    reason: "Debut win over Blade Rivera in a strong mid-card showing. Followed it up with a post-match interview that put his name on the map. First impression delivered.",
-    tags: ["debut win","interview","mid card"]
+    name: "Ivy Page",
+    img: "https://i.imgur.com/HnEiuCq.jpeg",
+    score: 37,
+    move: "same", moveAmt: 0,
+    reason: "Shibata ordered her to put the Diamond Championship on the line and intentionally lose it to prove her loyalty to the Umbra Collective. She did. The title is gone.",
+    tags: ["segment","championship match","champion","character moment"]
   },
   {
     rank: 9,
-    name: "J1",
-    img: "https://i.imgur.com/opQQ1P2.jpeg",
-    score: 30,
-    move: "same", moveAmt: 0,
-    reason: "Won the Genesis Championship semifinal against Javi Hernandez and punched his ticket to Blood, Sweat & Tears. Will face Smoove Marino for the FSW Genesis Championship at the PLE. Number one contender.",
-    tags: ["win","semifinal","title contender"]
+    name: "Arnez Jackson",
+    img: "https://i.imgur.com/O1wRnvp.jpeg",
+    score: 38,
+    move: "new", moveAmt: 0,
+    reason: "Dominant debut win over Blade Rivera. Post-match interview made it clear he is here to stay. First night in FSW — already a problem.",
+    tags: ["debut","compete","win","interview"]
   },
   {
     rank: 10,
-    name: "Smoove Marino",
-    img: "https://i.imgur.com/SubN4je.jpeg",
-    score: 30,
-    move: "new", moveAmt: 0,
-    reason: "Won the Genesis Championship semifinal against Jay Cole and is heading to Blood, Sweat & Tears to face J1 for the FSW Genesis Championship. Came to win and got exactly that.",
-    tags: ["win","semifinal","title contender"]
+    name: "St. Peter Reyes",
+    img: "https://i.imgur.com/XTIZE4a.jpeg",
+    score: 35,
+    move: "down", moveAmt: 8,
+    reason: "Received a phone call asking him to show up at the main event to build his BST match with William Kennedy. Refused — argued that if they need him there, William isn't ready. Showed up anyway. Got hit with Shibata's chair for it.",
+    tags: ["segment","main event appearance","show closer"]
   }
 ];
 
@@ -355,7 +356,7 @@ const alsoAppeared = [
   { name: "CJ Moore",         img: "https://i.imgur.com/TF7KcDi.jpeg", pts: 24, notes: "Title loss · Umbra segment" },
   { name: "Henry Carter",     img: "https://i.imgur.com/OlZbgfe.jpeg", pts: 30, notes: "Debut win · opened the show · show-opener bonus" },
   { name: "Jason Prince",     img: "https://i.imgur.com/Buesjnb.jpeg", pts: 18, notes: "Won vs Godson · good match" },
-  { name: "William Kennedy",  img: "https://i.imgur.com/55E5bES.jpeg", pts: 12, notes: "Main event loss" },
+  { name: "William Kennedy",  img: "https://i.imgur.com/55E5bES.jpeg", pts: 22, notes: "Main event loss · Shibata chair attack" },
   { name: "Blade Rivera",     img: "https://i.imgur.com/OlZbgfe.jpeg", pts: 6,  notes: "Mid card loss" },
   { name: "The Godson",       img: "https://i.imgur.com/OlZbgfe.jpeg", pts: 6,  notes: "Debut loss · good match" },
   { name: "Jay Phoenix",      img: "https://i.imgur.com/OlZbgfe.jpeg", pts: 4,  notes: "Opener loss" },
@@ -366,11 +367,21 @@ const alsoAppeared = [
 ];
 
 const tagColors = {
-  "win": "tag-win", "debut win": "tag-debut", "loss": "tag-loss",
-  "promo": "tag-promo", "interview": "tag-promo", "title": "tag-title",
-  "title defense": "tag-title", "title change": "tag-title", "title contender": "tag-title",
-  "main event": "tag-title", "segment": "tag-segment", "cutscene": "tag-segment",
-  "storyline catalyst": "tag-segment", "intangibles": "tag-segment",
+  // IN-RING
+  "opening match": "tag-debut", "compete": "tag-loss", "win": "tag-win",
+  "main event": "tag-title", "main event win": "tag-win",
+  "championship match": "tag-title", "championship win": "tag-win",
+  "#1 contender win": "tag-win", "tournament": "tag-debut",
+  // PROMOS / MEDIA
+  "opener": "tag-promo", "in-ring promo": "tag-promo", "backstage promo": "tag-promo",
+  "interview": "tag-promo", "segment": "tag-segment",
+  // IMPACT
+  "interference": "tag-title", "weapon": "tag-title",
+  "main event appearance": "tag-title", "focal point": "tag-focal",
+  "storyline catalyst": "tag-segment", "show closer": "tag-segment",
+  "character moment": "tag-segment", "post show": "tag-segment",
+  // STATUS
+  "debut": "tag-debut", "champion": "tag-title", "contender": "tag-debut",
   "show-ending moment": "tag-segment", "semifinal": "tag-debut",
   "mid card": "tag-loss"
 };
