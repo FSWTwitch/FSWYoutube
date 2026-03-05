@@ -325,9 +325,36 @@
     .modal-photo-wrap{width:100%;height:200px;}
     .modal-stats-grid{grid-template-columns:repeat(3,1fr);}
 
+    /* VIDEO PLAYING: compress everything, show just video + bottom bar */
+    .modal-box.mobile-playing .modal-top{display:none;}
+    .modal-box.mobile-playing .modal-extended{display:none;}
+    .modal-box.mobile-playing .mobile-video-frame{display:block;}
+  }
+  .mobile-video-frame{
+    display:none;
+    width:100%;
+    aspect-ratio:16/9;
+    background:#000;
+    position:relative;
+    overflow:hidden;
+  }
+  .mobile-video-frame iframe{
+    width:100%;height:100%;border:none;display:block;
   }
 
   /* FOOTER */
+  .commercials-wrap{margin-top:14px;}
+  .commercials-head{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:#fff;letter-spacing:2px;margin-bottom:10px;display:flex;align-items:center;gap:10px;border-left:3px solid var(--accent);padding-left:10px;}
+  .commercials-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none;}
+  .commercials-row::-webkit-scrollbar{display:none;}
+  .commercial-item{flex-shrink:0;width:180px;cursor:pointer;}
+  .commercial-thumb{position:relative;width:180px;aspect-ratio:16/9;border-radius:6px;overflow:hidden;background:#000;transition:transform .2s;}
+  .commercial-item:hover .commercial-thumb{transform:scale(1.04);}
+  .commercial-thumb img{width:100%;height:100%;object-fit:cover;opacity:.75;transition:opacity .2s;}
+  .commercial-item:hover .commercial-thumb img{opacity:1;}
+  .commercial-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+  .commercial-play svg{filter:drop-shadow(0 2px 8px rgba(0,0,0,.8));}
+  .commercial-brand{font-size:.7rem;font-weight:600;color:rgba(255,255,255,.55);margin-top:6px;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .faction-wrap{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:14px 16px;margin-top:14px;}
   .faction-head{font-size:.55rem;color:var(--muted);letter-spacing:2.5px;text-transform:uppercase;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
   .faction-head::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.07);}
@@ -466,7 +493,12 @@
           <div class="modal-endorsements" id="modal-endorsements" style="display:none;flex:1;"></div>
           <div id="modal-rating" style="text-align:center;flex-shrink:0;"></div>
         </div>
+        <div class="modal-commercials" id="modal-commercials" style="display:none;margin-top:14px;"></div>
         <div class="modal-social" id="modal-social" style="margin-top:10px;"></div>
+    </div>
+    <!-- MOBILE VIDEO FRAME -->
+    <div class="mobile-video-frame" id="mobile-video-frame">
+      <iframe id="mobile-video-iframe" src="" frameborder="0" allow="autoplay;encrypted-media" allowfullscreen style="display:block;width:100%;height:100%;"></iframe>
     </div>
     <!-- BOTTOM: theme + rating + play -->
     <div class="modal-video-section">
@@ -550,6 +582,61 @@ const wrestlers = [
     ],
   },
   // ↓ Add more wrestlers below ↓
+  {
+    name: "Motor Hunter",
+    img: "https://i.imgur.com/HrBGrSR.jpeg",
+    popupImg: "https://i.imgur.com/HrBGrSR.jpeg",
+    bgImg: "https://i.imgur.com/KicZpLM.jpeg",
+    videoId: "80A5qUOw4E0",
+    champion: false,
+    title: "",
+    nickname: "",
+    alignment: "heel",
+    location: "Los Angeles, CA",
+    height: "6'5\"",
+    weight: "244 lbs",
+    stable: "",
+    social: "@fswyoutub.motor",
+    twitter: "@kobewrightkw",
+    twitterUrl: "https://x.com/kobewrightkw",
+    instagram: "",
+    theme: "Dead Reckoning — Ethan Meixsell",
+    rating: 87,
+    rival: "",
+    endorsements: ["Red Bull"],
+    bio: "Motor Hunter is a relentless force wrapped in raw toughness. Built like someone who has spent his life pushing through resistance, he brings a grinding, punishing style that wears opponents down over time. Motor Hunter does not rush for flashy moments; he keeps pressure constant, forcing mistakes and capitalizing on them with brutal efficiency until the fight inevitably tilts in his favor.",
+    signatures: [["Blue Thunder Bomb", "Blue Thunder Bomb"], ["Nightmare Pendulum Submission", "Nightmare Pendulum Submission"]],
+    finisher1: "Final Turn",
+    finisher1Orig: "TKO",
+    finisher2: "Lights Out",
+    finisher2Orig: "Kross Hammer",
+    record: { singlesW:6, singlesL:4, multiW:1, multiL:5, titleWins:1, titleDefenses:1 },
+  },
+  {
+    name: "J1",
+    nickname: "The Hybrid",
+    img: "https://i.imgur.com/opQQ1P2.jpeg",
+    popupImg: "https://i.imgur.com/opQQ1P2.jpeg",
+    bgImg: "",
+    videoId: "lU75CjHBr6I",
+    champion: false,
+    title: "",
+    alignment: "face",
+    location: "Yorkshire, England",
+    height: "6'3\"",
+    weight: "240 lbs",
+    stable: "",
+    social: "@fswyoutub.j1",
+    twitter: "@the_hybrid_j1_caw",
+    twitterUrl: "https://x.com/the_hybrid_j1_caw",
+    instagram: "",
+    theme: "Make It Make Sense — A Day to Remember",
+    rating: 87,
+    rival: "",
+    endorsements: ["Tag Heuer", "Dr. Martens"],
+    bio: "J1 competes with quiet dominance and absolute control. He wastes no movement, imposes his pace on every match, and forces opponents to fight on his terms. J1 does not chase moments or reactions; he simply takes over, making victories feel less like surprises and more like inevitabilities.",
+    record: { singlesW:2, singlesL:0, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
+  },
   {
     name: "Arnez Jackson",
     img: "https://i.imgur.com/O1wRnvp.jpeg",
@@ -691,6 +778,12 @@ const wrestlers = [
     rating: 87,
     rival: "Derrick Maximus",
     endorsements: ["Carl's Jr", "Skechers", "Vitamin Water"],
+    commercials: [
+      { brand: "Carl's Jr", videoId: "IVEVPS3L5-M" },
+    ],
+    commercials: [
+      { brand: "Carl's Jr", videoId: "IVEVPS3L5-M" },
+    ],
     bio: "Kyle Vance is raw heart in a world full of politics. He fights with visible emotion, pushing through exhaustion and doubt because quitting simply is not in him. Kyle does not scheme or posture; he absorbs punishment, learns from it, and comes back harder, making him dangerous not because he is the loudest in the room, but because he refuses to stay down.",
     superFinisher: "Fall of the Apex",
     superFinisherOrig: "Phoenix 630 Senton",
@@ -729,6 +822,10 @@ const wrestlers = [
     rival: "Kyle Vance · Shibata Reyes",
     allies: "Jaelyn Garcia",
     endorsements: ["Calvin Klein", "Cosmic Energy Drink", "Toyota", "Y by YSL", "Nike"],
+    commercials: [
+      { brand: "Y by YSL", videoId: "7BWUwQ8IupE" },
+      { brand: "Calvin Klein", videoId: "ySlxDOBkokI" },
+    ],
     bio: "Derrick Maximus is ambition wrapped in entitlement, a man who carries legacy on his shoulders whether he admits it or not. Sharp, composed, and calculating, he hides insecurity behind confidence, moving with the precision of someone who believes the spotlight was always meant for him. Derrick does not explode like others; he pressures, manipulates, and outthinks, proving that control can be more dangerous than rage.",
     finisher1: "Maximum Odds",
     finisher1Orig: "Eight Second Ride",
@@ -923,21 +1020,31 @@ function toggleVideoVisibility(){
   sw.style.background = videoVisible ? 'var(--accent)' : 'rgba(255,255,255,.15)';
 }
 
+function isMobile(){ return window.innerWidth <= 600; }
+
 function toggleEntrance(){
-  const player = document.getElementById('entrance-player');
-  const iframe = document.getElementById('entrance-iframe');
-  const modalTop = document.querySelector('.modal-top');
   const toggleInput = document.getElementById('vid-toggle-input');
-  if(!player) return;
   const isPlaying = window._audioPlaying === true;
+
   if(!isPlaying){
-    // START
     if(!currentVideoId) return;
-    iframe.src = `https://www.youtube.com/embed/${currentVideoId}?autoplay=1&rel=0`;
     window._audioPlaying = true;
-    player.style.display = 'block';
+
+    if(isMobile()){
+      // Mobile: use dedicated full-width frame, compress modal
+      const mf = document.getElementById('mobile-video-iframe');
+      if(mf) mf.src = `https://www.youtube.com/embed/${currentVideoId}?autoplay=1&rel=0&playsinline=1`;
+      const mbox = document.getElementById('modal-box');
+      if(mbox) mbox.classList.add('mobile-playing');
+    } else {
+      // Desktop: use absolute overlay
+      const player = document.getElementById('entrance-player');
+      const iframe = document.getElementById('entrance-iframe');
+      if(iframe) iframe.src = `https://www.youtube.com/embed/${currentVideoId}?autoplay=1&rel=0`;
+      if(player) player.style.display = 'block';
+    }
+
     if(toggleInput) toggleInput.checked = true;
-    if(modalTop) modalTop.classList.add('video-playing');
     const ytBtn = document.getElementById('modal-yt-btn');
     if(ytBtn) ytBtn.classList.add('playing');
     const tw = document.getElementById('vid-toggle-wrap');
@@ -947,7 +1054,6 @@ function toggleEntrance(){
     if(pi) pi.style.display = 'none';
     if(pa) pa.style.display = 'block';
   } else {
-    // STOP - regardless of whether video is visible or hidden
     closeEntrance();
   }
 }
@@ -956,10 +1062,23 @@ function closeEntrance(){
   const player = document.getElementById('entrance-player');
   const iframe = document.getElementById('entrance-iframe');
   const modalTop = document.querySelector('.modal-top');
-  if(!player) return;
-  iframe.src = '';
   window._audioPlaying = false;
-  player.style.display = 'none';
+  // Restore theme info if commercial was playing
+  if(window._isCommercial && window._currentThemeSong !== undefined){
+    const songEl = document.getElementById('modal-theme-song');
+    const artistEl = document.getElementById('modal-theme-artist');
+    if(songEl) songEl.textContent = window._currentThemeSong;
+    if(artistEl) artistEl.textContent = window._currentThemeArtist;
+    window._isCommercial = false;
+  }
+  // Desktop
+  if(iframe) iframe.src = '';
+  if(player) player.style.display = 'none';
+  // Mobile
+  const mf = document.getElementById('mobile-video-iframe');
+  if(mf) mf.src = '';
+  const mbox = document.getElementById('modal-box');
+  if(mbox) mbox.classList.remove('mobile-playing');
   const toggleBar = document.getElementById('video-toggle-bar');
   if(toggleBar) toggleBar.style.display = 'none';
   if(modalTop) modalTop.classList.remove('video-playing');
@@ -975,14 +1094,55 @@ function closeEntrance(){
   if(pa) pa.style.display = 'none';
 }
 
-function hideShowVideo(){
+function playCommercial(videoId, brand){
   const player = document.getElementById('entrance-player');
-  const toggleInput = document.getElementById('vid-toggle-input');
-  if(!player) return;
-  if(toggleInput && toggleInput.checked){
-    player.style.display = 'block';
+  const iframe = document.getElementById('entrance-iframe');
+  const mbox = document.getElementById('modal-box');
+  if(!player || !iframe) return;
+  iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+  window._audioPlaying = true;
+
+  // Update bottom bar to show commercial info
+  const songEl = document.getElementById('modal-theme-song');
+  const artistEl = document.getElementById('modal-theme-artist');
+  const labelEl = songEl ? songEl.nextElementSibling : null;
+  if(songEl) songEl.textContent = brand;
+  if(artistEl) artistEl.textContent = 'Commercial';
+  // Store original theme so we can restore it on close
+  window._isCommercial = true;
+
+  if(isMobile()){
+    const mf = document.getElementById('mobile-video-iframe');
+    if(mf) mf.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&playsinline=1`;
+    if(mbox) mbox.classList.add('mobile-playing');
   } else {
-    player.style.display = 'none';
+    player.style.display = 'block';
+  }
+  const ytBtn = document.getElementById('modal-yt-btn');
+  if(ytBtn) ytBtn.classList.add('playing');
+  const tw = document.getElementById('vid-toggle-wrap');
+  if(tw) tw.style.display = 'flex';
+  const toggleInput = document.getElementById('vid-toggle-input');
+  if(toggleInput) toggleInput.checked = true;
+  const pi = document.querySelector('.entrance-play-icon');
+  const pa = document.querySelector('.entrance-pause-icon');
+  if(pi) pi.style.display = 'none';
+  if(pa) pa.style.display = 'block';
+}
+
+function hideShowVideo(){
+  const toggleInput = document.getElementById('vid-toggle-input');
+  if(isMobile()){
+    const mbox = document.getElementById('modal-box');
+    if(toggleInput && toggleInput.checked){
+      if(mbox) mbox.classList.add('mobile-playing');
+    } else {
+      if(mbox) mbox.classList.remove('mobile-playing');
+    }
+  } else {
+    const player = document.getElementById('entrance-player');
+    if(!player) return;
+    player.style.display = (toggleInput && toggleInput.checked) ? 'block' : 'none';
   }
 }
 
@@ -1057,6 +1217,29 @@ function openModal(w){
   if(bioEl){ bioEl.textContent = w.bio || ''; bioEl.style.display = w.bio ? '' : 'none'; }
   const stableEl2 = document.getElementById('modal-stable');
   if(stableEl2){ stableEl2.style.display = w.stable ? '' : 'none'; }
+
+  // Commercials
+  const comEl = document.getElementById('modal-commercials');
+  if(comEl){
+    if(w.commercials && w.commercials.length){
+      comEl.innerHTML = `<div class="commercials-wrap">
+        <div class="commercials-head">Commercials <span style="font-family:'DM Sans',sans-serif;font-size:.7rem;color:var(--muted);letter-spacing:0;font-weight:400;">· ${w.commercials.length} video${w.commercials.length!==1?'s':''}</span></div>
+        <div class="commercials-row">
+          ${w.commercials.map(c => `
+            <div class="commercial-item" onclick="playCommercial('${c.videoId}', '${c.brand}')">
+              <div class="commercial-thumb">
+                <img src="https://i.ytimg.com/vi/${c.videoId}/hqdefault.jpg" alt="${c.brand}">
+                <div class="commercial-play">
+                  <svg width="44" height="44" viewBox="0 0 44 44"><circle cx="22" cy="22" r="22" fill="rgba(0,0,0,.55)"/><polygon points="18 14 32 22 18 30 18 14" fill="white"/></svg>
+                </div>
+              </div>
+              <div class="commercial-brand">${c.brand}</div>
+            </div>`).join('')}
+        </div>
+      </div>`;
+      comEl.style.display = 'block';
+    } else { comEl.style.display = 'none'; }
+  }
 
   // Faction
   const factionEl = document.getElementById('modal-faction');
@@ -1173,6 +1356,9 @@ function openModal(w){
     const parts = w.theme.split(' — ');
     if(themeSong) themeSong.textContent = parts[0] || w.theme;
     if(themeArtist) themeArtist.textContent = parts[1] || '';
+    window._currentThemeSong = parts[0] || w.theme;
+    window._currentThemeArtist = parts[1] || '';
+    window._isCommercial = false;
   } else {
     if(themeSong) themeSong.textContent = '';
     if(themeArtist) themeArtist.textContent = '';
