@@ -264,6 +264,7 @@
 <div class="legend">
   <div class="legend-title">How points are scored</div>
   <div class="legend-pills">
+    <div class="pill">pre show <span>+5</span></div>
     <div class="pill">opening match <span>+10</span></div>
     <div class="pill">compete <span>+5</span></div>
     <div class="pill">win <span>+20</span></div>
@@ -271,8 +272,7 @@
     <div class="pill">championship tier 1 win <span>+50</span></div>
     <div class="pill">championship tier 2 win <span>+15</span></div>
     <div class="pill">championship loss <span>+10</span></div>
-    <div class="pill">tournament win <span>×1.5</span></div>
-    <div class="pill">tournament loss <span>+5</span></div>
+    <div class="pill">tournament win <span>+10</span></div>
     <div class="pill">in-ring promo <span>+50</span></div>
     <div class="pill">interview <span>+8</span></div>
     <div class="pill">segment <span>+15</span> stackable</div>
@@ -281,7 +281,7 @@
     <div class="pill">weapon <span>+10</span></div>
     <div class="pill">focal point <span>+30</span></div>
     <div class="pill">storyline catalyst <span>+20</span></div>
-    <div class="pill">show closer <span>+10</span></div>
+    <div class="pill">closing logo <span>+10</span></div>
     <div class="pill">character moment <span>+15</span></div>
     <div class="pill">post show <span>+5</span></div>
     <div class="pill">debut <span>+10</span></div>
@@ -314,10 +314,10 @@ const top10 = [
     rank: 2,
     name: "Kendrick Montana",
     img: "https://i.imgur.com/5kqtFWZ.jpeg",
-    score: 150,
+    score: 145,
     move: "up", moveAmt: 4,
     reason: "Opened the show with an in-ring promo — laid out exactly why he attacked Shibata and why he's done waiting. Won the main event by DQ when Shibata stormed in with a chair. The show ended on the rooftop in the rain, face to face with Shibata.",
-    tags: ["opener","in-ring promo","compete","win","main event","show closer","segment","contender","character moment"],
+    tags: ["opener","in-ring promo","compete","win","main event","closing logo","segment","contender","character moment"],
     video: { url: "https://www.youtube.com/embed/SGQqbCUJvME?start=374&autoplay=1", label: "Kendrick Montana — In-Ring Promo" }
   },
   {
@@ -327,7 +327,7 @@ const top10 = [
     score: 105,
     move: "down", moveAmt: 2,
     reason: "Appeared backstage and ordered Ivy Page to put the Diamond Championship on the line and lose it — a loyalty test. Stormed the main event with a steel chair, attacked Kendrick, William Kennedy, and St. Peter Reyes. Closed the show face to face with Kendrick on a rain-soaked rooftop.",
-    tags: ["segment ×2","main event","interference","weapon","show closer","champion","character moment"],
+    tags: ["segment ×2","main event","interference","weapon","closing logo","champion","character moment"],
     video: { url: "https://www.youtube.com/embed/SGQqbCUJvME?start=1123&autoplay=1", label: "Shibata Reyes — The Price of Loyalty" }
   },
   {
@@ -343,31 +343,13 @@ const top10 = [
     rank: 5,
     name: "Kyle Vance",
     img: "https://i.imgur.com/wtvvzLD.jpeg",
-    score: 70,
+    score: 65,
     move: "same", moveAmt: 0,
     reason: "Non-title win over Jaelyn Garcia. When Derrick attacked him backstage, he didn't retaliate. Heading into BST as Mayhem Champion.",
     tags: ["compete","win","champion","character moment","segment"]
   },
   {
     rank: 6,
-    name: "J1",
-    img: "https://i.imgur.com/opQQ1P2.jpeg",
-    score: 60,
-    move: "up", moveAmt: 3,
-    reason: "Won his Genesis Tournament Semi-Final against Javi Hernandez. Controlled the match completely. BST bound for the vacant Genesis Championship.",
-    tags: ["compete","win","tournament","contender"]
-  },
-  {
-    rank: 7,
-    name: "Smoove Marino",
-    img: "https://i.imgur.com/SubN4je.jpeg",
-    score: 60,
-    move: "new", moveAmt: 0,
-    reason: "Won his Genesis Tournament Semi-Final against Jay Cole. Will face J1 at BST for the vacant Genesis Championship.",
-    tags: ["compete","win","tournament","contender"]
-  },
-  {
-    rank: 8,
     name: "Henry Carter",
     img: "https://i.imgur.com/rZksJJN.jpeg",
     score: 45,
@@ -376,7 +358,7 @@ const top10 = [
     tags: ["opening match","compete","win","debut"]
   },
   {
-    rank: 9,
+    rank: 7,
     name: "Arnez Jackson",
     img: "https://i.imgur.com/O1wRnvp.jpeg",
     score: 43,
@@ -385,10 +367,28 @@ const top10 = [
     tags: ["debut","compete","win","interview"]
   },
   {
+    rank: 8,
+    name: "J1",
+    img: "https://i.imgur.com/opQQ1P2.jpeg",
+    score: 40,
+    move: "up", moveAmt: 1,
+    reason: "Won his Genesis Tournament Semi-Final against Javi Hernandez. Controlled the match completely. BST bound for the vacant Genesis Championship.",
+    tags: ["compete","win","tournament","contender"]
+  },
+  {
+    rank: 9,
+    name: "Smoove Marino",
+    img: "https://i.imgur.com/SubN4je.jpeg",
+    score: 40,
+    move: "new", moveAmt: 0,
+    reason: "Won his Genesis Tournament Semi-Final against Jay Cole. Will face J1 at BST for the vacant Genesis Championship.",
+    tags: ["compete","win","tournament","contender"]
+  },
+  {
     rank: 10,
     name: "St. Peter Reyes",
     img: "https://i.imgur.com/XTIZE4a.jpeg",
-    score: 40,
+    score: 35,
     move: "down", moveAmt: 8,
     reason: "Received a phone call asking him to show up at the main event to build his BST match with William Kennedy. Refused — argued that if they need him there, William isn't ready. Showed up anyway. Got hit with Shibata's chair for it.",
     tags: ["segment","main event"]
@@ -408,7 +408,7 @@ const tagColors = {
   // IMPACT
   "interference": "tag-title", "weapon": "tag-title",
   "main event appearance": "tag-title", "focal point": "tag-focal",
-  "storyline catalyst": "tag-segment", "show closer": "tag-segment",
+  "storyline catalyst": "tag-segment", "closing logo": "tag-segment",
   "character moment": "tag-segment", "post show": "tag-segment",
   // STATUS
   "debut": "tag-debut", "champion": "tag-title", "contender": "tag-debut", "new champ": "tag-win", "pre show": "tag-promo", "championship match": "tag-title", "main event appearance": "tag-title", "opening match": "tag-debut",
