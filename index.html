@@ -191,7 +191,7 @@
 
 <!-- NAV -->
 <nav id="nav">
-  <a href="https://www.youtube.com/@fsw_caw" target="_blank" class="logo" style="flex-direction:row;align-items:center;gap:14px;">
+  <a href="index.html" class="logo" style="flex-direction:row;align-items:center;gap:14px;">
     <img src="https://i.imgur.com/LdEOjkv.png" alt="FSW" style="height:32px;width:auto;display:block;filter:brightness(1.1);">
 <div class="cosmic-tag" style="display:flex;align-items:center;gap:8px;"><span class="logo-top">Brought to you by</span><img src="https://i.imgur.com/ZalooKf.png" alt="Cosmic Energy Drink" style="height:16px;width:auto;"></div>
   </a>
@@ -435,15 +435,16 @@ function closeTeaser(){
 
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeM(); closeTeaser(); } });
 
+const HERO_ID = 'LFV9xmdWJUY';
 let _muted = true;
 function toggleMute(){
-  const iframe = document.getElementById('hero-iframe');
   _muted = !_muted;
+  const iframe = document.getElementById('hero-iframe');
+  // Reload iframe with or without mute — most reliable cross-browser method
+  iframe.src = `https://www.youtube.com/embed/${HERO_ID}?autoplay=1&mute=${_muted?1:0}&loop=1&playlist=${HERO_ID}&controls=0&disablekb=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&enablejsapi=1`;
   document.getElementById('icon-sound').style.display = _muted ? 'none' : 'block';
   document.getElementById('icon-mute').style.display = _muted ? 'block' : 'none';
   document.getElementById('mute-btn').style.borderColor = _muted ? 'rgba(192,0,14,.6)' : 'rgba(255,255,255,.2)';
-  // Use postMessage to control YouTube iframe
-  iframe.contentWindow.postMessage(JSON.stringify({event:'command', func: _muted ? 'mute' : 'unMute'}), '*');
 }
 window.addEventListener('scroll',()=>{ document.getElementById('nav').classList.toggle('scrolled',scrollY>50); });
 </script>

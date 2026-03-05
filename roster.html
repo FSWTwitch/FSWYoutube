@@ -345,8 +345,14 @@
   /* FOOTER */
   .commercials-wrap{margin-top:14px;}
   .commercials-head{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:#fff;letter-spacing:2px;margin-bottom:10px;display:flex;align-items:center;gap:10px;border-left:3px solid var(--accent);padding-left:10px;}
+  .commercials-scroll-wrap{position:relative;padding:0 20px;}
   .commercials-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none;}
   .commercials-row::-webkit-scrollbar{display:none;}
+  .com-arrow{position:absolute;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.85);border:1px solid rgba(255,255,255,.15);color:#fff;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:5;transition:background .2s;font-size:.9rem;line-height:1;}
+  .com-arrow:hover{background:var(--accent);}
+  .commercials-scroll-wrap:hover .com-arrow.needed{display:flex;}
+  .com-arrow-left{left:0;}
+  .com-arrow-right{right:0;}
   .commercial-item{flex-shrink:0;width:180px;cursor:pointer;}
   .commercial-thumb{position:relative;width:180px;aspect-ratio:16/9;border-radius:6px;overflow:hidden;background:#000;transition:transform .2s;}
   .commercial-item:hover .commercial-thumb{transform:scale(1.04);}
@@ -608,12 +614,15 @@ const wrestlers = [
     rival: "",
     endorsements: ["Red Bull"],
     bio: "Motor Hunter is a relentless force wrapped in raw toughness. Built like someone who has spent his life pushing through resistance, he brings a grinding, punishing style that wears opponents down over time. Motor Hunter does not rush for flashy moments; he keeps pressure constant, forcing mistakes and capitalizing on them with brutal efficiency until the fight inevitably tilts in his favor.",
-    signatures: [["Blue Thunder Bomb", "Blue Thunder Bomb"], ["Nightmare Pendulum Submission", "Nightmare Pendulum Submission"]],
+    signatures: ["Blue Thunder Bomb", "Nightmare Pendulum Submission"],
     finisher1: "Final Turn",
     finisher1Orig: "TKO",
     finisher2: "Lights Out",
     finisher2Orig: "Kross Hammer",
     record: { singlesW:6, singlesL:4, multiW:1, multiL:5, titleWins:1, titleDefenses:1 },
+    titleHistory: [
+      { title: "FSW Mayhem Championship", event: "FSW 28: Sin City Slam", date: "21.01.24" },
+    ],
   },
   {
     name: "J1",
@@ -715,6 +724,9 @@ const wrestlers = [
     rating: 86,
     rival: "",
     endorsements: ["Chick-fil-A", "Diet Coke", "Subway"],
+    commercials: [
+      { brand: "Chick-fil-A", videoId: "9-jlkXMhShY" },
+    ],
     bio: "Javi Hernandez carries the confidence of someone who has already proven he can win on the biggest nights. His past success gives him a natural composure under pressure, allowing him to stay relaxed while others panic. At times he can underestimate new threats, trusting his instincts a little too much, but when the moment truly demands it, Javi has the ability to flip the switch and remind everyone why his résumé speaks for itself.",
     superFinisher: "Springboard Frog Splash",
     superFinisherOrig: "Springboard Frog Splash",
@@ -722,7 +734,7 @@ const wrestlers = [
     finisher1Orig: "Operation Dragon 1",
     finisher2: "Frog Splash 8",
     finisher2Orig: "Frog Splash 8",
-    signatures: [["Basement Dropkick", "Basement Dropkick"], ["Superkick 13", "Superkick 13"]],
+    signatures: ["Basement Dropkick", "Superkick 13"],
     record: { singlesW:1, singlesL:1, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
   },
   {
@@ -1109,6 +1121,11 @@ function closeEntrance(){
   if(pa) pa.style.display = 'none';
 }
 
+function scrollCom(btn, dir){
+  const row = btn.parentElement.querySelector('.commercials-row');
+  if(row) row.scrollBy({ left: dir * 400, behavior: 'smooth' });
+}
+
 function playCommercial(videoId, brand){
   const player = document.getElementById('entrance-player');
   const iframe = document.getElementById('entrance-iframe');
@@ -1238,8 +1255,10 @@ function openModal(w){
   if(comEl){
     if(w.commercials && w.commercials.length){
       comEl.innerHTML = `<div class="commercials-wrap">
-        <div class="commercials-head">Commercials <span style="font-family:'DM Sans',sans-serif;font-size:.7rem;color:var(--muted);letter-spacing:0;font-weight:400;">· ${w.commercials.length} video${w.commercials.length!==1?'s':''}</span></div>
-        <div class="commercials-row">
+        <div class="commercials-head">Commercials <span style="font-family:'DM Sans',sans-serif;font-size:.7rem;color:var(--muted);letter-spacing:0;font-weight:400;">· ${(w.commercials||[]).length} video${(w.commercials||[]).length!==1?'s':''}</span></div>
+        <div class="commercials-scroll-wrap">
+          <button class="com-arrow com-arrow-left ${(w.commercials||[]).length > 3 ? 'needed' : ''}" onclick="scrollCom(this,-1)">‹</button>
+          <div class="commercials-row">
           ${w.commercials.map(c => `
             <div class="commercial-item" onclick="playCommercial('${c.videoId}', '${c.brand}')">
               <div class="commercial-thumb">
@@ -1250,6 +1269,8 @@ function openModal(w){
               </div>
               <div class="commercial-brand">${c.brand}</div>
             </div>`).join('')}
+          </div>
+          <button class="com-arrow com-arrow-right ${(w.commercials||[]).length > 3 ? 'needed' : ''}" onclick="scrollCom(this,1)">›</button>
         </div>
       </div>`;
       comEl.style.display = 'block';
@@ -1329,10 +1350,18 @@ function openModal(w){
       const name = Array.isArray(s) ? s[1] : s;
       leftHtml += moveRow('Signature','is-sig', orig===name?'':orig, name);
     });
-    if(w.superFinisher) rightHtml += moveRow('Super','is-super', w.superFinisherOrig||'', w.superFinisher);
+    if(w.superFinisher) rightHtml += moveRow('Super Finisher','is-super', w.superFinisherOrig||'', w.superFinisher);
     if(w.finisher1) rightHtml += moveRow('Finisher','is-finisher', w.finisher1Orig||'', w.finisher1);
     if(w.finisher2) rightHtml += moveRow('Finisher','is-finisher', w.finisher2Orig||'', w.finisher2);
-    html = `<div style="display:flex;gap:16px;"><div style="flex:1;">${leftHtml}</div><div style="flex:1;border-left:1px solid rgba(255,255,255,.06);padding-left:16px;">${rightHtml}</div></div>`;
+    const hasLeft = leftHtml !== '';
+    const hasRight = rightHtml !== '';
+    if(hasLeft && hasRight){
+      html = `<div style="display:flex;gap:16px;"><div style="flex:1;">${leftHtml}</div><div style="flex:1;border-left:1px solid rgba(255,255,255,.06);padding-left:16px;">${rightHtml}</div></div>`;
+    } else if(hasLeft){
+      html = `<div>${leftHtml}</div>`;
+    } else {
+      html = `<div>${rightHtml}</div>`;
+    }
     movesEl.innerHTML = html;
     movesEl.style.display = 'flex';
     movesEl.style.marginTop = '4px';
