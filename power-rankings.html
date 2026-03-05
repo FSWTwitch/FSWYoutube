@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FSW Power Rankings — FSW 52: Maximum</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07070a;
+    --surface: #0f0f14;
+    --surface2: #16161e;
+    --accent: #c0000e;
+    --gold: #c8a84b;
+    --muted: #5a5a6a;
+    --text: #e8e8e8;
+    --border: rgba(255,255,255,.06);
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; min-height:100vh; overflow-x:hidden; }
+
+  /* NAV */
+  nav{ position:fixed; top:0; left:0; right:0; z-index:100; padding:20px 56px; display:flex; align-items:center; justify-content:space-between; background:linear-gradient(to bottom,rgba(0,0,0,.95) 0%,transparent 100%); transition:background .3s; }
+  .nav-links{ display:flex; gap:28px; align-items:center; }
+
+  /* HERO */
+  .hero{ padding: 120px 40px 60px; text-align:center; position:relative; }
+  .hero::before{ content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 0%, rgba(192,0,14,.12) 0%, transparent 65%); pointer-events:none; }
+  .hero-eyebrow{ font-size:.62rem; letter-spacing:4px; color:var(--accent); text-transform:uppercase; font-weight:700; margin-bottom:12px; }
+  .hero-title{ font-family:'Bebas Neue',sans-serif; font-size:clamp(3rem,8vw,6rem); letter-spacing:4px; color:#fff; line-height:1; }
+  .hero-title span{ color:var(--gold); }
+  .hero-sub{ font-size:.78rem; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-top:10px; }
+  .show-badge{ display:inline-flex; align-items:center; gap:8px; background:rgba(200,168,75,.08); border:1px solid rgba(200,168,75,.2); border-radius:20px; padding:6px 16px; margin-top:18px; font-size:.7rem; letter-spacing:2px; color:var(--gold); text-transform:uppercase; }
+  .show-badge::before{ content:''; width:6px; height:6px; border-radius:50%; background:var(--gold); animation:pulse 2s infinite; }
+  @keyframes pulse{ 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:.4; transform:scale(1.4); } }
+
+  /* SCORING LEGEND */
+  .legend{ max-width:900px; margin:0 auto 50px; padding:0 40px; }
+  .legend-title{ font-size:.6rem; letter-spacing:3px; color:var(--muted); text-transform:uppercase; margin-bottom:12px; }
+  .legend-pills{ display:flex; flex-wrap:wrap; gap:8px; }
+  .pill{ background:var(--surface2); border:1px solid var(--border); border-radius:20px; padding:5px 12px; font-size:.62rem; color:rgba(255,255,255,.5); letter-spacing:.5px; }
+  .pill span{ color:var(--gold); font-weight:600; }
+
+  /* RANKINGS */
+  .rankings{ max-width:900px; margin:0 auto; padding:0 40px 100px; }
+
+  .rank-card{ display:flex; align-items:center; gap:0; background:var(--surface); border:1px solid var(--border); border-radius:10px; margin-bottom:10px; overflow:hidden; position:relative; transition:transform .2s, border-color .2s; cursor:default; }
+  .rank-card:hover{ transform:translateX(4px); border-color:rgba(255,255,255,.12); }
+  .rank-card.rank-1{ border-color:rgba(200,168,75,.3); background:linear-gradient(135deg, #0f0f14 0%, #14120a 100%); }
+  .rank-card.rank-2{ border-color:rgba(255,255,255,.15); }
+  .rank-card.rank-3{ border-color:rgba(192,0,14,.2); }
+
+  /* NUMBER */
+  .rank-num{ width:64px; min-width:64px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px 0; border-right:1px solid var(--border); }
+  .rank-n{ font-family:'Bebas Neue',sans-serif; font-size:2rem; line-height:1; color:var(--muted); }
+  .rank-card.rank-1 .rank-n{ color:var(--gold); font-size:2.4rem; }
+  .rank-card.rank-2 .rank-n{ color:rgba(255,255,255,.5); font-size:2.2rem; }
+  .rank-card.rank-3 .rank-n{ color:rgba(192,0,14,.7); }
+  .rank-move{ font-size:.55rem; letter-spacing:1px; margin-top:2px; }
+  .move-new{ color:var(--gold); }
+  .move-up{ color:#4ade80; }
+  .move-same{ color:var(--muted); }
+
+  /* PHOTO */
+  .rank-photo{ width:72px; min-width:72px; height:80px; overflow:hidden; position:relative; }
+  .rank-photo img{ width:100%; height:100%; object-fit:cover; object-position:top center; filter:grayscale(20%); }
+  .rank-card.rank-1 .rank-photo img{ filter:none; }
+
+  /* INFO */
+  .rank-info{ flex:1; padding:14px 18px; min-width:0; }
+  .rank-name{ font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:2px; color:#fff; line-height:1; }
+  .rank-card.rank-1 .rank-name{ font-size:1.5rem; color:var(--gold); }
+  .rank-reason{ font-size:.68rem; color:rgba(255,255,255,.45); margin-top:5px; line-height:1.5; }
+  .rank-tags{ display:flex; flex-wrap:wrap; gap:5px; margin-top:8px; }
+  .tag{ font-size:.55rem; letter-spacing:1px; text-transform:uppercase; padding:3px 8px; border-radius:3px; font-weight:600; }
+  .tag-win{ background:rgba(74,222,128,.1); color:#4ade80; border:1px solid rgba(74,222,128,.2); }
+  .tag-loss{ background:rgba(255,255,255,.05); color:rgba(255,255,255,.3); border:1px solid rgba(255,255,255,.08); }
+  .tag-promo{ background:rgba(200,168,75,.1); color:var(--gold); border:1px solid rgba(200,168,75,.2); }
+  .tag-title{ background:rgba(192,0,14,.1); color:#ff6b6b; border:1px solid rgba(192,0,14,.25); }
+  .tag-debut{ background:rgba(74,144,226,.1); color:#74b0ff; border:1px solid rgba(74,144,226,.2); }
+  .tag-segment{ background:rgba(168,85,247,.1); color:#c084fc; border:1px solid rgba(168,85,247,.2); }
+
+  /* SCORE */
+  .rank-score{ padding:14px 20px 14px 10px; text-align:right; flex-shrink:0; }
+  .score-val{ font-family:'Bebas Neue',sans-serif; font-size:2rem; line-height:1; color:#fff; }
+  .rank-card.rank-1 .score-val{ color:var(--gold); font-size:2.4rem; }
+  .score-lbl{ font-size:.5rem; letter-spacing:2px; color:var(--muted); text-transform:uppercase; margin-top:2px; }
+
+  /* GOLD ACCENT LINE */
+  .rank-card.rank-1::before{ content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--gold); }
+  .rank-card.rank-2::before{ content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:rgba(255,255,255,.3); }
+  .rank-card.rank-3::before{ content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--accent); }
+
+  /* ALSO APPEARED */
+  .also-section{ max-width:900px; margin:0 auto; padding:0 40px 60px; }
+  .also-title{ font-size:.6rem; letter-spacing:3px; color:var(--muted); text-transform:uppercase; margin-bottom:14px; border-top:1px solid var(--border); padding-top:30px; }
+  .also-grid{ display:flex; flex-wrap:wrap; gap:8px; }
+  .also-chip{ display:flex; align-items:center; gap:8px; background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:8px 12px; }
+  .also-chip img{ width:28px; height:28px; border-radius:50%; object-fit:cover; object-position:top; filter:grayscale(40%); }
+  .also-name{ font-size:.7rem; font-weight:600; color:rgba(255,255,255,.5); }
+  .also-pts{ font-family:'Bebas Neue',sans-serif; font-size:.9rem; color:var(--muted); margin-left:4px; }
+
+  /* FOOTER */
+  .pr-footer{ text-align:center; padding:30px; font-size:.62rem; color:var(--muted); letter-spacing:1px; border-top:1px solid var(--border); }
+
+  @media(max-width:600px){
+    nav{ padding:12px 20px; }
+    .hero{ padding:100px 20px 40px; }
+    .legend, .rankings, .also-section{ padding-left:20px; padding-right:20px; }
+    .rank-photo{ width:54px; min-width:54px; height:64px; }
+    .rank-num{ width:48px; min-width:48px; }
+    .rank-name{ font-size:1.1rem; }
+    .score-val{ font-size:1.6rem; }
+  }
+
+  /* ── MODAL (copied from roster) ── */
+  .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:200;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;padding:20px;overflow-y:auto;}
+  .modal-bg.open{opacity:1;pointer-events:all;}
+  .modal-box{width:96%;max-width:920px;background:var(--surface);border-radius:10px;overflow:hidden;transform:scale(.94);transition:transform .3s;border:1px solid rgba(255,255,255,.07);position:relative;margin:auto;}
+  .modal-bg.open .modal-box{transform:scale(1);}
+  .modal-box.champ-modal{border-color:rgba(200,168,75,.3);}
+  .modal-top{position:relative;display:flex;min-height:0;}
+  .modal-extended{padding:0 24px 18px;border-top:1px solid rgba(255,255,255,.06);margin-top:0;}
+  .modal-photo-wrap{width:220px;min-height:320px;flex-shrink:0;background:var(--surface2);overflow:hidden;align-self:stretch;}
+  .modal-photo-wrap .modal-photo-single{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
+  .modal-photo-ph{width:100%;height:100%;background:var(--surface2);display:flex;align-items:center;justify-content:center;}
+  .modal-photo-wrap img,.modal-photo-ph{position:relative;z-index:1;}
+  .modal-profile{flex:1;padding:22px 24px;display:flex;flex-direction:column;gap:0;position:relative;overflow:hidden;}
+  .modal-profile .mp-row{margin-top:8px;}
+  .modal-profile .mp-row:empty{display:none !important;margin-top:0;}
+  .modal-profile::before{content:'';position:absolute;inset:0;z-index:0;background-size:cover;background-position:center top;opacity:.18;background-image:var(--profile-bg);}
+  .modal-profile > *{position:relative;z-index:1;}
+  .modal-eyebrow{font-size:.6rem;color:var(--gold);letter-spacing:2.5px;text-transform:uppercase;font-weight:700;}
+  .modal-name{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:3px;color:#fff;line-height:.95;margin-top:4px;}
+  .modal-champ-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(200,168,75,.1);border:1px solid rgba(200,168,75,.35);color:var(--gold);font-size:.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:2px;width:fit-content;}
+  .modal-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.05);border-radius:5px;overflow:hidden;}
+  .modal-stat-item{background:var(--surface2);padding:10px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .modal-stat-val{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:#fff;letter-spacing:1px;}
+  .modal-stat-lbl{font-size:.58rem;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-top:2px;}
+  .modal-record{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.05);border-radius:5px;overflow:hidden;}
+  .rec-item{background:var(--surface2);padding:8px 10px;text-align:center;}
+  .rec-val{font-family:'Bebas Neue',sans-serif;font-size:1rem;color:#fff;letter-spacing:1px;}
+  .rec-lbl{font-size:.55rem;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-top:1px;}
+  .modal-stable{font-size:.72rem;color:rgba(232,232,232,.45);letter-spacing:1px;text-transform:uppercase;padding-left:10px;border-left:2px solid var(--accent);}
+  .modal-bio{font-size:.82rem;line-height:1.65;color:rgba(232,232,232,.6);}
+  .modal-moves{display:none;flex-direction:column;gap:5px;border-top:1px solid rgba(255,255,255,.06);padding-top:10px;margin-top:4px;}
+  .move-row{display:flex;align-items:baseline;gap:10px;padding:3px 0;}
+  .move-type{font-size:.55rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);width:62px;flex-shrink:0;}
+  .move-new{font-size:.8rem;font-weight:700;}
+  .move-original{font-size:.68rem;color:rgba(232,232,232,.25);font-style:italic;}
+  .move-row.is-super .move-type,.move-row.is-super .move-new{color:var(--gold);}
+  .move-row.is-finisher .move-new{color:var(--accent);}
+  .modal-endorsements{border-top:1px solid rgba(255,255,255,.06);padding-top:10px;}
+  .modal-endorse-title{font-size:.58rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;display:flex;align-items:center;gap:8px;}
+  .modal-endorse-title::after{content:'Fictional · Entertainment Only';font-size:.52rem;color:rgba(255,255,255,.2);letter-spacing:1px;font-weight:400;}
+  .endorse-tags{display:flex;flex-wrap:wrap;gap:6px;}
+  .endorse-tag{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(232,232,232,.5);font-size:.7rem;padding:4px 10px;border-radius:3px;letter-spacing:.5px;}
+  .modal-social{display:inline-flex;align-items:center;gap:7px;font-size:.75rem;color:var(--muted);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);padding:6px 12px;border-radius:4px;width:fit-content;}
+  .vid-toggle{position:relative;display:inline-block;cursor:pointer;}
+  .vid-toggle input{opacity:0;width:0;height:0;position:absolute;}
+  .vid-toggle-track{display:block;width:34px;height:18px;background:rgba(255,255,255,.1);border-radius:20px;border:1px solid rgba(255,255,255,.12);transition:background .2s;position:relative;}
+  .vid-toggle-thumb{position:absolute;top:2px;left:2px;width:12px;height:12px;background:#fff;border-radius:50%;transition:transform .2s,background .2s;opacity:.4;}
+  .vid-toggle input:checked + .vid-toggle-track{background:var(--accent);border-color:var(--accent);}
+  .vid-toggle input:checked + .vid-toggle-track .vid-toggle-thumb{transform:translateX(16px);opacity:1;background:#fff;}
+  .modal-video-section{border-top:1px solid rgba(255,255,255,.05);padding:18px 22px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+  .entrance-bars{display:none;align-items:flex-end;gap:2px;height:16px;}
+  .entrance-bars span{display:block;width:3px;background:#fff;border-radius:1px;animation:bar-bounce .8s ease-in-out infinite;}
+  .entrance-bars span:nth-child(2){animation-delay:.15s;}
+  .entrance-bars span:nth-child(3){animation-delay:.3s;}
+  @keyframes bar-bounce{0%,100%{height:3px}50%{height:14px}}
+  .modal-yt-btn.playing .entrance-bars{display:flex;}
+  .modal-video-section .entrance-bars{display:none;align-items:flex-end;gap:2px;height:16px;flex-shrink:0;}
+  .modal-yt-btn.playing ~ * .entrance-bars,.modal-video-section:has(.modal-yt-btn.playing) .entrance-bars{display:flex;}
+  .modal-yt-btn.playing .entrance-play-icon{display:none !important;}
+  .modal-yt-btn{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);transition:background .2s;}
+  .modal-yt-btn:hover{background:rgba(255,255,255,.09);}
+  .modal-yt-btn.playing{background:rgba(192,0,14,.1);border-color:rgba(192,0,14,.25);}
+  .modal-close{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.7);border:none;color:#fff;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;z-index:10;transition:background .2s;}
+  .modal-close:hover{background:var(--accent);}
+  .title-history-wrap{} .title-history-head{font-size:.58rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
+  .title-history-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+  .th-icon{font-size:1rem;flex-shrink:0;}
+  .th-belt{font-size:.82rem;font-weight:600;color:var(--gold);}
+  .th-event{font-size:.7rem;color:rgba(255,255,255,.35);margin-top:2px;}
+  .th-won{font-size:.6rem;color:rgba(255,255,255,.25);letter-spacing:1px;text-transform:uppercase;margin-left:auto;flex-shrink:0;}
+  .faction-wrap{} .faction-head{font-size:.58rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
+  .faction-body{display:flex;gap:14px;align-items:flex-start;}
+  .faction-logo{width:48px;height:48px;object-fit:contain;flex-shrink:0;}
+  .faction-name{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;}
+  .faction-role{font-size:.68rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;}
+  .faction-motto{font-size:.75rem;color:rgba(255,255,255,.4);font-style:italic;margin-top:3px;}
+  .faction-members{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;}
+  .faction-member{font-size:.65rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);padding:2px 8px;border-radius:2px;color:rgba(255,255,255,.5);}
+  .faction-debut{font-size:.62rem;color:var(--muted);margin-top:4px;}
+  .mobile-video-frame{display:none;width:100%;aspect-ratio:16/9;background:#000;position:relative;overflow:hidden;}
+  .mobile-video-frame iframe{width:100%;height:100%;border:none;display:block;}
+  @media(max-width:600px){
+    .modal-top{flex-direction:column;}
+    .modal-photo-wrap{width:100%;height:200px;}
+    .modal-stats-grid{grid-template-columns:repeat(3,1fr);}
+    .modal-box.mobile-playing .modal-top{display:none;}
+    .modal-box.mobile-playing .modal-extended{display:none;}
+    .modal-box.mobile-playing .mobile-video-frame{display:block;}
+  }
+</style>
+</head>
+<body>
+  <div style="padding:100px 56px 0;margin-bottom:-24px;">
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:8px;color:rgba(255,255,255,.5);text-decoration:none;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;font-weight:600;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.5)'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+      Home
+    </a>
+  </div>
+
+<nav id="nav">
+  <a href="index.html" class="logo" style="flex-direction:row;align-items:center;gap:14px;text-decoration:none;">
+    <img src="https://i.imgur.com/LdEOjkv.png" alt="FSW" style="height:32px;width:auto;display:block;filter:brightness(1.1);">
+  </a>
+  <div class="nav-links">
+    <a href="index.html" style="color:rgba(255,255,255,.45);text-decoration:none;font-size:.75rem;font-weight:500;letter-spacing:1px;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.45)'">Home</a>
+    <a href="roster.html" style="color:rgba(255,255,255,.45);text-decoration:none;font-size:.75rem;font-weight:500;letter-spacing:1px;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.45)'">Roster</a>
+    <a href="power-rankings.html" style="color:#fff;text-decoration:none;font-size:.75rem;font-weight:500;letter-spacing:1px;">Rankings</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">First Strike Wrestling</div>
+  <div class="hero-title">Power <span>Rankings</span></div>
+  <div class="hero-sub">Who made the biggest impact?</div>
+  <div class="show-badge">FSW 52: Maximum &nbsp;·&nbsp; Top 10</div>
+</div>
+
+<div class="legend">
+  <div class="legend-title">How points are scored</div>
+  <div class="legend-pills">
+    <div class="pill">Main Event Win <span>+30</span></div>
+    <div class="pill">Title Match ×<span>1.5</span></div>
+    <div class="pill">Loss <span>40%</span> of match value</div>
+    <div class="pill">DQ Win <span>70%</span> of match value</div>
+    <div class="pill">Ring Promo <span>+25</span></div>
+    <div class="pill">Interview <span>+10</span></div>
+    <div class="pill">Cutscene/Segment <span>+15</span></div>
+    <div class="pill">Debut Win Bonus <span>+10</span></div>
+    <div class="pill">Storyline Catalyst <span>+15</span></div>
+    <div class="pill">Show-Ending Moment <span>+20</span></div>
+  </div>
+</div>
+
+<div class="rankings" id="rankings-list"></div>
+
+<div class="also-section">
+  <div class="also-title">Also appeared on FSW 52</div>
+  <div class="also-grid" id="also-grid"></div>
+</div>
+
+<div class="pr-footer"><div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;"><span style="font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:2px;color:var(--muted);font-weight:300;font-style:italic;">Brought to you by</span><img src="https://i.imgur.com/ZalooKf.png" alt="Cosmic Energy Drink" style="height:14px;width:auto;opacity:.7;"></div>FSW Power Rankings · FSW 52: Maximum · Points reset each show</div>
+
+<script>
+const top10 = [
+  {
+    rank: 1,
+    name: "Derrick Maximus",
+    img: "https://i.imgur.com/YcvmZnv.jpeg",
+    score: 95,
+    move: "new",
+    reason: "Opened the show with a devastating cutscene — overheard his own father blaming him to President Michael Hammond for wrestlers leaving FSW. That betrayal fueled everything that followed. Ring promo declaring he's done playing by the rules. Stole the president's roster list. Bank confrontation with Kyle Vance. Suspension angle set up the Mayhem title match for Blood, Sweat & Tears.",
+    tags: ["promo","segment","storyline catalyst"]
+  },
+  {
+    rank: 2,
+    name: "Kendrick Montana",
+    img: "https://i.imgur.com/XQEcAFt.jpeg",
+    score: 66,
+    move: "new",
+    reason: "Opened the show with a powerful promo laying out his championship ambitions. Won the main event by DQ after Shibata's interference. Closed the show on the rooftop in the rain — face to face with Shibata.",
+    tags: ["promo","win","main event","show-ending moment"]
+  },
+  {
+    rank: 3,
+    name: "Alexa Rivera",
+    img: "https://i.imgur.com/Bk6fCNI.jpeg",
+    score: 55,
+    move: "new",
+    reason: "Became the NEW FSW Diamond Champion in the only championship match of the night, positioned before the main event. Upper mid card slot, title change, and the biggest in-ring moment of FSW 52. She didn't just win — she arrived.",
+    tags: ["win","title change","upper mid card","storyline catalyst"]
+  },
+  {
+    rank: 4,
+    name: "Shibata Reyes",
+    img: "https://i.imgur.com/CDxDnTl.jpeg",
+    score: 55,
+    move: "new",
+    reason: "Attacked Kendrick, William Kennedy, and St. Peter Reyes across the main event. Delivered the final image of the night on the rooftop in the rain. Made Kendrick want it.",
+    tags: ["segment","intangibles","show-ending moment"]
+  },
+  {
+    rank: 5,
+    name: "St. Peter Reyes",
+    img: "https://i.imgur.com/CDxDnTl.jpeg",
+    score: 50,
+    move: "new",
+    reason: "Bar cutscene set the tone — was asked to show up at the main event to hype his Supreme Championship match with William Kennedy. He questioned it: 'If you need me to sell it, William isn't ready.' Showed up anyway. That one line told the whole story.",
+    tags: ["segment","promo","storyline catalyst","main event"]
+  },
+  {
+    rank: 6,
+    name: "Kyle Vance",
+    img: "https://i.imgur.com/5BjJFJE.jpeg",
+    score: 40,
+    move: "new",
+    reason: "Won a non-title upper mid card match against Jaelyn Garcia despite being attacked backstage by Derrick Maximus before the match. Kept composure. Backstage interview added fuel to the Mayhem title rivalry.",
+    tags: ["win","interview","upper mid card"]
+  },
+  {
+    rank: 7,
+    name: "Ivy Page",
+    img: "https://i.imgur.com/HnEiuCq.jpeg",
+    score: 40,
+    move: "new",
+    reason: "The Umbra Collective backstage segment revealed the depth of her loyalty test — Sheba forced her to lay down the Diamond Championship. She did it. The sacrifice showed just how far the Umbra's grip goes.",
+    tags: ["segment","loss","title","storyline catalyst"]
+  },
+  {
+    rank: 8,
+    name: "Arnez Jackson",
+    img: "https://i.imgur.com/OlZbgfe.jpeg",
+    score: 35,
+    move: "new",
+    reason: "Debut win over Blade Rivera in a strong mid-card showing. Followed it up with a post-match interview that put his name on the map. First impression delivered.",
+    tags: ["debut win","interview","mid card"]
+  },
+  {
+    rank: 9,
+    name: "J1",
+    img: "https://i.imgur.com/wPn0GJT.png",
+    score: 30,
+    move: "new",
+    reason: "Won the Genesis Championship semifinal against Javi Hernandez and punched his ticket to Blood, Sweat & Tears. Will face Smoove Marino for the FSW Genesis Championship at the PLE. Number one contender.",
+    tags: ["win","semifinal","title contender"]
+  },
+  {
+    rank: 10,
+    name: "Smoove Marino",
+    img: "https://i.imgur.com/SubN4je.jpeg",
+    score: 30,
+    move: "new",
+    reason: "Won the Genesis Championship semifinal against Jay Cole and is heading to Blood, Sweat & Tears to face J1 for the FSW Genesis Championship. Came to win and got exactly that.",
+    tags: ["win","semifinal","title contender"]
+  }
+];
+
+const alsoAppeared = [
+  { name: "Jaelyn Garcia",    img: "https://i.imgur.com/K4AJTRT.jpeg", pts: 22, notes: "Title match loss · composure under fire" },
+  { name: "CJ Moore",         img: "https://i.imgur.com/TF7KcDi.jpeg", pts: 24, notes: "Title loss · Umbra segment" },
+  { name: "Henry Carter",     img: "https://i.imgur.com/OlZbgfe.jpeg", pts: 30, notes: "Debut win · opened the show · show-opener bonus" },
+  { name: "Jason Prince",     img: "https://i.imgur.com/Buesjnb.jpeg", pts: 18, notes: "Won vs Godson · good match" },
+  { name: "William Kennedy",  img: "https://i.imgur.com/55E5bES.jpeg", pts: 12, notes: "Main event loss" },
+  { name: "Blade Rivera",     img: "https://i.imgur.com/OlZbgfe.jpeg", pts: 6,  notes: "Mid card loss" },
+  { name: "The Godson",       img: "https://i.imgur.com/OlZbgfe.jpeg", pts: 6,  notes: "Debut loss · good match" },
+  { name: "Jay Phoenix",      img: "https://i.imgur.com/OlZbgfe.jpeg", pts: 4,  notes: "Opener loss" },
+  { name: "Javi Hernandez",    img: "https://i.imgur.com/TXkB7nH.jpeg", pts: 26, notes: "Semifinal loss to J1 · strong interview" },
+  { name: "Matheo",             img: "https://i.imgur.com/OlZbgfe.jpeg", pts: 25, notes: "Debut win vs Axel Hernandez · mid card" },
+  { name: "Axel Hernandez",     img: "https://i.imgur.com/OlZbgfe.jpeg", pts: 6,  notes: "Mid card loss · Matheo debut" },
+  { name: "Damian Rage",      img: "https://i.imgur.com/YcvmZnv.jpeg", pts: 25, notes: "Win vs CJ Moore · interview" },
+];
+
+const tagColors = {
+  "win": "tag-win", "debut win": "tag-debut", "loss": "tag-loss",
+  "promo": "tag-promo", "interview": "tag-promo", "title": "tag-title",
+  "title defense": "tag-title", "title change": "tag-title", "title contender": "tag-title",
+  "main event": "tag-title", "segment": "tag-segment", "cutscene": "tag-segment",
+  "storyline catalyst": "tag-segment", "intangibles": "tag-segment",
+  "show-ending moment": "tag-segment", "semifinal": "tag-debut",
+  "mid card": "tag-loss"
+};
+
+const moveLabel = { new: "NEW", up: "▲", down: "▼", same: "—" };
+const moveClass = { new: "move-new", up: "move-up", down: "move-same", same: "move-same" };
+
+const list = document.getElementById('rankings-list');
+
+// ── WRESTLER PROFILES ──
+const wrestlerProfiles = {
+  "Derrick Maximus":{name:"Derrick Maximus",img:"https://i.imgur.com/Y00Je4M.jpeg",popupImg:"https://i.imgur.com/Y00Je4M.jpeg",bgImg:"https://i.imgur.com/oXdCuGu.jpeg",videoId:"PeA39_QONno",champion:false,title:"",nickname:"The Unconquered, Self-Crowned Malefactor",location:"Beverly Hills, CA",height:"6'0\"",weight:"198 lbs",stable:"Son of the Owner of FSW",twitter:"@der_maximus",twitterUrl:"https://x.com/der_maximus",theme:"Sirius — Dartul",rating:88,rival:"Kyle Vance · Shibata Reyes",allies:"Jaelyn Garcia",endorsements:["Calvin Klein","Cosmic Energy Drink","Toyota","Y by YSL","Nike","Crocs"],movies:[{title:"Street Fighter",released:"March 2026",videoId:"raPQD-uwWL8",role:"Ken"},{title:"Street Reckoning",released:"January 2026",videoId:"xbF1zY0OJMM",role:"Marcus Cole"},{title:"Monster Hunter",released:"December 2025",videoId:"jceTfYweR2o",role:"Lt. Artemis"},{title:"Black Hawk Dawn",released:"September 2025",videoId:"mUGRFSlRdlc",role:"Sgt. Holt"}],commercials:[{brand:"Y by YSL",videoId:"7BWUwQ8IupE"},{brand:"Calvin Klein",videoId:"ySlxDOBkokI"},{brand:"Toyota",videoId:"RmU9wh4fsYA"},{brand:"Crocs",videoId:"lDXs394eSrc"}],debut:"FSW 1: Maximum",record:{singlesW:4,singlesL:1,multiW:0,multiL:0,titleWins:0,titleDefenses:0},bio:"Derrick Maximus is ambition wrapped in entitlement, a man who carries legacy on his shoulders whether he admits it or not. Sharp, composed, and calculating, he hides insecurity behind confidence.",finisher1:"Maximum Odds",finisher1Orig:"Eight Second Ride",signatures:[["Dragon Slayer","The Big Red"]]},
+  "Kendrick Montana":{name:"Kendrick Montana",img:"https://i.imgur.com/5kqtFWZ.jpeg",popupImg:"https://i.imgur.com/5kqtFWZ.jpeg",bgImg:"https://i.imgur.com/xDY6KAR.jpeg",videoId:"tzmcSro1j00",champion:false,title:"#1 Contender — FSW Ultima Championship",nickname:"Prince of the Rose",location:"Santo Domingo, Dominican Republic",height:"6'0\"",weight:"210 lbs",theme:"Guiding Light — Caskets",rating:88,rival:"Shibata Reyes",endorsements:["Gatorade"],commercials:[{brand:"Gatorade",videoId:"k4uTXGL6KrI"}],movies:[{title:"Street Fighter",released:"March 2026",videoId:"raPQD-uwWL8",role:"Akuma"}],debut:"FSW 1: Maximum",record:{singlesW:1,singlesL:1,multiW:0,multiL:2,titleWins:0,titleDefenses:0},bio:"Kendrick Montana is pure impulse wrapped in pride. With fire in his eyes, he reacts before he thinks, driven by ego, insecurity, and a desperate need to prove he belongs at the top.",superFinisher:"From the Heavens",superFinisherOrig:"Burning Hammer",finisher1:"Divinity Within",finisher1Orig:"Shooting Star Press",finisher2:"FTH V2",finisher2Orig:"Burning Hammer",signatures:[["The Devil Inside","Naibu no Akuma"],["Flying Knee","Deadeye"]]},
+  "Alexa Rivera":{name:"Alexa Rivera",img:"https://i.imgur.com/kdvqxwt.jpeg",popupImg:"https://i.imgur.com/kdvqxwt.jpeg",bgImg:"https://i.imgur.com/mvIONnO.jpeg",videoId:"45-UN44oRJo",champion:true,title:"FSW Diamond Champion",nickname:"The Deadline",location:"Buffalo, New York",height:"5'6\"",weight:"210 lbs",theme:"Queen — Loren Gray",rating:88,rival:"Ivy Page · Brittany Black",endorsements:["State Farm"],commercials:[{brand:"State Farm",videoId:"QshZDbNOYlk"}],debut:"FSW 51: Victory",record:{singlesW:2,singlesL:0,multiW:0,multiL:0,titleWins:1,titleDefenses:0},titleHistory:[{title:"FSW Diamond Championship",event:"FSW 52: Maximum",date:"12.02.26"}],bio:"Alexa Rivera moves with quiet intensity, the kind that doesn't need volume to command attention. She's calculated and emotionally controlled, but underneath that composure is a competitive fire.",finisher1:"Deadline Driver"},
+  "Shibata Reyes":{name:"Shibata Reyes",img:"https://i.imgur.com/8sYtF4l.jpeg",popupImg:"https://i.imgur.com/8sYtF4l.jpeg",bgImg:"https://i.imgur.com/8Ff7wJD.jpeg",videoId:"TSKPLwFDaKI",champion:true,title:"FSW Ultima Champion",nickname:"The Founding Father",location:"Los Angeles, CA",height:"5'11\"",weight:"228 lbs",stable:"Leader of Umbra Collective · Longest Reigning FSW Champion in History",rival:"Kendrick Montana · Derrick Maximus",allies:"Chris Jackson · Jeremiah Brown · Cola Davis · Ivy Page",theme:"The Foundations of Decay — My Chemical Romance",rating:93,endorsements:["GEICO","Norton LifeLock","Tap Out","Beats by Dre"],commercials:[{brand:"GEICO",videoId:"KOBAqcMw2nU"},{brand:"Norton LifeLock",videoId:"Dau5JpQQwOQ"}],movies:[{title:"Street Fighter",released:"March 2026",videoId:"raPQD-uwWL8",role:"Vega"}],debut:"FSW 1: Maximum",record:{singlesW:7,singlesL:1,multiW:3,multiL:0,titleWins:2,titleDefenses:2},titleHistory:[{title:"FSW Ultima Championship",event:"FSW 50: Nemesis",date:"09.09.25"},{title:"FSW Bloodsport Championship",event:"FSW 1: Maximum"}],bio:"Shibata Reyes is the reigning FSW Ultima Champion and the cold, commanding leader of the Umbra Collective. Methodical, ruthless, and always ten steps ahead.",finisher1:"Street Justice",finisher1Orig:"Judo Throw DDT",finisher2:"Reyes Lock",finisher2Orig:"Crossface",signatures:[["Superkick","Mercy Kick"],["Coast to Coast","Tree of Woke"]]},
+  "St. Peter Reyes":{name:"St. Peter Reyes",img:"https://i.imgur.com/XTIZE4a.jpeg",popupImg:"https://i.imgur.com/XTIZE4a.jpeg",bgImg:"https://i.imgur.com/We7TK6s.jpeg",videoId:"krhYuiqwPBQ",champion:true,title:"FSW Supreme Champion",nickname:"Vaquero",location:"Puerto Rico",height:"6'0\"",weight:"215 lbs",rival:"William Kennedy · Aries Santiago",endorsements:["Ringfizz","Johnnie Walker"],theme:"VERDE MENTA — Rauw Alejandro",rating:91,debut:"FSW 37: Fight for Survival",record:{singlesW:2,singlesL:1,multiW:1,multiL:0,titleWins:1,titleDefenses:0},titleHistory:[{title:"FSW Supreme Championship",event:"FSW 37: Fight for Survival",date:"5.11.24"}],bio:"St. Peter Reyes carries himself like judgment made flesh. Calm, unreadable, and spiritually composed, he does not chase chaos or applause; he waits for the moment when his presence alone shifts the room.",superFinisher:"Top Rope Perrero Powerbomb",superFinisherOrig:"Avalanche Powerbomb",finisher1:"Perrero Powerbomb",finisher1Orig:"Crucifix Jumping Powerbomb",finisher2:"SanDeVistan",finisher2Orig:"Footstomp",signatures:[["German Suplex","Incoming!"],["Butterfly DDT","Snakebite"]]},
+  "Kyle Vance":{name:"Kyle Vance",img:"https://i.imgur.com/wtvvzLD.jpeg",popupImg:"https://i.imgur.com/wtvvzLD.jpeg",bgImg:"https://i.imgur.com/UqZSVHC.jpeg",videoId:"scDk9revJKI",champion:true,title:"FSW Mayhem Champion",nickname:"Next Level",location:"Phoenix, AZ",height:"5'9\"",weight:"174 lbs",rival:"Derrick Maximus",endorsements:["Carl's Jr","Skechers","Vitamin Water"],commercials:[{brand:"Carl's Jr",videoId:"IVEVPS3L5-M"}],movies:[{title:"Street Fighter",released:"March 2026",videoId:"raPQD-uwWL8",role:"Luke"}],theme:"Harlem — New Politics",rating:87,record:{singlesW:2,singlesL:0,multiW:0,multiL:0,titleWins:1,titleDefenses:0},titleHistory:[{title:"FSW Mayhem Championship",event:"FSW 51: Victory",date:"19.12.25",label:"Claimed"}],bio:"Kyle Vance is raw heart in a world full of politics. He fights with visible emotion, pushing through exhaustion and doubt because quitting simply is not in him.",superFinisher:"Fall of the Apex",superFinisherOrig:"Phoenix 630 Senton",finisher1:"Cyclone Crash",finisher1Orig:"Corkscrew Forearm Smash",finisher2:"Sky Vance Spiral",finisher2Orig:"Corkscrew Shooting Star Press",signatures:[["Twist of Fate","Vance Verdict"],["Da Shout Out","Loudmouth Lariat"]]},
+  "Ivy Page":{name:"Ivy Page",img:"https://i.imgur.com/HnEiuCq.jpeg",popupImg:"https://i.imgur.com/HnEiuCq.jpeg",bgImg:"",videoId:"",champion:false,title:"",nickname:"",location:"",height:"",weight:"",stable:"Umbra Collective",allies:"Shibata Reyes",theme:"",rating:82,rival:"Alexa Rivera",debut:"",record:{singlesW:0,singlesL:1,multiW:0,multiL:0,titleWins:1,titleDefenses:0},titleHistory:[{title:"FSW Diamond Championship",event:"FSW 51: Victory",label:"Won"},{title:"FSW Diamond Championship",event:"FSW 52: Maximum",label:"Lost"}],bio:"Ivy Page is a calculated member of the Umbra Collective. Her loyalty was tested when she was ordered to surrender the Diamond Championship — and she did, proving the Umbra's grip runs deeper than gold."},
+  "Arnez Jackson":{name:"Arnez Jackson",img:"https://i.imgur.com/O1wRnvp.jpeg",popupImg:"https://i.imgur.com/O1wRnvp.jpeg",bgImg:"https://i.imgur.com/k8Fi3oU.jpeg",videoId:"TdRYRQNu4Mk",champion:false,title:"",nickname:"",location:"Detroit, Michigan",height:"6'0\"",weight:"292 lbs",theme:"Hail Mary — 2Pac",rating:88,endorsements:["Hennessy"],movies:[{title:"Street Fighter",released:"March 2026",videoId:"raPQD-uwWL8",role:"Balrog"}],debut:"FSW 52: Maximum",record:{singlesW:1,singlesL:0,multiW:0,multiL:0,titleWins:0,titleDefenses:0},bio:"Arnez Jackson brings controlled swagger backed by real toughness. He carries himself like someone who has had to earn every opportunity, blending athletic explosiveness with sharp instincts.",finisher1:"Detroit Destroyer"},
+  "J1":{name:"J1",img:"https://i.imgur.com/opQQ1P2.jpeg",popupImg:"https://i.imgur.com/opQQ1P2.jpeg",bgImg:"",videoId:"lU75CjHBr6I",champion:false,title:"#1 Contender — FSW Genesis Championship",nickname:"The Hybrid",location:"Yorkshire, England",height:"6'3\"",weight:"240 lbs",theme:"Make It Make Sense — A Day to Remember",rating:87,endorsements:["Tag Heuer","Dr. Martens"],movies:[{title:"Street Fighter",released:"March 2026",videoId:"raPQD-uwWL8",role:"Zangief"}],debut:"FSW 51: Victory",record:{singlesW:2,singlesL:0,multiW:0,multiL:0,titleWins:0,titleDefenses:0},bio:"J1 competes with quiet dominance and absolute control. He wastes no movement, imposes his pace on every match, and forces opponents to fight on his terms.",finisher1:"Yorkshire Lock"},
+  "Smoove Marino":{name:"Smoove Marino",img:"https://i.imgur.com/SubN4je.jpeg",popupImg:"https://i.imgur.com/SubN4je.jpeg",bgImg:"",videoId:"HIxk-21co88",champion:false,title:"#1 Contender — FSW Genesis Championship",nickname:"",location:"",height:"6'2\"",weight:"286 lbs",theme:"Out Of My Hands — Future & Metro Boomin",rating:87,endorsements:["Hennessy"],debut:"FSW Underground",record:{singlesW:2,singlesL:1,multiW:0,multiL:0,titleWins:0,titleDefenses:0},bio:"Smoove Marino walks back into FSW with a reputation that only grew while he was gone. Recently released from jail, he carries the same swagger and street-hardened confidence that made him dangerous before.",finisher1:"Smooth Criminal"}
+};
+
+// YT API
+var ePlayer=null,ePlayerReady=false,ePendingId=null,_eVideoPlaying=false,currentVideoId='';
+(function(){var s=document.createElement('script');s.src='https://www.youtube.com/iframe_api';document.head.appendChild(s);})();
+window.onYouTubeIframeAPIReady=function(){
+  ePlayer=new YT.Player('entrance-iframe',{height:'100%',width:'100%',
+    playerVars:{controls:0,disablekb:1,modestbranding:1,rel:0,iv_load_policy:3,playsinline:1},
+    events:{
+      onReady:function(){ePlayerReady=true;if(ePendingId){ePlayer.loadVideoById(ePendingId);ePendingId=null;}},
+      onStateChange:function(e){
+        if(e.data===YT.PlayerState.PLAYING){_eVideoPlaying=true;window._audioPlaying=true;setEntranceBtn(true);}
+        else if(e.data===YT.PlayerState.PAUSED||e.data===YT.PlayerState.ENDED){_eVideoPlaying=false;window._audioPlaying=false;setEntranceBtn(false);}
+      }
+    }
+  });
+};
+function setEntranceBtn(p){
+  var b=document.getElementById('modal-yt-btn'),tw=document.getElementById('vid-toggle-wrap'),ti=document.getElementById('vid-toggle-input'),pi=document.querySelector('.entrance-play-icon'),pa=document.querySelector('.entrance-pause-icon');
+  if(b){p?b.classList.add('playing'):b.classList.remove('playing');}
+  if(tw)tw.style.display=p?'flex':'none';
+  if(ti&&p)ti.checked=true;
+  if(pi)pi.style.display=p?'none':'block';
+  if(pa)pa.style.display=p?'block':'none';
+}
+function toggleEntrance(){
+  if(!currentVideoId)return;
+  var player=document.getElementById('entrance-player');
+  if(!window._audioPlaying){
+    if(player)player.style.display='block';
+    if(ePlayerReady)ePlayer.loadVideoById(currentVideoId);else ePendingId=currentVideoId;
+    window._audioPlaying=true;setEntranceBtn(true);
+  } else {
+    if(_eVideoPlaying)ePlayer.pauseVideo();else ePlayer.playVideo();
+  }
+}
+function closeEntrance(){
+  var player=document.getElementById('entrance-player');
+  window._audioPlaying=false;_eVideoPlaying=false;
+  if(ePlayerReady)ePlayer.stopVideo();
+  if(player)player.style.display='none';
+  var mf=document.getElementById('mobile-video-iframe');if(mf)mf.src='';
+  var mbox=document.getElementById('modal-box');if(mbox)mbox.classList.remove('mobile-playing');
+  setEntranceBtn(false);
+}
+function hideShowVideo(){
+  var ti=document.getElementById('vid-toggle-input'),player=document.getElementById('entrance-player');
+  if(player)player.style.display=(ti&&ti.checked)?'block':'none';
+}
+function isMobile(){return window.innerWidth<=600;}
+function playCommercial(videoId,brand,type){
+  var player=document.getElementById('entrance-player');
+  if(!player)return;
+  window._audioPlaying=true;_eVideoPlaying=true;
+  var s=document.getElementById('modal-theme-song'),a=document.getElementById('modal-theme-artist');
+  if(s)s.textContent=brand;if(a)a.textContent=type||'Commercial';
+  player.style.display='block';
+  if(ePlayerReady)ePlayer.loadVideoById(videoId);else ePendingId=videoId;
+  setEntranceBtn(true);
+}
+
+function openWrestlerModal(name){
+  var w=wrestlerProfiles[name];if(!w)return;
+  document.getElementById('modal-box').className='modal-box'+(w.champion?' champ-modal':'');
+  var ph=document.getElementById('modal-photo-ph'),p1=document.getElementById('modal-photo-1'),img=w.popupImg||w.img;
+  if(img){p1.src=img;p1.style.display='block';ph.style.display='none';}else{p1.style.display='none';ph.style.display='flex';}
+  var pr=document.querySelector('.modal-profile');
+  pr.style.setProperty('--profile-bg',w.bgImg?'url('+w.bgImg+')':'none');
+  document.getElementById('modal-eyebrow').textContent='Cinematic Wrestling Series';
+  document.getElementById('modal-name').textContent=w.name;
+  document.getElementById('modal-alignment').style.display='none';
+  var nick=document.getElementById('modal-nickname');
+  if(nick){if(w.nickname){nick.textContent='"'+w.nickname+'"';nick.style.display='block';}else nick.style.display='none';}
+  var badge=document.getElementById('modal-champ-badge');
+  if(badge){if(w.champion&&w.title){badge.innerHTML='👑 '+w.title;badge.style.display='inline-flex';}else badge.style.display='none';}
+  document.getElementById('modal-stats-grid').innerHTML=
+    '<div class="modal-stat-item"><div class="modal-stat-val">'+(w.weight||'—')+'</div><div class="modal-stat-lbl">Weight</div></div>'+
+    '<div class="modal-stat-item"><div class="modal-stat-val">'+(w.height||'—')+'</div><div class="modal-stat-lbl">Height</div></div>'+
+    '<div class="modal-stat-item"><div class="modal-stat-val" style="font-size:.78rem;line-height:1.25;">'+(w.location||'—')+'</div><div class="modal-stat-lbl">From</div></div>';
+  var rec=document.getElementById('modal-record');
+  if(w.record){var r=w.record;rec.innerHTML='<div class="rec-item"><div class="rec-val">'+r.singlesW+'-'+r.singlesL+'</div><div class="rec-lbl">Singles</div></div><div class="rec-item"><div class="rec-val">'+r.multiW+'-'+r.multiL+'</div><div class="rec-lbl">Multi-Man</div></div><div class="rec-item"><div class="rec-val" style="color:var(--gold)">'+r.titleWins+'</div><div class="rec-lbl">Title Wins</div></div><div class="rec-item"><div class="rec-val" style="color:var(--gold)">'+r.titleDefenses+'</div><div class="rec-lbl">Defenses</div></div>';rec.style.display='grid';}else rec.style.display='none';
+  var al=document.getElementById('modal-allies');
+  if(al){if(w.allies){al.innerHTML='<span style="color:var(--muted);font-size:.6rem;letter-spacing:2px;text-transform:uppercase;">Allies</span> <span style="color:#4ade80;font-weight:600;">'+w.allies+'</span>';al.style.display='flex';}else al.style.display='none';}
+  var rv=document.getElementById('modal-rival');
+  if(rv){if(w.rival){rv.innerHTML='<span style="color:var(--muted);font-size:.6rem;letter-spacing:2px;text-transform:uppercase;">Rival</span> <span style="color:var(--accent);font-weight:600;">'+w.rival+'</span>';rv.style.display='flex';}else rv.style.display='none';}
+  var st=document.getElementById('modal-stable');if(st){st.textContent=w.stable||'';st.style.display=w.stable?'block':'none';}
+  var bio=document.getElementById('modal-bio');if(bio){bio.textContent=w.bio||'';bio.style.display=w.bio?'':'none';}
+  var deb=document.getElementById('modal-debut');
+  if(deb){if(w.debut){deb.innerHTML='<span style="color:rgba(255,255,255,.3);text-transform:uppercase;font-size:.58rem;letter-spacing:1.5px;">Debut</span> &nbsp;'+w.debut;deb.style.display='block';}else deb.style.display='none';}
+  // Moves
+  var mv=document.getElementById('modal-moves');
+  if(w.finisher1||w.finisher2||(w.signatures&&w.signatures.length)){
+    var lh='',rh='';
+    var mr=function(type,cls,orig,name){return '<div class="move-row '+cls+'"><span class="move-type">'+type+'</span><div><div class="move-new">'+name+'</div>'+(orig&&orig!==name?'<div class="move-original">'+orig+'</div>':'')+'</div></div>';};
+    if(w.signatures)w.signatures.forEach(function(s){var o=Array.isArray(s)?s[0]:'',n=Array.isArray(s)?s[1]:s;lh+=mr('Signature','is-sig',o===n?'':o,n);});
+    if(w.superFinisher)rh+=mr('Super Finisher','is-super',w.superFinisherOrig||'',w.superFinisher);
+    if(w.finisher1)rh+=mr('Finisher','is-finisher',w.finisher1Orig||'',w.finisher1);
+    if(w.finisher2)rh+=mr('Finisher','is-finisher',w.finisher2Orig||'',w.finisher2);
+    mv.innerHTML=lh&&rh?'<div style="display:flex;gap:16px;"><div style="flex:1;">'+lh+'</div><div style="flex:1;border-left:1px solid rgba(255,255,255,.06);padding-left:16px;">'+rh+'</div></div>':(lh?'<div>'+lh+'</div>':'<div>'+rh+'</div>');
+    mv.style.display='flex';mv.style.marginTop='4px';mv.style.paddingTop='10px';mv.style.borderTop='1px solid rgba(255,255,255,.06)';
+  }else mv.style.display='none';
+  // Endorsements
+  var en=document.getElementById('modal-endorsements');
+  if(en){if(w.endorsements&&w.endorsements.length){en.innerHTML='<div class="modal-endorse-title">Endorsements</div><div class="endorse-tags">'+w.endorsements.map(function(e){return '<span class="endorse-tag">'+e+'</span>';}).join('')+'</div>';en.style.display='block';}else en.style.display='none';}
+  // Movies
+  var mo=document.getElementById('modal-movies');
+  if(mo){
+    if(w.movies&&w.movies.length){
+      var sm=[...w.movies].sort(function(a,b){return new Date(b.released)-new Date(a.released);});
+      var mhtml='<div style="font-size:.58rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Movie Trailers</div><div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;">';
+      sm.forEach(function(m){
+        var vid=m.videoId,ttl=m.title,rol=m.role||'';
+        var div=document.createElement('div');
+        div.style.cssText='cursor:pointer;flex-shrink:0;width:120px;';
+        div.onclick=function(){playCommercial(vid,ttl,'Movie Trailer');};
+        div.innerHTML='<div style="position:relative;aspect-ratio:16/9;border-radius:4px;overflow:hidden;"><img src="https://i.ytimg.com/vi/'+vid+'/hqdefault.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);"><svg width="28" height="28" viewBox="0 0 44 44"><circle cx="22" cy="22" r="22" fill="rgba(0,0,0,.5)"/><polygon points="18 14 32 22 18 30 18 14" fill="white"/></svg></div></div><div style="font-size:.65rem;color:rgba(255,255,255,.6);margin-top:4px;">'+ttl+'</div>'+(rol?'<div style="font-size:.58rem;color:var(--gold);">as '+rol+'</div>':'');
+        mo.appendChild&&false;
+        mhtml+='<div style="cursor:pointer;flex-shrink:0;width:120px;" data-vid="'+vid+'" data-ttl="'+ttl+'" data-rol="'+rol+'"><div style="position:relative;aspect-ratio:16/9;border-radius:4px;overflow:hidden;"><img src="https://i.ytimg.com/vi/'+vid+'/hqdefault.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);"><svg width=\"28\" height=\"28\" viewBox=\"0 0 44 44\"><circle cx=\"22\" cy=\"22\" r=\"22\" fill=\"rgba(0,0,0,.5)\"/><polygon points=\"18 14 32 22 18 30 18 14\" fill=\"white\"/></svg></div></div><div style=\"font-size:.65rem;color:rgba(255,255,255,.6);margin-top:4px;\">'+(ttl)+'</div>'+(rol?'<div style=\"font-size:.58rem;color:var(--gold);\">'+'as '+rol+'</div>':'')+'</div>';
+      });
+      mo.innerHTML=mhtml+'</div>';
+      mo.querySelectorAll('[data-vid]').forEach(function(el){
+        el.style.cursor='pointer';
+        el.addEventListener('click',function(){playCommercial(this.dataset.vid,this.dataset.ttl,'Movie Trailer');});
+      });
+      mo.style.display='block';
+    }else mo.style.display='none';
+  }
+  // Commercials
+  var co=document.getElementById('modal-commercials');
+  if(co){
+    if(w.commercials&&w.commercials.length){
+      co.innerHTML='<div style="font-size:.58rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Commercials</div><div id="com-inner" style="display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;"></div>';
+      var ci=co.querySelector('#com-inner');
+      w.commercials.forEach(function(c){
+        var el=document.createElement('div');
+        el.style.cssText='cursor:pointer;flex-shrink:0;width:120px;';
+        el.innerHTML='<div style="position:relative;aspect-ratio:16/9;border-radius:4px;overflow:hidden;"><img src="https://i.ytimg.com/vi/'+c.videoId+'/hqdefault.jpg" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);"><svg width="28" height="28" viewBox="0 0 44 44"><circle cx="22" cy="22" r="22" fill="rgba(0,0,0,.5)"/><polygon points="18 14 32 22 18 30 18 14" fill="white"/></svg></div></div><div style="font-size:.65rem;color:rgba(255,255,255,.6);margin-top:4px;">'+c.brand+'</div>';
+        el.addEventListener('click',(function(vid,brand){return function(){playCommercial(vid,brand);};})(c.videoId,c.brand));
+        ci.appendChild(el);
+      });
+      co.style.display='block';
+    }else co.style.display='none';
+  }
+  // Title History
+  var th=document.getElementById('modal-title-history');
+  if(th){if(w.titleHistory&&w.titleHistory.length){th.innerHTML='<div class="title-history-wrap"><div class="title-history-head">Title History</div>'+w.titleHistory.map(function(t){return '<div class="title-history-row"><div class="th-icon">🏆</div><div class="th-info"><div class="th-belt">'+t.title+'</div><div class="th-event">'+t.event+(t.date?' · '+t.date:'')+'</div></div><div class="th-won">'+(t.label||'Won')+'</div></div>';}).join('')+'</div>';th.style.display='block';}else th.style.display='none';}
+  // Faction
+  var fa=document.getElementById('modal-faction');if(fa)fa.style.display='none';
+  // Social
+  var so=document.getElementById('modal-social'),shtml='';
+  if(w.twitter){var xu=w.twitterUrl||'https://x.com/'+w.twitter.replace('@','');shtml+='<a href="'+xu+'" target="_blank" style="color:inherit;text-decoration:none;">𝕏 '+w.twitter+'</a>';}
+  if(so&&shtml){so.innerHTML=shtml;so.style.display='inline-flex';}else if(so)so.style.display='none';
+  // Rating
+  var ra=document.getElementById('modal-rating');
+  if(w.rating){var c=w.rating>=90?'#c8a84b':w.rating>=80?'#4ade80':'#e8e8e8';ra.innerHTML='<div style="font-family:\'Bebas Neue\',sans-serif;font-size:2.2rem;color:'+c+';line-height:1;">'+w.rating+'</div><div style="font-size:.55rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;">Rating</div>';ra.style.display='block';}else ra.style.display='none';
+  // Theme
+  var ts=document.getElementById('modal-theme-song'),ta=document.getElementById('modal-theme-artist');
+  if(w.theme){var pts=w.theme.split(' — ');if(ts)ts.textContent=pts[0]||w.theme;if(ta)ta.textContent=pts[1]||'';}else{if(ts)ts.textContent='';if(ta)ta.textContent='';}
+  currentVideoId=w.videoId||'';
+  closeEntrance();
+  var ytb=document.getElementById('modal-yt-btn'),tw3=document.getElementById('vid-toggle-wrap');
+  if(tw3)tw3.style.display='none';
+  if(ytb){if(!currentVideoId)ytb.style.display='none';else ytb.style.display='inline-flex';}
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow='';
+  closeEntrance();
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+
+
+
+top10.forEach((r, i) => {
+  const card = document.createElement('div');
+  card.className = `rank-card rank-${Math.min(r.rank,4)}`;
+  card.style.animationDelay = `${i * 0.06}s`;
+  if(wrestlerProfiles[r.name]) card.style.cursor='pointer';
+  card.onclick = () => { if(wrestlerProfiles[r.name]) openWrestlerModal(r.name); };
+  card.innerHTML = `
+    <div class="rank-num">
+      <div class="rank-n">${r.rank}</div>
+      <div class="rank-move ${moveClass[r.move]}">${moveLabel[r.move]}</div>
+    </div>
+    <div class="rank-photo"><img src="${r.img}" alt="${r.name}" onerror="this.style.background='#1a1a1a'"></div>
+    <div class="rank-info">
+      <div class="rank-name">${r.name}</div>
+      <div class="rank-reason">${r.reason}</div>
+      <div class="rank-tags">
+        ${r.tags.map(t => `<span class="tag ${tagColors[t]||'tag-loss'}">${t}</span>`).join('')}
+      </div>
+    </div>
+    <div class="rank-score">
+      <div class="score-val">${r.score}</div>
+      <div class="score-lbl">pts</div>
+    </div>
+  `;
+  list.appendChild(card);
+});
+
+
+
+const also = document.getElementById('also-grid');
+alsoAppeared.sort((a,b) => b.pts - a.pts).forEach(p => {
+  const chip = document.createElement('div');
+  chip.className = 'also-chip';
+  chip.title = p.notes;
+  chip.innerHTML = `
+    <img src="${p.img}" alt="${p.name}" onerror="this.style.background='#1a1a1a'">
+    <div>
+      <div class="also-name">${p.name}</div>
+    </div>
+    <div class="also-pts">${p.pts}pts</div>
+  `;
+  also.appendChild(chip);
+});
+</script>
+<!-- WRESTLER MODAL -->
+<div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box" id="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="entrance-player" style="display:none;position:absolute;top:0;left:0;right:0;bottom:72px;z-index:20;background:#000;overflow:hidden;border-radius:8px 8px 0 0;">
+      <div id="entrance-iframe" style="width:100%;height:100%;"></div>
+    </div>
+    <div class="modal-top">
+      <div class="modal-photo-wrap">
+        <img id="modal-photo-1" class="modal-photo-single" src="" alt="" style="display:none;">
+        <div id="modal-photo-ph" class="modal-photo-ph" style="display:none;">
+          <svg style="width:50%;opacity:.1;" viewBox="0 0 100 180" fill="white"><ellipse cx="50" cy="28" rx="20" ry="22"/><path d="M15 75 Q50 55 85 75 L92 155 Q50 168 8 155Z"/></svg>
+        </div>
+      </div>
+      <div class="modal-profile">
+        <div class="modal-eyebrow" id="modal-eyebrow">Cinematic Wrestling Series</div>
+        <div class="modal-name" id="modal-name"></div>
+        <div id="modal-nickname" style="display:none;font-size:.8rem;color:rgba(255,255,255,.4);font-style:italic;margin-top:2px;"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+          <div class="modal-champ-badge" id="modal-champ-badge" style="display:none;"></div>
+          <div id="modal-alignment"></div>
+        </div>
+        <div class="modal-stats-grid mp-row" id="modal-stats-grid"></div>
+        <div class="modal-record mp-row" id="modal-record"></div>
+        <div id="modal-rival" style="display:none;align-items:center;gap:8px;font-size:.78rem;margin-top:4px;"></div>
+        <div id="modal-allies" style="display:none;align-items:center;gap:8px;font-size:.78rem;margin-top:2px;"></div>
+        <div class="modal-stable mp-row" id="modal-stable"></div>
+        <div id="modal-debut" style="display:none;font-size:.7rem;color:var(--muted);margin-top:3px;letter-spacing:.5px;"></div>
+        <div class="modal-bio mp-row" id="modal-bio"></div>
+        <div class="modal-moves" id="modal-moves"></div>
+      </div>
+    </div>
+    <div id="video-toggle-bar" style="display:none;padding:10px 28px;border-top:1px solid rgba(255,255,255,.05);align-items:center;justify-content:space-between;">
+      <span style="font-size:.68rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;">Entrance Video</span>
+    </div>
+    <div class="modal-extended" id="modal-extended">
+      <div class="modal-faction" id="modal-faction" style="display:none;margin-top:14px;"></div>
+      <div class="modal-title-history" id="modal-title-history" style="display:none;margin-top:14px;"></div>
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-top:14px;">
+        <div class="modal-endorsements" id="modal-endorsements" style="display:none;flex:1;"></div>
+        <div id="modal-rating" style="text-align:center;flex-shrink:0;"></div>
+      </div>
+      <div class="modal-commercials" id="modal-commercials" style="display:none;margin-top:14px;"></div>
+      <div class="modal-movies" id="modal-movies" style="display:none;margin-top:14px;"></div>
+      <div class="modal-social" id="modal-social" style="margin-top:10px;"></div>
+    </div>
+    <div class="mobile-video-frame" id="mobile-video-frame">
+      <iframe id="mobile-video-iframe" src="" frameborder="0" allow="autoplay;encrypted-media" allowfullscreen style="display:block;width:100%;height:100%;"></iframe>
+    </div>
+    <div class="modal-video-section">
+      <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">
+        <div class="entrance-bars"><span></span><span></span><span></span></div>
+        <div style="min-width:0;">
+          <div id="modal-theme-song" style="font-size:.8rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
+          <div id="modal-theme-artist" style="font-size:.63rem;color:rgba(255,255,255,.35);margin-top:1px;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
+          <div style="font-size:.52rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:2px;">Theme Song</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+        <div id="vid-toggle-wrap" style="display:none;flex-direction:column;align-items:center;gap:3px;">
+          <label class="vid-toggle" id="vid-toggle-label">
+            <input type="checkbox" id="vid-toggle-input" onchange="hideShowVideo()">
+            <span class="vid-toggle-track"><span class="vid-toggle-thumb"></span></span>
+          </label>
+          <div style="font-size:.48rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;">Video</div>
+        </div>
+        <button id="modal-yt-btn" onclick="toggleEntrance()" class="modal-yt-btn" style="width:44px;height:44px;border-radius:50%;background:var(--accent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;">
+          <svg class="entrance-play-icon" width="15" height="15" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <svg class="entrance-pause-icon" style="display:none;" width="15" height="15" viewBox="0 0 24 24" fill="white"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
