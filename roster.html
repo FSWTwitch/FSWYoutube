@@ -502,6 +502,7 @@
 <div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
   <div class="modal-box" id="modal-box">
     <button class="modal-close" onclick="closeModal()">✕</button>
+    <a id="modal-edit-btn" href="edit-request.html" title="Request Profile Edit" style="position:absolute;top:12px;right:54px;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;z-index:10;transition:all .2s;text-decoration:none;" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,.3)'" onmouseout="this.style.color='rgba(255,255,255,.5)';this.style.borderColor='rgba(255,255,255,.1)'">✏️</a>
     <div id="entrance-player" style="display:none;position:absolute;top:0;left:0;right:0;bottom:72px;z-index:20;background:#000;overflow:hidden;border-radius:8px 8px 0 0;">
       <iframe id="entrance-iframe" width="100%" height="100%" src="" frameborder="0" allow="autoplay;encrypted-media" allowfullscreen style="display:block;"></iframe>
     </div>
@@ -1576,6 +1577,8 @@ function toggleEntrance(){
     if(toggleInput) toggleInput.checked = true;
     const ytBtn = document.getElementById('modal-yt-btn');
     if(ytBtn) ytBtn.classList.add('playing');
+    const editBtn = document.getElementById('modal-edit-btn');
+    if(editBtn) editBtn.style.display = 'none';
     const tw = document.getElementById('vid-toggle-wrap');
     if(tw) tw.style.display = 'flex';
     const pi = document.querySelector('.entrance-play-icon');
@@ -1613,6 +1616,8 @@ function closeEntrance(){
   if(modalTop) modalTop.classList.remove('video-playing');
   const ytBtn = document.getElementById('modal-yt-btn');
   if(ytBtn) ytBtn.classList.remove('playing');
+  const editBtnR = document.getElementById('modal-edit-btn');
+  if(editBtnR) editBtnR.style.display = 'flex';
   const ti = document.getElementById('vid-toggle-input');
   if(ti) ti.checked = false;
   const tw2 = document.getElementById('vid-toggle-wrap');
