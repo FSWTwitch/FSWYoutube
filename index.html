@@ -255,7 +255,8 @@
 <main>
   <!-- PILL NAV ROW -->
   <style>
-    .nav-pills{ padding:0 56px 48px; display:flex; gap:14px; flex-wrap:wrap; }
+    .nav-pills{ padding:0 56px 48px; display:flex; gap:14px; flex-wrap:wrap; overflow-x:auto; scrollbar-width:none; }
+    .nav-pills::-webkit-scrollbar{display:none;}
     .nav-pill{
       display:inline-flex; align-items:center; gap:10px;
       text-decoration:none; font-family:'Bebas Neue',sans-serif;
@@ -287,12 +288,9 @@
       color:#ff6b6b; border:1px solid rgba(192,0,14,.4);
       box-shadow:0 0 20px rgba(192,0,14,.1), inset 0 1px 0 rgba(255,100,100,.08);
     }
-    .np-bst:hover{ box-shadow:0 8px 32px rgba(192,0,14,.25), 0 0 40px rgba(192,0,14,.15); border-color:rgba(192,0,14,.7); }
-    .np-prompts{ background:linear-gradient(135deg,rgba(26,159,212,.08),rgba(26,159,212,.03)); border-color:rgba(26,159,212,.25); color:rgba(26,159,212,.9); }
-    .np-prompts:hover{ box-shadow:0 8px 32px rgba(26,159,212,.2), 0 0 30px rgba(26,159,212,.1); border-color:rgba(26,159,212,.6); }
-    .pill-icon{ opacity:.6; flex-shrink:0; }
+    .np-bst:hover{ box-shadow:0 8px 32px rgba(192,0,14,.25), 0 0 40px rgba(192,0,14,.15); border-color:rgba(192,0,14,.7); }    .pill-icon{ opacity:.6; flex-shrink:0; }
     .pill-pulse{ width:7px; height:7px; border-radius:50%; background:#ff6b6b; animation:pulse 1.8s infinite; flex-shrink:0; }
-    @media(max-width:768px){ .nav-pills{ padding:0 20px 36px; gap:10px; } .nav-pill{ font-size:.8rem; padding:11px 18px; letter-spacing:2px; } }
+    @media(max-width:768px){ .nav-pills{ padding:0 20px 36px; gap:10px; flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; } .nav-pill{ font-size:.8rem; padding:11px 18px; letter-spacing:2px; flex-shrink:0; } }
   </style>
   <div class="nav-pills">
     <a href="roster.html" class="nav-pill np-roster">
@@ -306,12 +304,7 @@
     <a href="bst.html" class="nav-pill np-bst">
       <span class="pill-pulse"></span>
       Blood, Sweat &amp; Tears
-    </a>
-    <a href="prompt-maker.html" class="nav-pill np-prompts">
-      <svg class="pill-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-      Admin Only
-    </a>
-  </div>
+    </a>  </div>
 
   <div class="section" id="latest">
     <div class="sec-head">
