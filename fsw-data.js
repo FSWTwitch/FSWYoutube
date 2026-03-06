@@ -57,9 +57,9 @@ const wrestlers = [
       }
     ],
   recentMatches:[
-    { show:"FSW 52: Maximum", opponent:"Kendrick Montana", result:"L", type:"Singles", championship:"FSW Ultima Championship", ranked:true, rankPos:4 },
-    { show:"FSW 51: Victory", opponent:"Derrick Maximus", result:"W", type:"Singles — DQ", championship:"FSW Ultima Championship", ranked:true, rankPos:1 },
-    { show:"FSW 50: Nemesis", opponent:"Anthony Ragone", result:"W", type:"Singles", championship:"FSW Ultima Championship", ranked:true, rankPos:1 }
+    { show:"FSW 52: Maximum", opponent:"Kendrick Montana", result:"L", type:"Singles", championship:"FSW Ultima Championship", ranked:true, rankPos:3 },
+    { show:"FSW 51: Victory", opponent:"Derrick Maximus", result:"W", type:"Singles — DQ", championship:"FSW Ultima Championship", ranked:true, rankPos:3 },
+    { show:"FSW 50: Nemesis", opponent:"Anthony Ragone", result:"W", type:"Singles", championship:"FSW Ultima Championship", ranked:true, rankPos:3 }
   ],
   },
   // ↓ Add more wrestlers below ↓
@@ -244,13 +244,13 @@ const wrestlers = [
     img: "https://i.imgur.com/rZksJJN.jpeg",
     popupImg: "https://i.imgur.com/rZksJJN.jpeg",
     bgImg: "",
-    videoId: "",
+    videoId: "GZN6ISY_0e8",
     champion: false, title: "",
     alignment: "face",
     location: "England",
     height: "6'5\"", weight: "260 lbs",
-    stable: "", social: "@fswyoutub2.henry", instagram: "",
-    theme: "", rating: 85, rival: "",
+    stable: "", social: "@fswyoutub2.henry", instagram: "thehcarter",
+    theme: "On My Own — Three Days Grace", rating: 85, rival: "",
     endorsements: ["Jack Daniel's"],
     bio: "Henry Carter carries himself with composed confidence and old-school toughness. He approaches every match with discipline and patience, preferring steady control over reckless aggression. Henry Carter is the kind of competitor who stays grounded under pressure, relying on experience and resilience to outlast opponents when the fight gets difficult.",
     debut: "FSW 52: Maximum",
@@ -273,7 +273,7 @@ const wrestlers = [
     alignment: "tweener",
     location: "Vallejo, CA",
     height: "6'3\"", weight: "225 lbs",
-    stable: "", social: "", instagram: "",
+    stable: "", social: "@JBHayes707", instagram: "",
     theme: "Crest Shit or No Shit — Dubee", rating: 84, rival: "",
     endorsements: ["Jack in the Box"],
     bio: "JB Hayes competes with gritty determination and relentless drive. Known for pushing through punishment without hesitation, he thrives in hard-fought battles where endurance and toughness matter most. JB Hayes does not rely on flash or theatrics; he wins respect by outlasting opponents and proving he can endure more than anyone standing across from him.",
@@ -354,14 +354,14 @@ const wrestlers = [
     alignment: "heel",
     location: "",
     height: "6'2\"", weight: "286 lbs",
-    stable: "", social: "", instagram: "",
+    stable: "", social: "@JAHH444_MarinoX", instagram: "jahh_marino",
     theme: "Out Of My Hands — Future & Metro Boomin", rating: 87, rival: "",
     endorsements: ["Hennessy"],
     bio: "Smoove Marino walks back into FSW with a reputation that only grew while he was gone. Recently released from jail, he carries the same swagger and street-hardened confidence that made him dangerous before, but now with even more to prove. Smoove Marino does not just want his place back; he wants everyone to remember why his name still carries weight the moment he steps into the arena.",
     debut: "FSW Underground",
     record: { singlesW:2, singlesL:1, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
   recentMatches:[
-    { show:"FSW 52: Maximum", opponent:"Jay Cole", result:"W", type:"Singles", championship:null, ranked:true, rankPos:10 },
+    { show:"FSW 52: Maximum", opponent:"Jay Cole", result:"W", type:"Singles", championship:null, ranked:true, rankPos:9 },
     { show:"FSW Underground", opponent:"—", result:"W", type:"Singles", championship:null, ranked:false, rankPos:null },
     { show:"FSW Underground", opponent:"—", result:"L", type:"Singles", championship:null, ranked:false, rankPos:null }
   ],
@@ -540,8 +540,8 @@ const wrestlers = [
     debut: "FSW 51: Victory",
     record: { singlesW:2, singlesL:0, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
   recentMatches:[
-    { show:"FSW 52: Maximum", opponent:"Javi Hernandez", result:"W", type:"Genesis Tournament Final", championship:null, ranked:true, rankPos:9 },
-    { show:"FSW 51: Victory", opponent:"—", result:"W", type:"Debut — Genesis Tournament R1", championship:null, ranked:true, rankPos:9 },
+    { show:"FSW 52: Maximum", opponent:"Javi Hernandez", result:"W", type:"Genesis Tournament Final", championship:null, ranked:true, rankPos:8 },
+    { show:"FSW 51: Victory", opponent:"—", result:"W", type:"Debut — Genesis Tournament R1", championship:null, ranked:true, rankPos:8 },
     { show:"FSW 50: Nemesis", opponent:"—", result:"—", type:"—", championship:null, ranked:false, rankPos:null }
   ],
   },
@@ -575,7 +575,7 @@ const wrestlers = [
     debut: "FSW 52: Maximum",
     record: { singlesW:1, singlesL:0, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
   recentMatches:[
-    { show:"FSW 52: Maximum", opponent:"Jaelyn Garcia", result:"W", type:"Singles", championship:null, ranked:true, rankPos:8 },
+    { show:"FSW 52: Maximum", opponent:"Jaelyn Garcia", result:"W", type:"Singles", championship:null, ranked:true, rankPos:7 },
     { show:"FSW 50: Nemesis", opponent:"—", result:"—", type:"—", championship:null, ranked:false, rankPos:null },
     { show:"FSW 50: Nemesis", opponent:"—", result:"—", type:"—", championship:null, ranked:false, rankPos:null }
   ],
@@ -702,8 +702,8 @@ const wrestlers = [
       { title: "FSW Supreme Championship", event: "FSW 37: Fight for Survival", date: "5.11.24" },
     ],
   recentMatches:[
-    { show:"FSW 52: Maximum", opponent:"Aries Santiago", result:"W", type:"Singles", championship:null, ranked:true, rankPos:5 },
-    { show:"FSW 51: Victory", opponent:"William Kennedy", result:"W", type:"Singles — #1 Contender", championship:null, ranked:true, rankPos:2 },
+    { show:"FSW 52: Maximum", opponent:"Aries Santiago", result:"W", type:"Singles", championship:null, ranked:true, rankPos:10 },
+    { show:"FSW 51: Victory", opponent:"William Kennedy", result:"W", type:"Singles — #1 Contender", championship:null, ranked:true, rankPos:10 },
     { show:"FSW 50: Nemesis", opponent:"—", result:"—", type:"—", championship:null, ranked:false, rankPos:null }
   ],
   },
@@ -753,7 +753,7 @@ const wrestlers = [
       { title: "FSW Mayhem Championship", event: "FSW 51: Victory", date: "19.12.25", label: "Claimed" },
     ],
   recentMatches:[
-    { show:"FSW 52: Maximum", opponent:"Derrick Maximus", result:"W", type:"Singles", championship:"FSW Mayhem Championship", ranked:true, rankPos:6 },
+    { show:"FSW 52: Maximum", opponent:"Derrick Maximus", result:"W", type:"Singles", championship:"FSW Mayhem Championship", ranked:true, rankPos:5 },
     { show:"FSW 51: Victory", opponent:"Max Milli (debut)", result:"W", type:"Singles", championship:"FSW Mayhem Championship", ranked:true, rankPos:5 },
     { show:"FSW 50: Nemesis", opponent:"—", result:"—", type:"—", championship:null, ranked:false, rankPos:null }
   ],
@@ -804,10 +804,10 @@ const wrestlers = [
     titleHistory: [
       { title: "FSW Mayhem Championship", event: "FSW 48: Unfinished Business", date: "29.12.24" },
     ],
-    record: { singlesW:1, singlesL:4, multiW:0, multiL:1, titleWins:1, titleDefenses:0 },
+    record: { singlesW:1, singlesL:4, multiW:1, multiL:1, titleWins:1, titleDefenses:0 },
   recentMatches:[
     { show:"FSW 52: Maximum", opponent:"Kyle Vance", result:"L", type:"Singles", championship:"FSW Mayhem Championship", ranked:true, rankPos:1 },
-    { show:"FSW 51: Victory", opponent:"Shibata Reyes", result:"L", type:"Singles — DQ", championship:null, ranked:true, rankPos:7 },
+    { show:"FSW 51: Victory", opponent:"Shibata Reyes", result:"L", type:"Singles — DQ", championship:null, ranked:true, rankPos:1 },
     { show:"FSW 50: Nemesis", opponent:"—", result:"—", type:"Return segment", championship:null, ranked:false, rankPos:null }
   ],
   },
@@ -888,7 +888,7 @@ const wrestlers = [
       { title: "FSW Diamond Championship", event: "FSW 52: Maximum", date: "12.02.26" },
     ],
   recentMatches:[
-    { show:"FSW 52: Maximum", opponent:"Ivy Page", result:"W", type:"Singles", championship:"FSW Diamond Championship", ranked:true, rankPos:3 },
+    { show:"FSW 52: Maximum", opponent:"Ivy Page", result:"W", type:"Singles", championship:"FSW Diamond Championship", ranked:true, rankPos:4 },
     { show:"FSW 51: Victory", opponent:"—", result:"—", type:"Debut", championship:null, ranked:false, rankPos:null },
     { show:"FSW 50: Nemesis", opponent:"—", result:"—", type:"—", championship:null, ranked:false, rankPos:null }
   ],
@@ -982,8 +982,8 @@ const wrestlers = [
     record: { singlesW:1, singlesL:1, multiW:0, multiL:2, titleWins:0, titleDefenses:0 },
   recentMatches:[
     { show:"FSW 52: Maximum", opponent:"Shibata Reyes", result:"W", type:"Singles", championship:"FSW Ultima Championship", ranked:true, rankPos:2 },
-    { show:"FSW 51: Victory", opponent:"—", result:"—", type:"Storyline segment", championship:null, ranked:true, rankPos:6 },
-    { show:"FSW 50: Nemesis", opponent:"Aric Myers", result:"L", type:"Multi-Man", championship:null, ranked:true, rankPos:5 }
+    { show:"FSW 51: Victory", opponent:"—", result:"—", type:"Storyline segment", championship:null, ranked:true, rankPos:2 },
+    { show:"FSW 50: Nemesis", opponent:"Aric Myers", result:"L", type:"Multi-Man", championship:null, ranked:true, rankPos:2 }
   ],
   },
   // { name:"Kyle Vance", img:"", videoId:"ID", champion:false, title:"", location:"", height:"", weight:"", stable:"", social:"", bio:"" },
