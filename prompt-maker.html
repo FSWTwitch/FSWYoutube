@@ -1471,15 +1471,26 @@ body { background:var(--bg-primary) !important; color:var(--text-primary) !impor
 #pm-layout {
   display:flex;
   min-height:calc(100vh - 54px - 88px - 72px);
+  align-items:flex-start;
 }
 #sectionsContainer {
-  flex:1;padding:24px 56px;min-width:0;overflow-y:auto;
+  flex:1;padding:24px 56px;min-width:0;
+  overflow-y:visible !important;
+  min-height:0;
 }
 #detailsPanel {
   width:280px;flex-shrink:0;
   background:#fff;border-left:1px solid rgba(0,0,0,.08);
-  padding:18px;overflow-y:auto;
+  padding:18px;
+  overflow-y:auto;
+  position:sticky;top:0;
+  max-height:100vh;
 }
+/* Override planner's fixed-height app layout */
+body { overflow-y:auto !important; height:auto !important; }
+.main-content { min-height:0 !important; overflow:visible !important; }
+.middle-column { overflow-y:visible !important; min-height:0 !important; }
+.right-column { max-height:100vh !important; position:sticky !important; top:0 !important; }
 
 /* Mobile panel */
 #mobileTopBar { display:none; }
@@ -5271,13 +5282,12 @@ function syncContentPadding() {}
                             clrB.onclick = () => { slot.textContent = '+'; slot.classList.remove('filled'); closeMobilePanel(); clearPanel(); }; panel.appendChild(clrB);
                         }
                         appendPickerSortFilter(panel, () => {});
-                        const pickerPool = promptId === 'inringpromo' ? [...rosterData, ...crewData.filter(c => c.name === 'Michael Hammond')] : rosterData;
-            const roster = applyPickerSortFilter(pickerPool);
-                        roster.forEach(w => {
+                        applyPickerSortFilter(rosterData).forEach(w => {
                             const row = document.createElement('div'); row.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:4px;padding:8px 10px;background:var(--bg-secondary);border:1px solid var(--border-primary);border-radius:4px;cursor:pointer;transition:all 0.15s;';
                             row.onmouseenter = () => { row.style.background = 'var(--bg-tertiary)'; row.style.borderColor = 'var(--accent-blue)'; };
                             row.onmouseleave = () => { row.style.background = 'var(--bg-secondary)'; row.style.borderColor = 'var(--border-primary)'; };
                             const nameD = document.createElement('div'); nameD.style.cssText = 'flex:1;font-size:13px;font-weight:500;color:var(--text-primary);'; nameD.textContent = w.name; row.appendChild(nameD);
+                            if (w.cameo) { const cd = document.createElement('div'); cd.style.cssText = 'font-size:11px;color:var(--text-muted);'; cd.textContent = w.cameo.includes('.') ? '@' + w.cameo : '@fswyoutub.' + w.cameo; row.appendChild(cd); }
                             row.onclick = () => { slot.textContent = w.name; slot.classList.add('filled'); closeMobilePanel(); clearPanel(); };
                             panel.appendChild(row);
                         });
@@ -5309,6 +5319,7 @@ function syncContentPadding() {}
                     const filledWrestlers = wrestlerSlots.map(s => s.textContent).filter(t => t !== '+');
                     let merchLogos = 'FSW logo';
                     let crowdEnergyContext = '';
+                    let signLines = '';
                     if (filledWrestlers.length > 0) {
                         const wrestlerData = filledWrestlers.map(name => {
                             const w = rosterData.find(r => r.name === name) || crewData.find(r => r.name === name);
@@ -5316,6 +5327,19 @@ function syncContentPadding() {}
                         });
                         const cameoNames = wrestlerData.map(w => w.cameo);
                         merchLogos = 'FSW logo, ' + cameoNames.join(', ');
+
+                        // Build specific merch + sign descriptions per wrestler
+                        const merchDetails = wrestlerData.map(w => {
+                            const lastName = w.name.split(' ').pop().toUpperCase();
+                            const fullName = w.name.toUpperCase();
+                            const isHeel = w.alignment === 'Heel';
+                            const shirtDesc = `fans wearing black shirts with "${fullName}" in bold block letters across the chest, some with ${w.cameo} face print`;
+                            const signDesc = isHeel
+                                ? `handmade signs reading "${lastName} IS THE BEST", "${fullName} RULES", "WE HATE ${lastName}"`
+                                : `handmade signs reading "${lastName} RULES", "${fullName} IS MY HERO", "WE LOVE ${lastName}"`;
+                            return `${w.cameo} section: ${shirtDesc}. ${signDesc}.`;
+                        }).join('\n');
+                        signLines = '\n\nMERCH & SIGNS DETAIL:\n' + merchDetails;
 
                         // Build crowd energy from alignments
                         const heels = wrestlerData.filter(w => w.alignment === 'Heel').map(w => w.cameo);
