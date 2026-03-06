@@ -216,6 +216,7 @@
     </button>
     <a href="roster.html" style="color:rgba(255,255,255,.45);text-decoration:none;font-size:.75rem;font-weight:500;letter-spacing:1px;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.45)'">Roster</a>
     <a href="power-rankings.html" style="color:rgba(255,255,255,.45);text-decoration:none;font-size:.75rem;font-weight:500;letter-spacing:1px;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.45)'">Rankings</a>
+    <a href="prompt-maker.html" style="color:rgba(255,255,255,.45);text-decoration:none;font-size:.75rem;font-weight:500;letter-spacing:1px;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.45)'">Prompts</a>
     <a href="https://www.youtube.com/@fsw_caw?sub_confirmation=1" target="_blank" class="sub-btn">Subscribe</a>
   </div>
 </nav>
@@ -463,7 +464,7 @@ function thumb(id){ return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`; }
 function makeCard(v, rank){
   const el=document.createElement('div');
   el.className='card';
-  el.onclick=()=>openM(v.id,v.ep,v.title,v.ep,'');
+  el.onclick=()=>openM(v.id,v.ep,v.title,v.ep,'',v.t||0);
   const badge=v.ple?'<div class="badge ple">PLE</div>':(v.isNew?'<div class="badge">New</div>':'');
   const rankEl=rank!=null?`<div class="rank">${rank}</div>`:'';
   el.innerHTML=`${rankEl}
@@ -547,14 +548,15 @@ function setMBtn(playing){
   if(body){ playing ? body.classList.add('playing') : body.classList.remove('playing'); }
 }
 
-function openM(id,ep,title,epLabel,date){
+function openM(id,ep,title,epLabel,date,startT){
   document.getElementById('m-ep').textContent=epLabel||ep;
   document.getElementById('m-title').textContent=title;
   document.getElementById('m-meta').textContent=date||'';
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow='hidden';
-  if(mPlayerReady){ mPlayer.loadVideoById(id); }
-  else { mPendingId = id; }
+  const t = startT||0;
+  if(mPlayerReady){ mPlayer.loadVideoById({videoId:id, startSeconds:t}); }
+  else { mPendingId = id; mPendingT = t; }
 }
 
 function toggleM(){
