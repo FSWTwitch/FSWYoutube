@@ -216,7 +216,6 @@
     </button>
     <a href="roster.html" style="color:rgba(255,255,255,.45);text-decoration:none;font-size:.75rem;font-weight:500;letter-spacing:1px;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.45)'">Roster</a>
     <a href="power-rankings.html" style="color:rgba(255,255,255,.45);text-decoration:none;font-size:.75rem;font-weight:500;letter-spacing:1px;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.45)'">Rankings</a>
-    <a href="prompt-maker.html" style="color:rgba(255,255,255,.45);text-decoration:none;font-size:.75rem;font-weight:500;letter-spacing:1px;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.45)'">Prompts</a>
     <a href="https://www.youtube.com/@fsw_caw?sub_confirmation=1" target="_blank" class="sub-btn">Subscribe</a>
   </div>
 </nav>
@@ -289,6 +288,8 @@
       box-shadow:0 0 20px rgba(192,0,14,.1), inset 0 1px 0 rgba(255,100,100,.08);
     }
     .np-bst:hover{ box-shadow:0 8px 32px rgba(192,0,14,.25), 0 0 40px rgba(192,0,14,.15); border-color:rgba(192,0,14,.7); }
+    .np-prompts{ background:linear-gradient(135deg,rgba(26,159,212,.08),rgba(26,159,212,.03)); border-color:rgba(26,159,212,.25); color:rgba(26,159,212,.9); }
+    .np-prompts:hover{ box-shadow:0 8px 32px rgba(26,159,212,.2), 0 0 30px rgba(26,159,212,.1); border-color:rgba(26,159,212,.6); }
     .pill-icon{ opacity:.6; flex-shrink:0; }
     .pill-pulse{ width:7px; height:7px; border-radius:50%; background:#ff6b6b; animation:pulse 1.8s infinite; flex-shrink:0; }
     @media(max-width:768px){ .nav-pills{ padding:0 20px 36px; gap:10px; } .nav-pill{ font-size:.8rem; padding:11px 18px; letter-spacing:2px; } }
@@ -305,6 +306,10 @@
     <a href="bst.html" class="nav-pill np-bst">
       <span class="pill-pulse"></span>
       Blood, Sweat &amp; Tears
+    </a>
+    <a href="prompt-maker.html" class="nav-pill np-prompts">
+      <svg class="pill-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Prompt Maker
     </a>
   </div>
 
