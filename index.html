@@ -210,11 +210,6 @@
 <div class="cosmic-tag" style="display:flex;align-items:center;gap:8px;"><span class="logo-top">Brought to you by</span><img src="https://i.imgur.com/ZalooKf.png" alt="Cosmic Energy Drink" style="height:16px;width:auto;"></div>
   </a>
   <div class="nav-r">
-    <button id="mute-btn" onclick="toggleMute()" style="background:none;border:1px solid rgba(192,0,14,.6);color:#fff;height:36px;border-radius:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;padding:0 12px;transition:all .2s;flex-shrink:0;" title="Toggle audio">
-      <svg id="icon-sound" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display:none;flex-shrink:0;"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-      <svg id="icon-mute" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
-      <span id="mute-label" style="font-size:.68rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;font-family:'DM Sans',sans-serif;">Listen</span>
-    </button>
     <a href="roster.html" style="color:rgba(255,255,255,.45);text-decoration:none;font-size:.75rem;font-weight:500;letter-spacing:1px;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.45)'">Roster</a>
     <a href="power-rankings.html" style="color:rgba(255,255,255,.45);text-decoration:none;font-size:.75rem;font-weight:500;letter-spacing:1px;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.45)'">Rankings</a>
     <a href="https://www.youtube.com/@fsw_caw?sub_confirmation=1" target="_blank" class="sub-btn">Subscribe</a>
@@ -623,53 +618,6 @@ function closeTeaser(){
 
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeM(); closeTeaser(); } });
 
-const HERO_ID = 'LFV9xmdWJUY';
-let _muted = true;
-
-// Mobile audio lightbox — only way to get audio on mobile without killing the bg video
-function openHeroAudio(){
-  const lb = document.getElementById('hero-audio-lb');
-  if(lb){ lb.style.display='flex'; document.body.style.overflow='hidden'; return; }
-  const box = document.createElement('div');
-  box.id = 'hero-audio-lb';
-  box.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;';
-  box.innerHTML = `
-    <div style="width:100%;max-width:400px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-        <span style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:#fff;">BST — Official Trailer</span>
-        <button onclick="document.getElementById('hero-audio-lb').style.display='none';document.body.style.overflow='';" style="background:none;border:none;color:#aaa;font-size:22px;cursor:pointer;line-height:1;">✕</button>
-      </div>
-      <div style="position:relative;padding-bottom:56.25%;height:0;border-radius:8px;overflow:hidden;background:#000;">
-        <iframe src="https://www.youtube.com/embed/${HERO_ID}?autoplay=1&mute=0&rel=0&modestbranding=1&playsinline=1"
-          style="position:absolute;inset:0;width:100%;height:100%;border:none;"
-          allow="autoplay; encrypted-media" allowfullscreen></iframe>
-      </div>
-      <p style="margin-top:10px;font-size:.75rem;color:#666;text-align:center;font-family:'DM Sans',sans-serif;">Tap outside or ✕ to close</p>
-    </div>`;
-  box.addEventListener('click', e => { if(e.target===box){ box.style.display='none'; document.body.style.overflow=''; } });
-  document.body.appendChild(box);
-  document.body.style.overflow='hidden';
-}
-
-function updateMuteBtn(){
-  document.getElementById('icon-sound').style.display = _muted ? 'none' : 'block';
-  document.getElementById('icon-mute').style.display = _muted ? 'block' : 'none';
-  document.getElementById('mute-label').textContent = _muted ? 'Listen' : 'Mute';
-  document.getElementById('mute-btn').style.borderColor = _muted ? 'rgba(192,0,14,.6)' : 'rgba(255,255,255,.3)';
-}
-
-function toggleMute(){
-  // On mobile: can't unmute bg iframe — open lightbox with audio instead
-  if(window.innerWidth <= 768){
-    openHeroAudio();
-    return;
-  }
-  // Desktop: reload iframe with mute toggled
-  _muted = !_muted;
-  const iframe = document.getElementById('hero-iframe');
-  iframe.src = `https://www.youtube.com/embed/${HERO_ID}?autoplay=1&mute=${_muted?1:0}&loop=1&playlist=${HERO_ID}&controls=0&disablekb=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&enablejsapi=1`;
-  updateMuteBtn();
-}
 window.addEventListener('scroll',()=>{ document.getElementById('nav').classList.toggle('scrolled',scrollY>50); });
 </script>
 </body>
