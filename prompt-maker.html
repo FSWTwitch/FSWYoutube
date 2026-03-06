@@ -3910,7 +3910,234 @@ function syncContentPadding() {}
             buildInRingPromo(container);
             buildPressConferencePrompt(container);
         }
+
+        let taleOfTapeMinimized = true;
+
+        function buildTaleOfTapePrompt(container) {
+            const id = 'taleoftape';
+            const minimized = taleOfTapeMinimized;
+            const cannedContainer = document.createElement('div');
+            cannedContainer.style.cssText = 'margin-bottom:20px;padding:15px;background:var(--bg-tertiary);border:1px solid var(--border-primary);border-radius:8px;position:relative;';
+
+            // Header
+            const headerRow = document.createElement('div');
+            headerRow.style.cssText = `display:flex;justify-content:space-between;align-items:center;gap:10px;${minimized ? '' : 'margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid var(--border-secondary);'}`;
+            const titleEl = document.createElement('div');
+            titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);";
+            titleEl.textContent = 'Tale of the Tape';
+            const subtitleEl = document.createElement('div');
+            subtitleEl.style.cssText = "font-size:11px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;";
+            subtitleEl.textContent = 'ESPN-style face-off graphic — two wrestlers, split screen standoff with stats.';
+            const menuBtn = document.createElement('button');
+            menuBtn.className = 'hide-section-btn';
+            menuBtn.textContent = minimized ? '↓' : '↑';
+            menuBtn.style.opacity = '0'; menuBtn.style.transition = 'opacity 0.2s';
+            menuBtn.onclick = () => { taleOfTapeMinimized = !taleOfTapeMinimized; renderPrompts(); };
+            if (minimized) {
+                cannedContainer.style.cursor = 'pointer';
+                cannedContainer.onclick = (e) => { if (e.target === menuBtn || (e.target.closest && e.target.closest('button') === menuBtn)) return; taleOfTapeMinimized = !taleOfTapeMinimized; renderPrompts(); };
+                menuBtn.style.display = 'none';
+            } else {
+                cannedContainer.style.cursor = '';
+                cannedContainer.onclick = null;
+                menuBtn.style.display = '';
+                cannedContainer.onmouseenter = () => menuBtn.style.opacity = '1';
+                cannedContainer.onmouseleave = () => menuBtn.style.opacity = '0';
+            }
+            const titleWrap = document.createElement('div'); titleWrap.style.cssText = 'flex:1;min-width:0;';
+            titleWrap.appendChild(titleEl); titleWrap.appendChild(subtitleEl);
+            headerRow.appendChild(titleWrap); headerRow.appendChild(menuBtn);
+            cannedContainer.appendChild(headerRow);
+
+            if (!minimized) {
+                const mkLabel = t => { const l = document.createElement('span'); l.style.cssText = "font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = t; return l; };
+                const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
+                const mkSel = (opts, val) => { const s = document.createElement('select'); s.className = 'item-dropdown'; s.style.cssText = 'width:100%;max-width:none;'; opts.forEach(o => { const op = document.createElement('option'); op.value = o; op.textContent = o; s.appendChild(op); }); if(val) s.value = val; return s; };
+
+                // Stats lookup (baked in from fsw-data.js)
+                const STATS = {"Shibata Reyes": {"height": "5'11\"", "weight": "228 lbs", "location": "Los Angeles, CA", "alignment": "heel", "singlesW": 7, "singlesL": 1, "titleWins": 2, "champion": true, "title": "FSW Ultima Champion", "finisher1": "Street Justice", "finisher2": "Reyes Lock", "nickname": "The Founding Father", "theme": "The Foundations of Decay \u2014 My Chemical Romance", "cameo": "fswyoutub.shibata"}, "Vincent Omen": {"height": "6'0\"", "weight": "269 lbs", "location": "Dublin, Ireland", "alignment": "heel", "singlesW": 2, "singlesL": 1, "titleWins": 1, "champion": false, "title": "", "finisher1": "Rabbit Hole", "finisher2": "Dead Man's Wonderland", "nickname": "The Villain King", "theme": "Violence No Matter What", "cameo": "fswyoutub.vincent"}, "Axel Hernandez": {"height": "6'1\"", "weight": "287 lbs", "location": "San Juan, Puerto Rico", "alignment": "tweener", "singlesW": 0, "singlesL": 2, "titleWins": 0, "champion": false, "title": "", "finisher1": "BFT", "finisher2": "", "nickname": "", "theme": "Animal I Have Become \u2014 Three Days Grace", "cameo": "fswyoutub.axel"}, "Blade Rivera": {"height": "6'0\"", "weight": "228 lbs", "location": "Denver, CO", "alignment": "face", "singlesW": 0, "singlesL": 2, "titleWins": 0, "champion": false, "title": "", "finisher1": "Juggernaut Driver", "finisher2": "Lo Down", "nickname": "", "theme": "Stitches \u2014 Orgy", "cameo": ""}, "Brittany Black": {"height": "5'4\"", "weight": "123 lbs", "location": "Green Bay, WI", "alignment": "heel", "singlesW": 0, "singlesL": 1, "titleWins": 0, "champion": false, "title": "", "finisher1": "", "finisher2": "", "nickname": "", "theme": "B.M.F. \u2014 Upon a Burning Body", "cameo": "fswyoutub.brittany"}, "CJ Moore": {"height": "5'10\"", "weight": "228 lbs", "location": "Pittsburgh, PA", "alignment": "heel", "singlesW": 3, "singlesL": 4, "titleWins": 1, "champion": true, "title": "FSW First Class Champion", "finisher1": "", "finisher2": "", "nickname": "", "theme": "Onna Come Up (Remix ft. G Herbo) \u2014 Lil Eazzyy", "cameo": "fswyoutub.cj"}, "Henry Carter": {"height": "6'5\"", "weight": "260 lbs", "location": "England", "alignment": "face", "singlesW": 1, "singlesL": 0, "titleWins": 0, "champion": false, "title": "", "finisher1": "", "finisher2": "", "nickname": "", "theme": "On My Own \u2014 Three Days Grace", "cameo": "fswyoutub2.henry"}, "JB Hayes": {"height": "6'3\"", "weight": "225 lbs", "location": "Vallejo, CA", "alignment": "tweener", "singlesW": 2, "singlesL": 1, "titleWins": 0, "champion": false, "title": "", "finisher1": "", "finisher2": "", "nickname": "", "theme": "Crest Shit or No Shit \u2014 Dubee", "cameo": "JBHayes707"}, "KJ Hunter": {"height": "6'1\"", "weight": "190 lbs", "location": "Montgomery, Alabama", "alignment": "face", "singlesW": 1, "singlesL": 5, "titleWins": 0, "champion": false, "title": "", "finisher1": "Hunter Clash", "finisher2": "", "nickname": "The One And Only Icon, Phenomenal One", "theme": "", "cameo": "fswyoutub.kj"}, "Matheo": {"height": "6'5\"", "weight": "241 lbs", "location": "France", "alignment": "heel", "singlesW": 1, "singlesL": 0, "titleWins": 0, "champion": false, "title": "", "finisher1": "The French Law", "finisher2": "The French Knee", "nickname": "The French General", "theme": "Fashion EDM Technology \u2014 Infraction", "cameo": "fswyoutub.matheo"}, "Smoove Marino": {"height": "6'2\"", "weight": "286 lbs", "location": "", "alignment": "heel", "singlesW": 2, "singlesL": 1, "titleWins": 0, "champion": false, "title": "", "finisher1": "", "finisher2": "", "nickname": "", "theme": "Out Of My Hands \u2014 Future & Metro Boomin", "cameo": "JAHH444_MarinoX"}, "Travis Valentine": {"height": "6'3\"", "weight": "260 lbs", "location": "Chicago, IL", "alignment": "face", "singlesW": 1, "singlesL": 2, "titleWins": 0, "champion": false, "title": "", "finisher1": "Hollow Tip", "finisher2": "Head Tap", "nickname": "The King of Carnage", "theme": "Worked Up \u2014 PHIX", "cameo": "fswyoutub.travis"}, "Jason Prince": {"height": "6'2\"", "weight": "235 lbs", "location": "Paducah, KY", "alignment": "face", "singlesW": 1, "singlesL": 1, "titleWins": 0, "champion": false, "title": "", "finisher1": "", "finisher2": "", "nickname": "", "theme": "OPPS ft. Dave East \u2014 Jahlil Beats & CRMC", "cameo": "fswyoutub.jason"}, "The Godson": {"height": "6'4\"", "weight": "254 lbs", "location": "Hackensack, NJ", "alignment": "face", "singlesW": 0, "singlesL": 1, "titleWins": 0, "champion": false, "title": "", "finisher1": "", "finisher2": "", "nickname": "Supreme Purple Pimp", "theme": "Original Theme", "cameo": "fswyoutub2.godson"}, "Motor Hunter": {"height": "6'5\"", "weight": "244 lbs", "location": "Los Angeles, CA", "alignment": "heel", "singlesW": 6, "singlesL": 4, "titleWins": 1, "champion": false, "title": "", "finisher1": "Final Turn", "finisher2": "Lights Out", "nickname": "", "theme": "Dead Reckoning \u2014 Ethan Meixsell", "cameo": "fswyoutub.motor"}, "J1": {"height": "6'3\"", "weight": "240 lbs", "location": "Yorkshire, England", "alignment": "face", "singlesW": 2, "singlesL": 0, "titleWins": 0, "champion": false, "title": "", "finisher1": "", "finisher2": "", "nickname": "The Hybrid", "theme": "Make It Make Sense \u2014 A Day to Remember", "cameo": "fswyoutub.j1"}, "Arnez Jackson": {"height": "6'0\"", "weight": "292 lbs", "location": "Detroit, Michigan", "alignment": "face", "singlesW": 1, "singlesL": 0, "titleWins": 0, "champion": false, "title": "", "finisher1": "", "finisher2": "", "nickname": "", "theme": "Hail Mary \u2014 2Pac", "cameo": "fswoutub2.arnez"}, "Jaelyn Garcia": {"height": "5'11\"", "weight": "204 lbs", "location": "Chicago, Illinois", "alignment": "heel", "singlesW": 0, "singlesL": 1, "titleWins": 0, "champion": false, "title": "", "finisher1": "", "finisher2": "", "nickname": "", "theme": "Lies \u2014 Evanescence", "cameo": "fswyoutub.jaelyn"}, "Javi Hernandez": {"height": "5'7\"", "weight": "200 lbs", "location": "Buffalo, New York", "alignment": "face", "singlesW": 1, "singlesL": 1, "titleWins": 0, "champion": false, "title": "", "finisher1": "Operation Dragon 1", "finisher2": "Frog Splash 8", "nickname": "", "theme": "El Drip \u2014 Natanael Cano", "cameo": "fswyoutub.javi"}, "St. Peter Reyes": {"height": "6'0\"", "weight": "215 lbs", "location": "Puerto Rico", "alignment": "face", "singlesW": 2, "singlesL": 1, "titleWins": 1, "champion": false, "title": "#1 Contender \u2014 FSW Supreme Championship", "finisher1": "Perrero Powerbomb", "finisher2": "SanDeVistan", "nickname": "Vaquero", "theme": "VERDE MENTA \u2014 Rauw Alejandro", "cameo": "fswyoutub.stpeter"}, "Kyle Vance": {"height": "5'9\"", "weight": "174 lbs", "location": "Phoenix, AZ", "alignment": "face", "singlesW": 2, "singlesL": 0, "titleWins": 1, "champion": true, "title": "FSW Mayhem Champion", "finisher1": "Cyclone Crash", "finisher2": "Sky Vance Spiral", "nickname": "Next Level", "theme": "Harlem \u2014 New Politics", "cameo": "fswyoutub.kyle"}, "Derrick Maximus": {"height": "6'0\"", "weight": "198 lbs", "location": "Beverly Hills, CA", "alignment": "heel", "singlesW": 1, "singlesL": 4, "titleWins": 1, "champion": false, "title": "", "finisher1": "Maximum Odds", "finisher2": "", "nickname": "The Unconquered, Self-Crowned Malefactor", "theme": "Sirius \u2014 Dartul", "cameo": "fswyoutub.derrick"}, "Damian Rage": {"height": "6'0\"", "weight": "245 lbs", "location": "Milwaukee, WI", "alignment": "heel", "singlesW": 2, "singlesL": 1, "titleWins": 1, "champion": false, "title": "", "finisher1": "Lucifer's Downfall", "finisher2": "End of Days", "nickname": "The Destroyer", "theme": "Violence No Matter What", "cameo": "fswyoutube.damian"}, "Alexa Rivera": {"height": "5'6\"", "weight": "210 lbs", "location": "Buffalo, New York", "alignment": "face", "singlesW": 2, "singlesL": 0, "titleWins": 1, "champion": true, "title": "FSW Diamond Champion", "finisher1": "", "finisher2": "", "nickname": "The Deadline", "theme": "Queen \u2014 Loren Gray", "cameo": "fswyoutub.alexa"}, "William Kennedy": {"height": "6'10\"", "weight": "275 lbs", "location": "Detroit, Michigan", "alignment": "heel", "singlesW": 2, "singlesL": 2, "titleWins": 0, "champion": false, "title": "#1 Contender \u2014 Supreme Championship", "finisher1": "The Will-Killer", "finisher2": "RDS (Real Deal Sault)", "nickname": "The Real Deal \u00b7 The Detroit Playa", "theme": "Untouchable (Swizz Beatz Remix) \u2014 2Pac", "cameo": "fswyoutub.william"}, "Kendrick Montana": {"height": "6'0\"", "weight": "210 lbs", "location": "Santo Domingo, Dominican Republic", "alignment": "face", "singlesW": 1, "singlesL": 1, "titleWins": 0, "champion": false, "title": "#1 Contender \u2014 FSW Ultima Championship", "finisher1": "Divinity Within", "finisher2": "FTH V2", "nickname": "Prince of the Rose", "theme": "Guiding Light \u2014 Caskets", "cameo": "fswyoutub2.kendrick"}};
+
+                // Helper: open wrestler picker
+                function openWrestlerPicker(btn) {
+                    const panel = document.getElementById('detailsPanel');
+                    openMobilePanel('Select Wrestler'); clearPanel();
+                    const t = document.createElement('div'); t.className = 'details-title'; t.textContent = 'Select Wrestler'; panel.appendChild(t);
+                    const cancelB = document.createElement('button'); cancelB.textContent = 'Cancel';
+                    cancelB.style.cssText = "margin-bottom:12px;padding:7px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;border-radius:4px;border:1px solid var(--border-input);background:transparent;color:var(--text-tertiary);text-transform:uppercase;";
+                    cancelB.onclick = () => { closeMobilePanel(); clearPanel(); }; panel.appendChild(cancelB);
+                    if (btn.textContent !== '+') {
+                        const clrB = document.createElement('button'); clrB.textContent = 'Clear';
+                        clrB.style.cssText = "display:block;margin-bottom:12px;padding:7px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;border-radius:4px;border:1px solid var(--accent-red);background:transparent;color:var(--accent-red);text-transform:uppercase;";
+                        clrB.onclick = () => { btn.textContent = '+'; btn.classList.remove('filled'); closeMobilePanel(); clearPanel(); }; panel.appendChild(clrB);
+                    }
+                    appendPickerSortFilter(panel, () => {});
+                    applyPickerSortFilter(rosterData).forEach(w => {
+                        const row = document.createElement('div');
+                        row.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:4px;padding:8px 10px;background:var(--bg-secondary);border:1px solid var(--border-primary);border-radius:4px;cursor:pointer;transition:all 0.15s;';
+                        row.onmouseenter = () => { row.style.background = 'var(--bg-tertiary)'; row.style.borderColor = 'var(--accent-blue)'; };
+                        row.onmouseleave = () => { row.style.background = 'var(--bg-secondary)'; row.style.borderColor = 'var(--border-primary)'; };
+                        const nd = document.createElement('div'); nd.style.cssText = 'flex:1;font-size:13px;font-weight:500;color:var(--text-primary);'; nd.textContent = w.name;
+                        const cd = document.createElement('div'); cd.style.cssText = 'font-size:11px;color:var(--text-muted);'; cd.textContent = w.cameo ? (w.cameo.includes('.') ? '@'+w.cameo : '@fswyoutub.'+w.cameo) : '';
+                        row.appendChild(nd); if(w.cameo) row.appendChild(cd);
+                        row.onclick = () => { btn.textContent = w.name; btn.classList.add('filled'); closeMobilePanel(); clearPanel(); };
+                        panel.appendChild(row);
+                    });
+                }
+
+                // Wrestler slots — same row, same pattern as crowd reaction
+                const w1Btn = document.createElement('button'); w1Btn.className = 'wrestler-slot'; w1Btn.textContent = '+';
+                const w2Btn = document.createElement('button'); w2Btn.className = 'wrestler-slot'; w2Btn.textContent = '+';
+                w1Btn.onclick = () => openWrestlerPicker(w1Btn);
+                w2Btn.onclick = () => openWrestlerPicker(w2Btn);
+                const wSlotsLabel = document.createElement('div'); wSlotsLabel.style.cssText = "font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;"; wSlotsLabel.innerHTML = 'Wrestlers <span style="color:#c0392b;">*</span>';
+                const wSlotsRow = document.createElement('div'); wSlotsRow.style.cssText = 'display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center;';
+                wSlotsRow.appendChild(w1Btn); wSlotsRow.appendChild(w2Btn);
+                cannedContainer.appendChild(wSlotsLabel); cannedContainer.appendChild(wSlotsRow);
+
+                // Attire
+                const attireSel = mkSel(['Default Ring Gear','Combat Gear — Tactical (black compression gear, knee pads, wrist tape, mouthguard)','Combat Gear — Street (ripped jeans, boots, fitted tee)','Suit / Business Attire','Entrance Gear (robe, jacket, fur coat)','Championship Gear (title belt draped over shoulder)','Casual Streetwear'], 'Default Ring Gear');
+                cannedContainer.appendChild(fieldWrap('Attire:', attireSel));
+
+                // Energy / Mood
+                const energySel = mkSel(['Intense — jaw set, laser focus, barely controlled aggression','Cold & Calculated — emotionless, dominant, intimidating','Confident & Relaxed — smirking, arms crossed, unbothered','Fired Up — veins showing, breathing heavy, war face','Taunting — pointing, trash talking, goading the other','Respectful Standoff — both professionals, mutual recognition'], 'Intense — jaw set, laser focus, barely controlled aggression');
+                cannedContainer.appendChild(fieldWrap('Energy / Mood:', energySel));
+
+                // Background theme
+                const bgSel = mkSel(['Arena — Dark Stage (dramatic spotlight, fog, LED pyro in background)','Arena — Full Crowd (packed arena, cheering crowd blurred behind)','Neutral Void — Black Background (pure ESPN studio graphic style)','Neutral Void — Dark Red Gradient (blood sport feel)','Split Screen — Each wrestler on their home turf','Locker Room Hallway — concrete walls, harsh lighting','Press Conference — banner backdrop, media flash photography'], 'Arena — Dark Stage (dramatic spotlight, fog, LED pyro in background)');
+                cannedContainer.appendChild(fieldWrap('Background:', bgSel));
+
+                // Camera angle
+                const camSel = mkSel(['Slow push-in — camera drifts toward both as they face off','Static — locked off, symmetrical ESPN graphic style','Rotating 360 — camera orbits the standoff','Low angle looking up — making both look massive and imposing','Dutch angle — slight tilt for unease and tension'], 'Slow push-in — camera drifts toward both as they face off');
+                cannedContainer.appendChild(fieldWrap('Camera:', camSel));
+
+                // Buttons
+                const btnRow = document.createElement('div'); btnRow.style.cssText = 'display:flex;gap:8px;margin-bottom:15px;margin-top:4px;';
+                const generateBtn = document.createElement('button'); generateBtn.className = 'add-commercial-btn'; generateBtn.textContent = 'Generate'; generateBtn.style.marginBottom = '0';
+
+                generateBtn.onclick = () => {
+                    const n1 = w1Btn.textContent !== '+' ? w1Btn.textContent.trim() : null;
+                    const n2 = w2Btn.textContent !== '+' ? w2Btn.textContent.trim() : null;
+                    if (!n1 || !n2) { alert('Please select both wrestlers.'); return; }
+                    if (n1 === n2) { alert('Please select two different wrestlers.'); return; }
+
+                    const s1 = STATS[n1] || {};
+                    const s2 = STATS[n2] || {};
+
+                    const getCameo = (name, s) => s.cameo ? (s.cameo.includes('.') ? '@'+s.cameo : '@fswyoutub.'+s.cameo) : name;
+                    const c1 = getCameo(n1, s1), c2 = getCameo(n2, s2);
+
+                    const attire = attireSel.value;
+                    const energy = energySel.value.split(' — ')[0];
+                    const energyDesc = energySel.value;
+                    const bg = bgSel.value;
+                    const cam = camSel.value;
+
+                    const buildStats = (name, s, cameo) => {
+                        const rec = `${s.singlesW || 0}W – ${s.singlesL || 0}L`;
+                        const fins = [s.finisher1, s.finisher2].filter(Boolean).join(' / ') || 'Unknown';
+                        const champ = s.champion ? `✓ ${s.title}` : `${s.titleWins || 0} career title reigns`;
+                        return `${cameo.toUpperCase()}${s.nickname ? ' ("' + s.nickname + '")' : ''}
+  Height: ${s.height || 'N/A'} | Weight: ${s.weight || 'N/A'} | From: ${s.location || 'N/A'}
+  Singles Record: ${rec}
+  Title History: ${champ}
+  Finisher(s): ${fins}`;
+                    };
+
+                    const bgDescMap = {
+                        'Arena — Dark Stage (dramatic spotlight, fog, LED pyro in background)': 'a dramatic dark arena stage — single overhead spotlight cutting through fog, distant LED pyro bursts, the ring barely visible far behind them',
+                        'Arena — Full Crowd (packed arena, cheering crowd blurred behind)': 'a packed arena floor — 20,000 fans blurred behind them, arena lights blazing overhead, the crowd a wall of energy',
+                        'Neutral Void — Black Background (pure ESPN studio graphic style)': 'a pure black void — clean ESPN broadcast studio aesthetic, no environment, only them and their presence',
+                        'Neutral Void — Dark Red Gradient (blood sport feel)': 'a deep crimson-to-black gradient void — blood sport atmosphere, no location, raw combat energy',
+                        'Split Screen — Each wrestler on their home turf': `a split screen — ${c1} on the left in their signature environment, ${c2} on the right in theirs. A sharp diagonal cut divides the screen at the center.`,
+                        'Locker Room Hallway — concrete walls, harsh lighting': 'a concrete arena backstage hallway — overhead fluorescent strips, equipment trunks along the walls, shadows heavy',
+                        'Press Conference — banner backdrop, media flash photography': 'a press conference setup — branded FSW step-and-repeat banner behind them, media cameras flashing, formal confrontation energy'
+                    };
+                    const bgDesc = bgDescMap[bg] || bg;
+
+                    const camDescMap = {
+                        'Slow push-in — camera drifts toward both as they face off': 'Camera begins on a wide establishing shot showing both wrestlers fully, then slowly pushes in over 8 seconds — ending on a tight two-shot at chest level. Slight rack focus between them.',
+                        'Static — locked off, symmetrical ESPN graphic style': 'Camera locked off. Perfectly symmetrical. Both wrestlers centered and equidistant from frame edge. No movement. Clean broadcast graphic feel.',
+                        'Rotating 360 — camera orbits the standoff': 'Camera orbits the standoff in a slow 180-degree arc from front to profile. Both wrestlers hold their pose. The environment rotates around them.',
+                        'Low angle looking up — making both look massive and imposing': 'Camera positioned at knee height, angled sharply upward. Both wrestlers tower over the lens. Ceiling or sky visible above. Maximum size and dominance.',
+                        'Dutch angle — slight tilt for unease and tension': 'Camera tilted 12–15 degrees off horizontal — Dutch angle. Creates unease and tension. Both wrestlers still symmetrical within the tilted frame.'
+                    };
+                    const camDesc = camDescMap[cam] || cam;
+
+                    const prompt = `1920x1080 true 1080p cinematic broadcast realism. 8–10 seconds. No fade-in. No fade-out.
+
+CHARACTER LOCK — ABSOLUTE:
+${c1} and ${c2} are two distinct individuals. No morphing. No feature blending. Each maintains their exact appearance, body type, and presence from first frame to last. No drift. No reinterpretation.
+
+SCENE — TALE OF THE TAPE STANDOFF:
+${c1} and ${c2} stand facing each other — inches apart, neither backing down. Set against ${bgDesc}.
+
+Both wearing: ${attire}.
+
+ENERGY — ${energyDesc}.
+They do not touch. No physicality. Pure presence and tension.
+
+POSITIONING:
+${c1} on the LEFT side of frame. ${c2} on the RIGHT side of frame.
+Both face inward — facing each other and slightly toward camera.
+Shoulders square. Chests up. Eyes locked.
+
+CAMERA:
+${camDesc}
+
+Lens: 85mm full-frame equivalent. Shallow depth of field — faces sharp, background smooth bokeh.
+Lighting: Split key lighting — each wrestler lit from their outside edge, center dark, creating dramatic separation. Rim lighting traces their silhouettes. No flat lighting.
+
+TALE OF THE TAPE — STATS GRAPHIC (overlay):
+Display as a broadcast ESPN-style lower-third split graphic. Left side for ${c1}, right side for ${c2}. Center shows "TALE OF THE TAPE" in Bebas-style block letters.
+
+${buildStats(n1, s1, c1)}
+
+VS
+
+${buildStats(n2, s2, c2)}
+
+GRAPHIC DESIGN:
+Dark semi-transparent overlay bar at bottom third of screen. Clean sans-serif font. Red accent lines. Each stat appears sequentially with a subtle slide-in animation from its respective side. The word "VS" pulses in red at center.
+
+AUDIO:
+Deep cinematic drone. Low bass tension build. No commentary. No crowd noise. Pure pre-match weight.
+
+This must feel like a legitimate sports broadcast face-off package — the kind shown before a championship main event.`;
+
+                    outputTextarea.value = prompt;
+                    outputContainer.style.display = 'block';
+                };
+
+                const clearBtn = document.createElement('button'); clearBtn.textContent = 'Clear';
+                clearBtn.style.cssText = "padding:7px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;border-radius:4px;border:1px solid var(--border-input);background:transparent;color:var(--text-tertiary);text-transform:uppercase;";
+                clearBtn.onclick = () => {
+                    w1Btn.textContent = '+'; w1Btn.classList.remove('filled');
+                    w2Btn.textContent = '+'; w2Btn.classList.remove('filled');
+                    attireSel.selectedIndex = 0; energySel.selectedIndex = 0;
+                    bgSel.selectedIndex = 0; camSel.selectedIndex = 0;
+                    outputContainer.style.display = 'none'; outputTextarea.value = '';
+                };
+                btnRow.appendChild(generateBtn); btnRow.appendChild(clearBtn);
+                cannedContainer.appendChild(btnRow);
+
+                // Output
+                const outputContainer = document.createElement('div'); outputContainer.style.display = 'none';
+                const outputLabel = document.createElement('div');
+                outputLabel.style.cssText = "font-size:10px;font-weight:700;font-family:'Bebas Neue',sans-serif;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;";
+                outputLabel.textContent = 'Generated Prompt:';
+                const outputTextarea = document.createElement('textarea');
+                outputTextarea.className = 'detail-textarea'; outputTextarea.style.minHeight = '240px'; outputTextarea.readOnly = true;
+                const copyBtn = document.createElement('button'); copyBtn.className = 'add-commercial-btn'; copyBtn.textContent = 'Copy';
+                copyBtn.style.cssText = 'margin-top:8px;margin-bottom:0;';
+                copyBtn.onclick = () => { navigator.clipboard.writeText(outputTextarea.value).then(() => { copyBtn.textContent = 'Copied!'; copyBtn.style.background = '#107c10'; setTimeout(() => { copyBtn.textContent = 'Copy'; copyBtn.style.background = ''; }, 2000); }).catch(() => alert('Failed to copy')); };
+                outputContainer.appendChild(outputLabel); outputContainer.appendChild(outputTextarea); outputContainer.appendChild(copyBtn);
+                cannedContainer.appendChild(outputContainer);
+            }
+            container.appendChild(cannedContainer);
+        }
+
         function renderDynamicsPrompts(container) {
+            buildTaleOfTapePrompt(container);
             buildCrowdReactionPrompt(container);
             buildTitantronPrompt(container);
             buildVignettePrompt(container);
@@ -5022,21 +5249,38 @@ function syncContentPadding() {}
                         const clrB = document.createElement('button'); clrB.textContent = 'Clear'; clrB.style.cssText = "display:block;margin-bottom:12px;padding:7px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;border-radius:4px;border:1px solid var(--accent-red);background:transparent;color:var(--accent-red);text-transform:uppercase;";
                         clrB.onclick = () => { selectedSponsor = null; renderSlotBtn(); closeMobilePanel(); clearPanel(); }; panel.appendChild(clrB);
                     }
-                    if (pickList.length === 0) { const em = document.createElement('p'); em.style.cssText = 'color:var(--text-muted);font-size:13px;padding:20px 0;'; em.textContent = isMovie ? 'No movies added yet. Add in the Sponsors tab.' : 'No sponsors added yet.'; panel.appendChild(em); return; }
-                    pickList.forEach(sp => {
-                        const card = document.createElement('div'); card.style.cssText = 'margin-bottom:6px;padding:10px 12px;background:var(--bg-secondary);border:1px solid var(--border-primary);border-radius:6px;cursor:pointer;transition:all 0.15s;';
-                        card.onmouseenter = () => { card.style.background = 'var(--bg-tertiary)'; card.style.borderColor = 'var(--accent-blue)'; };
-                        card.onmouseleave = () => { card.style.background = 'var(--bg-secondary)'; card.style.borderColor = 'var(--border-primary)'; };
-                        const cTop = document.createElement('div'); cTop.style.cssText = 'display:flex;align-items:center;justify-content:space-between;gap:8px;';
-                        const pName = document.createElement('div'); pName.style.cssText = 'font-size:14px;font-weight:700;color:var(--text-primary);'; pName.textContent = sp.product;
-                        const cBadge = document.createElement('div'); cBadge.style.cssText = 'font-size:9px;font-weight:700;color:var(--text-muted);padding:2px 6px;background:var(--bg-tertiary);border:1px solid var(--border-primary);border-radius:3px;text-transform:uppercase;letter-spacing:0.5px;flex-shrink:0;';
-                        cBadge.textContent = sp.category || '';
-                        cTop.appendChild(pName); cTop.appendChild(cBadge);
-                        const wName = document.createElement('div'); wName.style.cssText = 'font-size:12px;color:var(--text-secondary);margin-top:3px;'; wName.textContent = sp.wrestler || '';
-                        card.appendChild(cTop); card.appendChild(wName);
-                        card.onclick = () => { selectedSponsor = sp; renderSlotBtn(); closeMobilePanel(); clearPanel(); };
-                        panel.appendChild(card);
-                    });
+                    if (pickList.length === 0) { const em = document.createElement('p'); em.style.cssText = 'color:var(--text-muted);font-size:13px;padding:20px 0;'; em.textContent = isMovie ? 'No movies added yet.' : 'No sponsors added yet.'; panel.appendChild(em); return; }
+                    // Sort dropdown
+                    const sortRow = document.createElement('div'); sortRow.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:10px;';
+                    const sortLbl = document.createElement('span'); sortLbl.style.cssText = 'font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;flex-shrink:0;'; sortLbl.textContent = 'Sort:';
+                    const sortSel = document.createElement('select'); sortSel.className = 'item-dropdown'; sortSel.style.cssText = 'flex:1;';
+                    ['Product A–Z', 'Wrestler A–Z'].forEach(o => { const op = document.createElement('option'); op.value = o; op.textContent = o; sortSel.appendChild(op); });
+                    sortRow.appendChild(sortLbl); sortRow.appendChild(sortSel); panel.appendChild(sortRow);
+                    // List container
+                    const listContainer = document.createElement('div');
+                    panel.appendChild(listContainer);
+                    const renderList = () => {
+                        listContainer.innerHTML = '';
+                        const sorted = [...pickList].sort((a, b) => sortSel.value === 'Wrestler A–Z'
+                            ? (a.wrestler||'').localeCompare(b.wrestler||'')
+                            : (a.product||'').localeCompare(b.product||''));
+                        sorted.forEach(sp => {
+                            const card = document.createElement('div'); card.style.cssText = 'margin-bottom:6px;padding:10px 12px;background:var(--bg-secondary);border:1px solid var(--border-primary);border-radius:6px;cursor:pointer;transition:all 0.15s;';
+                            card.onmouseenter = () => { card.style.background = 'var(--bg-tertiary)'; card.style.borderColor = 'var(--accent-blue)'; };
+                            card.onmouseleave = () => { card.style.background = 'var(--bg-secondary)'; card.style.borderColor = 'var(--border-primary)'; };
+                            const cTop = document.createElement('div'); cTop.style.cssText = 'display:flex;align-items:center;justify-content:space-between;gap:8px;';
+                            const pName = document.createElement('div'); pName.style.cssText = 'font-size:14px;font-weight:700;color:var(--text-primary);'; pName.textContent = sp.product;
+                            const cBadge = document.createElement('div'); cBadge.style.cssText = 'font-size:9px;font-weight:700;color:var(--text-muted);padding:2px 6px;background:var(--bg-tertiary);border:1px solid var(--border-primary);border-radius:3px;text-transform:uppercase;letter-spacing:0.5px;flex-shrink:0;';
+                            cBadge.textContent = sp.category || '';
+                            cTop.appendChild(pName); cTop.appendChild(cBadge);
+                            const wName = document.createElement('div'); wName.style.cssText = 'font-size:12px;color:var(--text-secondary);margin-top:3px;'; wName.textContent = sp.wrestler || '';
+                            card.appendChild(cTop); card.appendChild(wName);
+                            card.onclick = () => { selectedSponsor = sp; renderSlotBtn(); closeMobilePanel(); clearPanel(); };
+                            listContainer.appendChild(card);
+                        });
+                    };
+                    sortSel.onchange = renderList;
+                    renderList();
                 };
                 slotWrap.appendChild(slotBtn); cannedContainer.appendChild(slotWrap);
 
@@ -6732,6 +6976,11 @@ document.addEventListener('DOMContentLoaded', function() {
     rosterData.length = 0;
     _fswRoster.forEach(function(w){ rosterData.push(w); });
     crewData = _fswCrew;
+
+    // Populate sponsorsData from fsw-data.js endorsements (baked in statically)
+    var _fswSponsors = [{"id": "sp-8", "product": "5-Hour Energy", "wrestler": "Blade Rivera", "category": "Other"}, {"id": "sp-47", "product": "Adidas", "wrestler": "William Kennedy", "category": "Apparel"}, {"id": "sp-9", "product": "Amiri", "wrestler": "Brittany Black", "category": "Apparel"}, {"id": "sp-4", "product": "Beats by Dre", "wrestler": "Shibata Reyes", "category": "Tech"}, {"id": "sp-21", "product": "Budweiser", "wrestler": "Travis Valentine", "category": "Food & Drink"}, {"id": "sp-15", "product": "Caesar's Rewards", "wrestler": "KJ Hunter", "category": "Entertainment"}, {"id": "sp-39", "product": "Calvin Klein", "wrestler": "Derrick Maximus", "category": "Apparel"}, {"id": "sp-36", "product": "Carl's Jr", "wrestler": "Kyle Vance", "category": "Food & Drink"}, {"id": "sp-11", "product": "Carnival Cruise", "wrestler": "CJ Moore", "category": "Travel"}, {"id": "sp-31", "product": "Chick-fil-A", "wrestler": "Javi Hernandez", "category": "Food & Drink"}, {"id": "sp-30", "product": "Chili's", "wrestler": "Jaelyn Garcia", "category": "Food & Drink"}, {"id": "sp-40", "product": "Cosmic Energy Drink", "wrestler": "Derrick Maximus", "category": "Food & Drink"}, {"id": "sp-44", "product": "Crocs", "wrestler": "Derrick Maximus", "category": "Other"}, {"id": "sp-18", "product": "Denny's", "wrestler": "Matheo", "category": "Other"}, {"id": "sp-32", "product": "Diet Coke", "wrestler": "Javi Hernandez", "category": "Other"}, {"id": "sp-24", "product": "DoorDash", "wrestler": "Jason Prince", "category": "Other"}, {"id": "sp-12", "product": "Doritos", "wrestler": "CJ Moore", "category": "Other"}, {"id": "sp-28", "product": "Dr. Martens", "wrestler": "J1", "category": "Other"}, {"id": "sp-16", "product": "DraftKings", "wrestler": "KJ Hunter", "category": "Gaming"}, {"id": "sp-1", "product": "GEICO", "wrestler": "Shibata Reyes", "category": "Finance"}, {"id": "sp-49", "product": "Gatorade", "wrestler": "Kendrick Montana", "category": "Food & Drink"}, {"id": "sp-20", "product": "Hennessy", "wrestler": "Smoove Marino", "category": "Food & Drink"}, {"id": "sp-29", "product": "Hennessy", "wrestler": "Arnez Jackson", "category": "Food & Drink"}, {"id": "sp-45", "product": "Hot Pockets", "wrestler": "Damian Rage", "category": "Other"}, {"id": "sp-17", "product": "Ignite Wireless", "wrestler": "KJ Hunter", "category": "Other"}, {"id": "sp-13", "product": "Jack Daniel's", "wrestler": "Henry Carter", "category": "Other"}, {"id": "sp-14", "product": "Jack in the Box", "wrestler": "JB Hayes", "category": "Food & Drink"}, {"id": "sp-5", "product": "Jameson Whiskey", "wrestler": "Vincent Omen", "category": "Other"}, {"id": "sp-35", "product": "Johnnie Walker", "wrestler": "St. Peter Reyes", "category": "Other"}, {"id": "sp-25", "product": "Kit Kat", "wrestler": "The Godson", "category": "Other"}, {"id": "sp-19", "product": "Monster Energy", "wrestler": "Matheo", "category": "Other"}, {"id": "sp-43", "product": "Nike", "wrestler": "Derrick Maximus", "category": "Other"}, {"id": "sp-2", "product": "Norton LifeLock", "wrestler": "Shibata Reyes", "category": "Tech"}, {"id": "sp-22", "product": "Old Spice", "wrestler": "Travis Valentine", "category": "Other"}, {"id": "sp-26", "product": "Red Bull", "wrestler": "Motor Hunter", "category": "Other"}, {"id": "sp-34", "product": "Ringfizz", "wrestler": "St. Peter Reyes", "category": "Other"}, {"id": "sp-48", "product": "Rolex", "wrestler": "William Kennedy", "category": "Other"}, {"id": "sp-37", "product": "Skechers", "wrestler": "Kyle Vance", "category": "Other"}, {"id": "sp-7", "product": "Slim Jim", "wrestler": "Axel Hernandez", "category": "Other"}, {"id": "sp-23", "product": "Snickers", "wrestler": "Jason Prince", "category": "Other"}, {"id": "sp-46", "product": "State Farm", "wrestler": "Alexa Rivera", "category": "Other"}, {"id": "sp-33", "product": "Subway", "wrestler": "Javi Hernandez", "category": "Other"}, {"id": "sp-27", "product": "Tag Heuer", "wrestler": "J1", "category": "Other"}, {"id": "sp-6", "product": "Takis", "wrestler": "Axel Hernandez", "category": "Other"}, {"id": "sp-3", "product": "Tap Out", "wrestler": "Shibata Reyes", "category": "Apparel"}, {"id": "sp-41", "product": "Toyota", "wrestler": "Derrick Maximus", "category": "Other"}, {"id": "sp-10", "product": "Versace", "wrestler": "Brittany Black", "category": "Other"}, {"id": "sp-38", "product": "Vitamin Water", "wrestler": "Kyle Vance", "category": "Other"}, {"id": "sp-42", "product": "Y by YSL", "wrestler": "Derrick Maximus", "category": "Other"}];
+    sponsorsData.length = 0;
+    _fswSponsors.forEach(function(s){ sponsorsData.push(s); });
 
     // Load saved My Prompts
     try { var s = localStorage.getItem('fsw-prompts-data'); if(s) promptsData = JSON.parse(s); } catch(e) {}
