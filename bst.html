@@ -114,9 +114,12 @@
   .stat-lbl{ font-size:.6rem; letter-spacing:2px; color:var(--muted); text-transform:uppercase; margin-top:2px; }
 
   /* FOOTER */
-  .bst-footer{ text-align:center; padding:30px; font-size:.62rem; color:var(--muted); letter-spacing:1px; border-top:1px solid var(--border); }
-  .bst-footer .cosmic{ display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:10px; }
-  .bst-footer .cosmic span{ font-style:italic; font-weight:300; color:var(--muted); }
+  .bst-footer{ text-align:center; padding:40px 30px 30px; font-size:.62rem; color:var(--muted); letter-spacing:1px; border-top:1px solid var(--border); }
+  .sponsors-label{ font-size:.52rem; letter-spacing:3px; color:rgba(255,255,255,.3); text-transform:uppercase; margin-bottom:20px; }
+  .sponsors-row{ display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:36px; margin-bottom:20px; }
+  .sponsors-row img{ height:40px; width:auto; opacity:.7; transition:opacity .2s, transform .2s; }
+  .sponsors-row img:hover{ opacity:1; transform:scale(1.05); }
+  .fiction-note{ font-size:.65rem; color:rgba(255,255,255,.25); letter-spacing:1px; margin-top:16px; font-style:italic; }
 
   @media(max-width:768px){
     nav{ padding:14px 20px; }
@@ -178,6 +181,12 @@
 </div>
 
 <!-- PRE-SHOW -->
+<div style="max-width:960px;margin:0 auto 16px;padding:0 40px;">
+  <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.4);text-decoration:none;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;font-weight:600;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.4)'">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    Back to Home
+  </a>
+</div>
 <div class="matches-section" style="padding-bottom:0;">
   <div class="section-label">Pre-Show</div>
   <div class="section-title" style="margin-bottom:24px;">Before The <span>Storm</span></div>
@@ -195,7 +204,6 @@
           <div class="vs-text">VS</div>
           <div class="fighter-name challenger">Jason Prince</div>
         </div>
-        <div class="match-note">The pre-show opener. Both looking to make a statement before the lights get brighter.</div>
       </div>
       <div class="match-right"></div>
     </div>
@@ -215,7 +223,7 @@
           <div class="vs-text">VS</div>
           <div class="fighter-name challenger" style="font-size:1.4rem;">Travis &amp; KJ Hunter</div>
         </div>
-        <div class="match-note">Damian Rage &amp; Vincent Omen defend The Syndicate's gold. Burn the order. Build the Syndicate.</div>
+
       </div>
       <div class="match-right">
         <div class="champ-label">Champions</div>
@@ -251,7 +259,7 @@
           <div class="vs-text">VS</div>
           <div class="fighter-name challenger">Shibata Reyes</div>
         </div>
-        <div class="match-note">The rooftop wasn't enough. Now they finish it.</div>
+        <div class="match-note">"He was told to take what he wanted. He chose the throne."</div>
       </div>
       <div class="match-right">
         <div class="champ-label">Champion</div>
@@ -273,7 +281,7 @@
           <div class="vs-text">VS</div>
           <div class="fighter-name challenger">William Kennedy</div>
         </div>
-        <div class="match-note">"If you need me to sell it, William isn't ready." — St. Peter Reyes</div>
+        <div class="match-note">"They know each other too well. Now they fight for supremacy."</div>
       </div>
       <div class="match-right">
         <div class="champ-label">Champion</div>
@@ -295,7 +303,7 @@
           <div class="vs-text">VS</div>
           <div class="fighter-name challenger">Kyle Vance</div>
         </div>
-        <div class="match-note">Maximus claims the title was stolen. Vance says he earned it. Chicago will decide.</div>
+        <div class="match-note">"A lie created the mask. Now the truth starts the fight."</div>
       </div>
       <div class="match-right">
         <div class="champ-label">Champion</div>
@@ -317,7 +325,7 @@
           <div class="vs-text">VS</div>
           <div class="fighter-name challenger">Smoove Marino</div>
         </div>
-        <div class="match-note">Both earned their spot. One becomes champion. The Genesis era begins in Chicago.</div>
+        <div class="match-note">"Both earned their spot. One becomes champion. The Genesis era begins in Chicago."</div>
       </div>
       <div class="match-right">
         <div class="champ-label">Vacant</div>
@@ -340,7 +348,7 @@
           <div class="vs-text">VS</div>
           <div class="fighter-name challenger" style="color:var(--muted);letter-spacing:1px;font-size:1.1rem;">???</div>
         </div>
-        <div class="match-note">The new Diamond Champion issues an open challenge. Anyone. Anytime. Answer it.</div>
+        <div class="match-note">The new Diamond Champion issues an open challenge. Anyone. Anytime.</div>
       </div>
       <div class="match-right">
         <div class="champ-label">Champion</div>
@@ -422,11 +430,18 @@
 </div>
 
 <div class="bst-footer">
-  <div class="cosmic">
-    <span>Brought to you by</span>
-    <img src="https://i.imgur.com/ZalooKf.png" alt="Cosmic Energy Drink" style="height:14px;width:auto;opacity:.7;">
+  <div class="sponsors-label">Official Sponsors — FSW: Blood, Sweat & Tears</div>
+  <div class="sponsors-row">
+    <img src="https://i.imgur.com/ZalooKf.png" alt="Cosmic Energy Drink" style="height:40px;">
+    <div style="background:rgba(235,235,235,.92);border-radius:8px;padding:6px 12px;display:flex;align-items:center;">
+      <img src="https://i.imgur.com/ntXlJT6.png" alt="DraftKings" style="height:65px;">
+    </div>
+    <img src="https://i.imgur.com/807OADt.png" alt="Sponsor" style="height:140px;">
+    <img src="https://i.imgur.com/9zTAWyO.png" alt="Sponsor" style="height:140px;">
+    <img src="https://i.imgur.com/FpZ2WKD.png" alt="Sponsor" style="height:140px;">
   </div>
   FSW: Blood, Sweat & Tears · United Center, Chicago, IL · © 2026 First Strike Wrestling
+  <div class="fiction-note">This event and all associated content is fictional and created for entertainment purposes only.</div>
 </div>
 
 </body>
