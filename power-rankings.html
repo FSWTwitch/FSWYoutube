@@ -288,6 +288,7 @@
     <div class="pill">debut <span>+10</span></div>
     <div class="pill">champion <span>+10</span></div>
     <div class="pill">contender <span>+5</span></div>
+    <div class="pill">contender win <span>+10</span></div>
     <div class="pill">new champ <span>+15</span></div>
   </div>
 </div>
@@ -351,6 +352,24 @@ const top10 = [
   },
   {
     rank: 6,
+    name: "J1",
+    img: "https://i.imgur.com/opQQ1P2.jpeg",
+    score: 45,
+    move: "up", moveAmt: 1,
+    reason: "Won his Genesis Tournament Semi-Final against Javi Hernandez. Controlled the match completely. BST bound for the vacant Genesis Championship.",
+    tags: ["compete","win","tournament","contender win"]
+  },
+  {
+    rank: 7,
+    name: "Smoove Marino",
+    img: "https://i.imgur.com/SubN4je.jpeg",
+    score: 45,
+    move: "new", moveAmt: 0,
+    reason: "Won his Genesis Tournament Semi-Final against Jay Cole. Will face J1 at BST for the vacant Genesis Championship.",
+    tags: ["compete","win","tournament","contender win"]
+  },
+  {
+    rank: 8,
     name: "Henry Carter",
     img: "https://i.imgur.com/rZksJJN.jpeg",
     score: 45,
@@ -359,31 +378,13 @@ const top10 = [
     tags: ["opening match","compete","win","debut"]
   },
   {
-    rank: 7,
+    rank: 9,
     name: "Arnez Jackson",
     img: "https://i.imgur.com/O1wRnvp.jpeg",
     score: 43,
     move: "new", moveAmt: 0,
     reason: "Dominant debut win over Blade Rivera. Post-match interview made it clear he is here to stay. First night in FSW — already a problem.",
     tags: ["debut","compete","win","interview"]
-  },
-  {
-    rank: 8,
-    name: "J1",
-    img: "https://i.imgur.com/opQQ1P2.jpeg",
-    score: 40,
-    move: "up", moveAmt: 1,
-    reason: "Won his Genesis Tournament Semi-Final against Javi Hernandez. Controlled the match completely. BST bound for the vacant Genesis Championship.",
-    tags: ["compete","win","tournament","contender"]
-  },
-  {
-    rank: 9,
-    name: "Smoove Marino",
-    img: "https://i.imgur.com/SubN4je.jpeg",
-    score: 40,
-    move: "new", moveAmt: 0,
-    reason: "Won his Genesis Tournament Semi-Final against Jay Cole. Will face J1 at BST for the vacant Genesis Championship.",
-    tags: ["compete","win","tournament","contender"]
   },
   {
     rank: 10,
@@ -412,7 +413,7 @@ const tagColors = {
   "storyline catalyst": "tag-segment", "closing logo": "tag-segment",
   "character moment": "tag-segment", "post show": "tag-segment",
   // STATUS
-  "debut": "tag-debut", "champion": "tag-title", "contender": "tag-debut", "new champ": "tag-win", "pre show": "tag-promo", "championship match": "tag-title", "main event appearance": "tag-title", "opening match": "tag-debut",
+  "debut": "tag-debut", "champion": "tag-title", "contender": "tag-debut", "contender win": "tag-win", "new champ": "tag-win", "pre show": "tag-promo", "championship match": "tag-title", "main event appearance": "tag-title", "opening match": "tag-debut",
   "show-ending moment": "tag-segment", "semifinal": "tag-debut",
   "mid card": "tag-loss"
 };
