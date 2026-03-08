@@ -3799,7 +3799,7 @@ function syncContentPadding() {}
                     { name: 'Media', icon: '📡', desc: 'Media and promotional content — podcasts, product ads, movie trailers, QVC segments, TV guest appearances, and PPV promos.' },
                     { name: 'Broadcast', icon: '📺', desc: 'In-show broadcast moments — backstage arrivals, in-ring promos, press conferences, and interviews.' },
                     { name: 'Dynamics', icon: '⚡', desc: 'Crowd and atmosphere prompts — crowd reactions, titantron packages, and character vignettes.' },
-                    { name: 'Training', icon: '🏋️', desc: 'Behind-the-scenes training content — gym sessions, sparring, and locker room pre-match moments.' },
+                    { name: 'Preparation', icon: '🏋️', desc: 'Behind-the-scenes training content — gym sessions, sparring, and locker room pre-match moments.' },
                     { name: 'My Prompts', icon: '📝', desc: 'Your own saved custom prompts — fully personalized and reusable.' },
                 ];
                 tabs.forEach(tab => {
@@ -3835,7 +3835,7 @@ function syncContentPadding() {}
             } else {
                 // DESKTOP: render tabs as before
                 const tabsContainer = document.createElement('div'); tabsContainer.style.cssText = 'display:flex;gap:4px;margin-bottom:20px;border-bottom:2px solid var(--border-primary);flex-wrap:wrap;';
-                ['Fan Experience', 'Media', 'Broadcast', 'Dynamics', 'Training', 'My Prompts'].forEach(tab => {
+                ['Fan Experience', 'Media', 'Broadcast', 'Dynamics', 'Preparation', 'My Prompts'].forEach(tab => {
                     const btn = document.createElement('button');
                     btn.textContent = tab;
                     const isActive = activePromptsTab === tab;
@@ -3848,7 +3848,7 @@ function syncContentPadding() {}
 
             // Desktop tab description
             if (!isMobile()) {
-                const tabDescMap = {"Fan Experience": "Fan-facing moments — autograph signings, fan interference, fan cosplay entrances, and press conferences.", "Media": "Media and promotional content — podcasts, product ads, movie trailers, QVC segments, TV guest appearances, and PPV promos.", "Broadcast": "In-show broadcast moments — backstage arrivals, in-ring promos, and interviews.", "Dynamics": "Crowd and atmosphere prompts — crowd reactions, titantron packages, and character vignettes.", "Training": "Behind-the-scenes training content — gym sessions, sparring, and locker room pre-match moments.", "My Prompts": "Your own saved custom prompts — fully personalized and reusable."};
+                const tabDescMap = {"Fan Experience": "Fan-facing moments — autograph signings, fan interference, fan cosplay entrances, and press conferences.", "Media": "Media and promotional content — podcasts, product ads, movie trailers, QVC segments, TV guest appearances, and PPV promos.", "Broadcast": "In-show broadcast moments — backstage arrivals, in-ring promos, and interviews.", "Dynamics": "Crowd and atmosphere prompts — crowd reactions, titantron packages, and character vignettes.", "Preparation": "Behind-the-scenes training content — gym sessions, sparring, and locker room pre-match moments.", "My Prompts": "Your own saved custom prompts — fully personalized and reusable."};
                 const descText = tabDescMap[activePromptsTab];
                 if (descText) {
                     const descBanner = document.createElement('div');
@@ -3862,7 +3862,7 @@ function syncContentPadding() {}
             else if (activePromptsTab === 'Media') { renderCommercialsPrompts(container); }
             else if (activePromptsTab === 'Broadcast') { renderBroadcastPrompts(container); }
             else if (activePromptsTab === 'Dynamics') { renderDynamicsPrompts(container); }
-            else if (activePromptsTab === 'Training') { renderTrainingPrompts(container); }
+            else if (activePromptsTab === 'Preparation') { renderTrainingPrompts(container); }
             else { renderCreatedPrompts(container); }
             const panel = document.getElementById('detailsPanel'); clearPanel();
             const title = document.createElement('div'); title.className = 'details-title'; title.textContent = 'Prompts View'; panel.appendChild(title);
@@ -3876,6 +3876,7 @@ function syncContentPadding() {}
         let cannedAdsType = 'Commercial';
         let inRingPromoState = { wrestler: null, attire: '', dialogue: '', tone: 'frustrated, tired, resigned, desperate, and emotional', optionalInstructions: '' };
         let cannedBackstageArrivalMinimized = true;
+        let cannedCurtainEntranceMinimized = true;
         let backstageArrivalState = { wrestler: null, gear: 'default gear', tone: 'serious and composed', bag: 'random' };
         let cannedCrowdReactionMinimized = true;
         let cannedAutographMinimized = true;
@@ -3883,8 +3884,11 @@ function syncContentPadding() {}
         let cannedSuperFanMinimized = true;
         let cannedSponsorPromptMinimized = true;
         let cannedTrainingMinimized = true;
+        let cannedEntranceRehearsalMinimized = true;
+        let cannedArenaVisitMinimized = true;
         let cannedSparringMinimized = true;
         let cannedDroneMinimized = true;
+        let cannedFSWTruckMinimized = true;
         let cannedLockerRoomMinimized = true;
         let cannedPressConfMinimized = true;
         let pressConfState = { wrestler: null, tone: 'composed and direct' };
@@ -3915,6 +3919,7 @@ function syncContentPadding() {}
             buildBackstageArrival(container);
             buildCannedInterviewPrompt(container);
             buildInRingPromo(container);
+            buildCurtainEntrancePrompt(container);
         }
 
         let taleOfTapeMinimized = true;
@@ -4148,11 +4153,14 @@ This must feel like a legitimate sports broadcast face-off package — the kind 
             buildTitantronPrompt(container);
             buildVignettePrompt(container);
             buildDroneArenaPrompt(container);
+            buildFSWTruckPrompt(container);
         }
         function renderTrainingPrompts(container) {
             buildTrainingPrompt(container);
             buildSparringPrompt(container);
             buildLockerRoomPrompt(container);
+            buildEntranceRehearsalPrompt(container);
+            buildArenaVisitPrompt(container);
         }
         function buildCannedInterviewPrompt(container) {
             const templates = {
@@ -5341,6 +5349,174 @@ This must feel like a legitimate sports broadcast face-off package — the kind 
             container.appendChild(cannedContainer);
         }
 
+        function buildFSWTruckPrompt(container) {
+            const id = 'fswtruck';
+            const minimized = cannedFSWTruckMinimized;
+            const cannedContainer = document.createElement('div');
+            cannedContainer.style.cssText = 'margin-bottom:20px;padding:15px;background:var(--bg-tertiary);border:1px solid var(--border-primary);border-radius:8px;position:relative;';
+            const headerRow = document.createElement('div');
+            headerRow.style.cssText = `display:flex;justify-content:space-between;align-items:center;gap:10px;${minimized ? '' : 'margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid var(--border-secondary);'}`;
+            const titleEl = document.createElement('div');
+            titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);";
+            titleEl.textContent = 'FSW Truck / Bus';
+            const subtitleEl = document.createElement('div');
+            subtitleEl.style.cssText = "font-size:11px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;";
+            subtitleEl.textContent = 'FSW branded vehicle on the street — wrestler faces on the wrap, parked or in motion.';
+            const menuBtn = document.createElement('button');
+            menuBtn.className = 'hide-section-btn';
+            menuBtn.textContent = minimized ? '↓' : '↑';
+            menuBtn.style.opacity = '0'; menuBtn.style.transition = 'opacity 0.2s';
+            menuBtn.onclick = () => { cannedFSWTruckMinimized = !cannedFSWTruckMinimized; renderPrompts(); };
+            if (minimized) {
+                cannedContainer.style.cursor = 'pointer';
+                cannedContainer.onclick = (e) => { if (e.target === menuBtn || (e.target.closest && e.target.closest('button') === menuBtn)) return; cannedFSWTruckMinimized = !cannedFSWTruckMinimized; renderPrompts(); };
+                menuBtn.style.display = 'none';
+            } else {
+                cannedContainer.style.cursor = '';
+                cannedContainer.onclick = null;
+                menuBtn.style.display = '';
+                cannedContainer.onmouseenter = () => menuBtn.style.opacity = '1';
+                cannedContainer.onmouseleave = () => menuBtn.style.opacity = '0';
+            }
+            const titleWrap = document.createElement('div'); titleWrap.style.cssText = 'flex:1;min-width:0;';
+            titleWrap.appendChild(titleEl); titleWrap.appendChild(subtitleEl);
+            headerRow.appendChild(titleWrap); headerRow.appendChild(menuBtn);
+            cannedContainer.appendChild(headerRow);
+
+            if (!minimized) {
+                const mkLabel = t => { const l = document.createElement('span'); l.style.cssText = "font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = t; return l; };
+                const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
+                const mkSel = (opts, val) => { const s = document.createElement('select'); s.className = 'item-dropdown'; s.style.cssText = 'width:100%;max-width:none;'; opts.forEach(o => { const op = document.createElement('option'); op.value = o; op.textContent = o; s.appendChild(op); }); if(val) s.value = val; return s; };
+
+                // 4 wrestler slots
+                const slots = [];
+                const slotsGrid = document.createElement('div');
+                slotsGrid.style.cssText = 'display:flex;gap:8px;margin-bottom:10px;flex-wrap:nowrap;';
+                for (let i = 0; i < 4; i++) {
+                    const btn = document.createElement('button'); btn.className = 'wrestler-slot'; btn.textContent = '+';
+                    btn.onclick = () => {
+                        const panel = document.getElementById('detailsPanel'); openMobilePanel('Select Wrestler'); clearPanel();
+                        const t = document.createElement('div'); t.className = 'details-title'; t.textContent = 'Select Wrestler ' + (i + 1); panel.appendChild(t);
+                        const cancelB = document.createElement('button'); cancelB.textContent = 'Cancel'; cancelB.style.cssText = "margin-bottom:12px;padding:7px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;border-radius:4px;border:1px solid var(--border-input);background:transparent;color:var(--text-tertiary);text-transform:uppercase;";
+                        cancelB.onclick = () => { closeMobilePanel(); clearPanel(); }; panel.appendChild(cancelB);
+                        if (btn.textContent !== '+') {
+                            const clrB = document.createElement('button'); clrB.textContent = 'Clear'; clrB.style.cssText = "display:block;margin-bottom:12px;padding:7px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;border-radius:4px;border:1px solid var(--accent-red);background:transparent;color:var(--accent-red);text-transform:uppercase;";
+                            clrB.onclick = () => { btn.textContent = '+'; btn.classList.remove('filled'); closeMobilePanel(); clearPanel(); }; panel.appendChild(clrB);
+                        }
+                        appendPickerSortFilter(panel, () => {});
+                        applyPickerSortFilter(rosterData).forEach(w => {
+                            const row = document.createElement('div'); row.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:4px;padding:8px 10px;background:var(--bg-secondary);border:1px solid var(--border-primary);border-radius:4px;cursor:pointer;transition:all 0.15s;';
+                            row.onmouseenter = () => { row.style.background = 'var(--bg-tertiary)'; row.style.borderColor = 'var(--accent-blue)'; };
+                            row.onmouseleave = () => { row.style.background = 'var(--bg-secondary)'; row.style.borderColor = 'var(--border-primary)'; };
+                            const nd = document.createElement('div'); nd.style.cssText = 'flex:1;font-size:13px;font-weight:500;color:var(--text-primary);'; nd.textContent = w.name; row.appendChild(nd);
+                            row.onclick = () => { btn.textContent = w.name; btn.classList.add('filled'); closeMobilePanel(); clearPanel(); };
+                            panel.appendChild(row);
+                        });
+                    };
+                    slots.push(btn);
+                    slotsGrid.appendChild(btn);
+                }
+                const slotsWrap = document.createElement('div'); slotsWrap.style.cssText = 'margin-bottom:10px;';
+                slotsWrap.appendChild(mkLabel('Wrestlers on Wrap (up to 4):'));
+                slotsWrap.appendChild(slotsGrid);
+                cannedContainer.appendChild(slotsWrap);
+
+                // Vehicle type
+                const vehicleSel = mkSel(['Truck', 'Bus'], 'Truck');
+                cannedContainer.appendChild(fieldWrap('Vehicle:', vehicleSel));
+
+                // Time of day
+                const timeSel = mkSel(['Morning', 'Night'], 'Morning');
+                cannedContainer.appendChild(fieldWrap('Time of Day:', timeSel));
+
+                // Parked or moving
+                const modeSel = mkSel(['Parked', 'Moving'], 'Parked');
+                cannedContainer.appendChild(fieldWrap('Mode:', modeSel));
+
+                // Buttons
+                const btnRow = document.createElement('div'); btnRow.style.cssText = 'display:flex;gap:8px;margin-bottom:15px;margin-top:4px;';
+                const generateBtn = document.createElement('button'); generateBtn.className = 'add-commercial-btn'; generateBtn.textContent = 'Generate'; generateBtn.style.marginBottom = '0';
+
+                generateBtn.onclick = () => {
+                    const names = slots.map(s => s.textContent !== '+' ? s.textContent.trim() : null).filter(Boolean);
+                    if (names.length === 0) { alert('Please select at least one wrestler.'); return; }
+
+                    const cameos = names.map(name => {
+                        const wr = rosterData.find(r => r.name === name);
+                        if (wr && wr.cameo && wr.cameo.trim()) return (wr.cameo.trim().includes('.') ? '@' : '@fswyoutub.') + wr.cameo.trim();
+                        return name;
+                    });
+
+                    const vehicle = vehicleSel.value;
+                    const time = timeSel.value;
+                    const mode = modeSel.value;
+
+                    const vehicleDesc = vehicle === 'Truck'
+                        ? 'a large commercial truck — long-haul style, full side panel wrap'
+                        : 'a full-size city bus — wide flat sides, full-length wrap on both sides';
+
+                    const timeDesc = time === 'Morning'
+                        ? 'Morning light — warm golden hour sun raking across the side of the vehicle, long shadows on the street, clean daylight clarity.'
+                        : 'Night — the wrap is lit by street lights, LED signage, and ambient city glow. High contrast. The faces pop against the dark street.';
+
+                    const modeDesc = mode === 'Parked'
+                        ? `The ${vehicle.toLowerCase()} is parked on a city street — engine off, fully still. Camera circles or pushes in slowly, taking in the full wrap. Pedestrians pass by on the sidewalk, some noticing and stopping to look.`
+                        : `The ${vehicle.toLowerCase()} moves through city streets — rolling through an intersection or down a main road. Camera holds wide as it passes or cuts to tracking shot alongside it. Other vehicles and pedestrians visible. The wrap catches eyes as it moves.`;
+
+                    const wrapFaces = cameos.length === 1
+                        ? `${cameos[0]}'s face dominates the entire side panel — massive, full-bleed, high-contrast print. Intense expression. Name in bold FSW typography below.`
+                        : `${cameos.map(c => c).join(', ')} — each face printed large across the panel in a split layout. Bold FSW typography. High-contrast graphic treatment. Names underneath each face.`;
+
+                    const prompt =
+`1920x1080 true 1080p broadcast realism. 8–10 seconds. No fade-in. No fade-out.
+
+SCENE — FSW ${vehicle.toUpperCase()} WRAP:
+${vehicleDesc} with a full FSW promotional wrap covering the entire side panel.
+
+WRAP DESIGN:
+${wrapFaces}
+FSW logo prominent. Event or brand name on the wrap. Black background base — high contrast, aggressive graphic design. Print quality is flawless — no pixelation, no distortion. The faces are sharp and imposing at full size.
+
+TIME OF DAY:
+${timeDesc}
+
+ACTION:
+${modeDesc}
+
+CAMERA:
+Cinematic street-level framing. Starts wide to establish the full vehicle, then pushes into the wrap. Smooth controlled movement — no handheld shake. The vehicle and its environment feel real and grounded. Lens flare from the sun or street lights is acceptable if natural.
+
+CHARACTER LOCK — ABSOLUTE:
+${cameos.join(', ')} — each face on the wrap must maintain exact likeness, facial structure, and identity. No drift, no averaging, no softening. These are sharp, real, photographic reproductions on the vehicle surface.
+
+NO text overlays added in post. NO motion graphics. NO title cards. Pure cinematic realism.`;
+
+                    outputTextarea.value = prompt;
+                    outputContainer.style.display = 'block';
+                };
+
+                const clearBtn = document.createElement('button'); clearBtn.textContent = 'Clear';
+                clearBtn.style.cssText = "padding:7px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;border-radius:4px;border:1px solid var(--border-input);background:transparent;color:var(--text-tertiary);text-transform:uppercase;";
+                clearBtn.onclick = () => { slots.forEach(s => { s.textContent = '+'; s.classList.remove('filled'); }); vehicleSel.selectedIndex = 0; timeSel.selectedIndex = 0; modeSel.selectedIndex = 0; outputContainer.style.display = 'none'; outputTextarea.value = ''; };
+                btnRow.appendChild(generateBtn); btnRow.appendChild(clearBtn);
+                cannedContainer.appendChild(btnRow);
+
+                // Output
+                const outputContainer = document.createElement('div'); outputContainer.style.display = 'none';
+                const outputLabel = document.createElement('div');
+                outputLabel.style.cssText = "font-size:10px;font-weight:700;font-family:'Bebas Neue',sans-serif;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;";
+                outputLabel.textContent = 'Generated Prompt:';
+                const outputTextarea = document.createElement('textarea');
+                outputTextarea.className = 'detail-textarea'; outputTextarea.style.minHeight = '240px'; outputTextarea.readOnly = true;
+                const copyBtn = document.createElement('button'); copyBtn.className = 'add-commercial-btn'; copyBtn.textContent = 'Copy';
+                copyBtn.style.cssText = 'margin-top:8px;margin-bottom:0;';
+                copyBtn.onclick = () => { navigator.clipboard.writeText(outputTextarea.value).then(() => { copyBtn.textContent = 'Copied!'; copyBtn.style.background = '#107c10'; setTimeout(() => { copyBtn.textContent = 'Copy'; copyBtn.style.background = ''; }, 2000); }).catch(() => alert('Failed to copy')); };
+                outputContainer.appendChild(outputLabel); outputContainer.appendChild(outputTextarea); outputContainer.appendChild(copyBtn);
+                cannedContainer.appendChild(outputContainer);
+            }
+            container.appendChild(cannedContainer);
+        }
+
         function buildTitantronPrompt(container) {
             const id = 'titantron';
             const minimized = cannedTitantronMinimized;
@@ -5622,12 +5798,349 @@ This must feel like a legitimate sports broadcast face-off package — the kind 
             container.appendChild(cannedContainer);
         }
 
+        function buildEntranceRehearsalPrompt(container) {
+            const id = 'entrancerehearsal';
+            const minimized = cannedEntranceRehearsalMinimized;
+            const cannedContainer = document.createElement('div');
+            cannedContainer.style.cssText = 'margin-bottom:20px;padding:15px;background:var(--bg-tertiary);border:1px solid var(--border-primary);border-radius:8px;position:relative;';
+            const headerRow = document.createElement('div');
+            headerRow.style.cssText = `display:flex;justify-content:space-between;align-items:center;gap:10px;${minimized ? '' : 'margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid var(--border-secondary);'}`;
+            const titleEl = document.createElement('div');
+            titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);";
+            titleEl.textContent = 'Entrance Rehearsal';
+            const subtitleEl = document.createElement('div');
+            subtitleEl.style.cssText = "font-size:11px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;";
+            subtitleEl.textContent = 'Wrestler runs through their entrance with the cameraman — Michael coaching poses behind the scenes.';
+            const menuBtn = document.createElement('button');
+            menuBtn.className = 'hide-section-btn';
+            menuBtn.textContent = minimized ? '↓' : '↑';
+            menuBtn.style.opacity = '0'; menuBtn.style.transition = 'opacity 0.2s';
+            menuBtn.onclick = () => { cannedEntranceRehearsalMinimized = !cannedEntranceRehearsalMinimized; renderPrompts(); };
+            if (minimized) {
+                cannedContainer.style.cursor = 'pointer';
+                cannedContainer.onclick = (e) => { if (e.target === menuBtn || (e.target.closest && e.target.closest('button') === menuBtn)) return; cannedEntranceRehearsalMinimized = !cannedEntranceRehearsalMinimized; renderPrompts(); };
+                menuBtn.style.display = 'none';
+            } else {
+                cannedContainer.style.cursor = '';
+                cannedContainer.onclick = null;
+                menuBtn.style.display = '';
+                cannedContainer.onmouseenter = () => menuBtn.style.opacity = '1';
+                cannedContainer.onmouseleave = () => menuBtn.style.opacity = '0';
+            }
+            const titleWrap = document.createElement('div'); titleWrap.style.cssText = 'flex:1;min-width:0;';
+            titleWrap.appendChild(titleEl); titleWrap.appendChild(subtitleEl);
+            headerRow.appendChild(titleWrap); headerRow.appendChild(menuBtn);
+            cannedContainer.appendChild(headerRow);
+
+            if (!minimized) {
+                const mkLabel = t => { const l = document.createElement('span'); l.style.cssText = "font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = t; return l; };
+                const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
+                const mkSel = (opts, val) => { const s = document.createElement('select'); s.className = 'item-dropdown'; s.style.cssText = 'width:100%;max-width:none;'; opts.forEach(o => { const op = document.createElement('option'); op.value = o; op.textContent = o; s.appendChild(op); }); if(val) s.value = val; return s; };
+
+                // Wrestler picker
+                const wrestlerBtn = document.createElement('button'); wrestlerBtn.className = 'wrestler-slot'; wrestlerBtn.textContent = '+';
+                wrestlerBtn.onclick = () => {
+                    const panel = document.getElementById('detailsPanel'); openMobilePanel('Select Wrestler'); clearPanel();
+                    const t = document.createElement('div'); t.className = 'details-title'; t.textContent = 'Select Wrestler'; panel.appendChild(t);
+                    const cancelB = document.createElement('button'); cancelB.textContent = 'Cancel'; cancelB.style.cssText = "margin-bottom:12px;padding:7px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;border-radius:4px;border:1px solid var(--border-input);background:transparent;color:var(--text-tertiary);text-transform:uppercase;";
+                    cancelB.onclick = () => { closeMobilePanel(); clearPanel(); }; panel.appendChild(cancelB);
+                    if (wrestlerBtn.textContent !== '+') {
+                        const clrB = document.createElement('button'); clrB.textContent = 'Clear'; clrB.style.cssText = "display:block;margin-bottom:12px;padding:7px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;border-radius:4px;border:1px solid var(--accent-red);background:transparent;color:var(--accent-red);text-transform:uppercase;";
+                        clrB.onclick = () => { wrestlerBtn.textContent = '+'; wrestlerBtn.classList.remove('filled'); closeMobilePanel(); clearPanel(); }; panel.appendChild(clrB);
+                    }
+                    appendPickerSortFilter(panel, () => {});
+                    applyPickerSortFilter(rosterData).forEach(w => {
+                        const row = document.createElement('div'); row.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:4px;padding:8px 10px;background:var(--bg-secondary);border:1px solid var(--border-primary);border-radius:4px;cursor:pointer;transition:all 0.15s;';
+                        row.onmouseenter = () => { row.style.background = 'var(--bg-tertiary)'; row.style.borderColor = 'var(--accent-blue)'; };
+                        row.onmouseleave = () => { row.style.background = 'var(--bg-secondary)'; row.style.borderColor = 'var(--border-primary)'; };
+                        const nd = document.createElement('div'); nd.style.cssText = 'flex:1;font-size:13px;font-weight:500;color:var(--text-primary);'; nd.textContent = w.name; row.appendChild(nd);
+                        if (w.cameo) { const cd = document.createElement('div'); cd.style.cssText = 'font-size:11px;color:var(--text-muted);'; cd.textContent = w.cameo.includes('.') ? '@' + w.cameo : '@fswyoutub.' + w.cameo; row.appendChild(cd); }
+                        row.onclick = () => { wrestlerBtn.textContent = w.name; wrestlerBtn.classList.add('filled'); closeMobilePanel(); clearPanel(); };
+                        panel.appendChild(row);
+                    });
+                };
+                cannedContainer.appendChild(fieldWrap('Wrestler:', wrestlerBtn));
+
+                // Setting
+                const settingSel = mkSel([
+                    'Empty arena — house lights, no production',
+                    'Backstage corridor — makeshift ramp setup',
+                    'Loading dock — open space, natural light',
+                    'Full production rehearsal — lights and music running'
+                ], 'Empty arena — house lights, no production');
+                cannedContainer.appendChild(fieldWrap('Setting:', settingSel));
+
+                // Michael moment
+                const michaelSel = mkSel([
+                    'Michael directing from the side — gesturing how to pose',
+                    'Michael demonstrating the pose himself first',
+                    'Michael walking alongside with camera, giving live feedback',
+                    'Michael and wrestler reviewing playback together on a monitor'
+                ], 'Michael directing from the side — gesturing how to pose');
+                cannedContainer.appendChild(fieldWrap('Michael\'s Role:', michaelSel));
+
+                // Buttons
+                const btnRow = document.createElement('div'); btnRow.style.cssText = 'display:flex;gap:8px;margin-bottom:15px;margin-top:4px;';
+                const generateBtn = document.createElement('button'); generateBtn.className = 'add-commercial-btn'; generateBtn.textContent = 'Generate'; generateBtn.style.marginBottom = '0';
+
+                generateBtn.onclick = () => {
+                    const wrestlerName = wrestlerBtn.textContent !== '+' ? wrestlerBtn.textContent.trim() : null;
+                    if (!wrestlerName) { alert('Please select a wrestler.'); return; }
+                    let cameo = wrestlerName;
+                    const wr = rosterData.find(r => r.name === wrestlerName);
+                    if (wr && wr.cameo && wr.cameo.trim()) cameo = (wr.cameo.trim().includes('.') ? '@' : '@fswyoutub.') + wr.cameo.trim();
+
+                    const setting = settingSel.value;
+                    const michaelRole = michaelSel.value;
+
+                    const settingDescMap = {
+                        'Empty arena — house lights, no production': 'an empty arena under basic house lights — no crowd, no pyro, no production. Just the ramp, the ring, and open space. The silence makes every footstep audible.',
+                        'Backstage corridor — makeshift ramp setup': 'a wide backstage corridor — tape marks on the floor indicating the ramp position, production crew in the background. Makeshift but focused.',
+                        'Loading dock — open space, natural light': 'the arena loading dock — high ceilings, open bay doors, natural light flooding in. Concrete floors. A raw, unglamorous space being used to rehearse something that will look very glamorous.',
+                        'Full production rehearsal — lights and music running': 'the full arena with production running — entrance lights triggered, music pumping through the PA, pyro positions marked. Everything live except the crowd.'
+                    };
+                    const michaelDescMap = {
+                        'Michael directing from the side — gesturing how to pose': '@fswyoutub.micheal stands just off the ramp, arms raised, physically showing ${cameo} the angle and body position he wants. Calling out adjustments — head up, arms wider, hold it longer. Fully in director mode.',
+                        'Michael demonstrating the pose himself first': '@fswyoutub.micheal steps onto the ramp himself and hits the pose first — showing exactly what he wants. Fully committed to the demonstration, no irony. Then steps aside and signals ${cameo} to run it.',
+                        'Michael walking alongside with camera, giving live feedback': '@fswyoutub.micheal walks the ramp alongside ${cameo} with a handheld camera — shooting and talking simultaneously. Calling out what he\'s seeing in real time. ${cameo} adjusting mid-walk based on the feedback.',
+                        'Michael and wrestler reviewing playback together on a monitor': '@fswyoutub.micheal and ${cameo} are huddled over a monitor or tablet at the edge of the ramp — watching the rehearsal footage back. Michael pointing at specific frames. ${cameo} nodding, studying their own image.'
+                    };
+
+                    const michaelDesc = michaelDescMap[michaelRole].replace(/\${cameo}/g, cameo);
+
+                    const prompt =
+`1920x1080 true 1080p broadcast realism. 8–12 seconds. No fade-in. No fade-out.
+
+CHARACTER LOCK — ABSOLUTE:
+${cameo} maintains their exact established appearance throughout. @fswyoutub.micheal maintains his exact established appearance — the cameraman, the director behind the scenes. Both characters remain consistent from first frame to last.
+
+SCENE — ENTRANCE REHEARSAL:
+${settingDescMap[setting]}
+
+${cameo} is rehearsing their entrance — working through the walk, the timing, the poses. Not performing for a crowd. Focused. Professional. Testing what works.
+
+MICHAEL:
+${michaelDesc}
+
+ENERGY:
+Behind-the-scenes, candid, working. This is the craft before the spectacle. Neither person is performing for cameras — they're working. The rawness of the rehearsal process is the whole point. Occasional pauses, resets, do-overs visible.
+
+CAMERA:
+Documentary-style. Handheld or shoulder-mounted. Observational — not staged for the camera. Medium and wide shots capturing both ${cameo} and @fswyoutub.micheal in frame together. Occasional close-up on faces during the feedback exchange.
+
+LIGHTING:
+Practical only — whatever the setting provides. No added key light. Raw and real.
+
+NO crowd. NO music unless full production setting. NO text overlays. NO title cards. Pure behind-the-scenes realism.`;
+
+                    outputTextarea.value = prompt;
+                    outputContainer.style.display = 'block';
+                };
+
+                const clearBtn = document.createElement('button'); clearBtn.textContent = 'Clear';
+                clearBtn.style.cssText = "padding:7px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;border-radius:4px;border:1px solid var(--border-input);background:transparent;color:var(--text-tertiary);text-transform:uppercase;";
+                clearBtn.onclick = () => { wrestlerBtn.textContent = '+'; wrestlerBtn.classList.remove('filled'); settingSel.selectedIndex = 0; michaelSel.selectedIndex = 0; outputContainer.style.display = 'none'; outputTextarea.value = ''; };
+                btnRow.appendChild(generateBtn); btnRow.appendChild(clearBtn);
+                cannedContainer.appendChild(btnRow);
+
+                // Output
+                const outputContainer = document.createElement('div'); outputContainer.style.display = 'none';
+                const outputLabel = document.createElement('div');
+                outputLabel.style.cssText = "font-size:10px;font-weight:700;font-family:'Bebas Neue',sans-serif;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;";
+                outputLabel.textContent = 'Generated Prompt:';
+                const outputTextarea = document.createElement('textarea');
+                outputTextarea.className = 'detail-textarea'; outputTextarea.style.minHeight = '240px'; outputTextarea.readOnly = true;
+                const copyBtn = document.createElement('button'); copyBtn.className = 'add-commercial-btn'; copyBtn.textContent = 'Copy';
+                copyBtn.style.cssText = 'margin-top:8px;margin-bottom:0;';
+                copyBtn.onclick = () => { navigator.clipboard.writeText(outputTextarea.value).then(() => { copyBtn.textContent = 'Copied!'; copyBtn.style.background = '#107c10'; setTimeout(() => { copyBtn.textContent = 'Copy'; copyBtn.style.background = ''; }, 2000); }).catch(() => alert('Failed to copy')); };
+                outputContainer.appendChild(outputLabel); outputContainer.appendChild(outputTextarea); outputContainer.appendChild(copyBtn);
+                cannedContainer.appendChild(outputContainer);
+            }
+            container.appendChild(cannedContainer);
+        }
+
+        function buildArenaVisitPrompt(container) {
+            const id = 'arenavisit';
+            const minimized = cannedArenaVisitMinimized;
+            const cannedContainer = document.createElement('div');
+            cannedContainer.style.cssText = 'margin-bottom:20px;padding:15px;background:var(--bg-tertiary);border:1px solid var(--border-primary);border-radius:8px;position:relative;';
+            const headerRow = document.createElement('div');
+            headerRow.style.cssText = `display:flex;justify-content:space-between;align-items:center;gap:10px;${minimized ? '' : 'margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid var(--border-secondary);'}`;
+            const titleEl = document.createElement('div');
+            titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);";
+            titleEl.textContent = 'Arena Walkthrough';
+            const subtitleEl = document.createElement('div');
+            subtitleEl.style.cssText = "font-size:11px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;";
+            subtitleEl.textContent = 'Wrestler walks through the arena as it is being built ahead of a major event.';
+            const menuBtn = document.createElement('button');
+            menuBtn.className = 'hide-section-btn';
+            menuBtn.textContent = minimized ? '↓' : '↑';
+            menuBtn.style.opacity = '0'; menuBtn.style.transition = 'opacity 0.2s';
+            menuBtn.onclick = () => { cannedArenaVisitMinimized = !cannedArenaVisitMinimized; renderPrompts(); };
+            if (minimized) {
+                cannedContainer.style.cursor = 'pointer';
+                cannedContainer.onclick = (e) => { if (e.target === menuBtn || (e.target.closest && e.target.closest('button') === menuBtn)) return; cannedArenaVisitMinimized = !cannedArenaVisitMinimized; renderPrompts(); };
+                menuBtn.style.display = 'none';
+            } else {
+                cannedContainer.style.cursor = '';
+                cannedContainer.onclick = null;
+                menuBtn.style.display = '';
+                cannedContainer.onmouseenter = () => menuBtn.style.opacity = '1';
+                cannedContainer.onmouseleave = () => menuBtn.style.opacity = '0';
+            }
+            const titleWrap = document.createElement('div'); titleWrap.style.cssText = 'flex:1;min-width:0;';
+            titleWrap.appendChild(titleEl); titleWrap.appendChild(subtitleEl);
+            headerRow.appendChild(titleWrap); headerRow.appendChild(menuBtn);
+            cannedContainer.appendChild(headerRow);
+
+            if (!minimized) {
+                const mkLabel = t => { const l = document.createElement('span'); l.style.cssText = "font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = t; return l; };
+                const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
+                const mkSel = (opts, val) => { const s = document.createElement('select'); s.className = 'item-dropdown'; s.style.cssText = 'width:100%;max-width:none;'; opts.forEach(o => { const op = document.createElement('option'); op.value = o; op.textContent = o; s.appendChild(op); }); if(val) s.value = val; return s; };
+
+                // Wrestler picker
+                const wrestlerBtn = document.createElement('button'); wrestlerBtn.className = 'wrestler-slot'; wrestlerBtn.textContent = '+';
+                wrestlerBtn.onclick = () => {
+                    const panel = document.getElementById('detailsPanel'); openMobilePanel('Select Wrestler'); clearPanel();
+                    const t = document.createElement('div'); t.className = 'details-title'; t.textContent = 'Select Wrestler'; panel.appendChild(t);
+                    const cancelB = document.createElement('button'); cancelB.textContent = 'Cancel'; cancelB.style.cssText = "margin-bottom:12px;padding:7px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;border-radius:4px;border:1px solid var(--border-input);background:transparent;color:var(--text-tertiary);text-transform:uppercase;";
+                    cancelB.onclick = () => { closeMobilePanel(); clearPanel(); }; panel.appendChild(cancelB);
+                    if (wrestlerBtn.textContent !== '+') {
+                        const clrB = document.createElement('button'); clrB.textContent = 'Clear'; clrB.style.cssText = "display:block;margin-bottom:12px;padding:7px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;border-radius:4px;border:1px solid var(--accent-red);background:transparent;color:var(--accent-red);text-transform:uppercase;";
+                        clrB.onclick = () => { wrestlerBtn.textContent = '+'; wrestlerBtn.classList.remove('filled'); closeMobilePanel(); clearPanel(); }; panel.appendChild(clrB);
+                    }
+                    appendPickerSortFilter(panel, () => {});
+                    applyPickerSortFilter(rosterData).forEach(w => {
+                        const row = document.createElement('div'); row.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:4px;padding:8px 10px;background:var(--bg-secondary);border:1px solid var(--border-primary);border-radius:4px;cursor:pointer;transition:all 0.15s;';
+                        row.onmouseenter = () => { row.style.background = 'var(--bg-tertiary)'; row.style.borderColor = 'var(--accent-blue)'; };
+                        row.onmouseleave = () => { row.style.background = 'var(--bg-secondary)'; row.style.borderColor = 'var(--border-primary)'; };
+                        const nd = document.createElement('div'); nd.style.cssText = 'flex:1;font-size:13px;font-weight:500;color:var(--text-primary);'; nd.textContent = w.name; row.appendChild(nd);
+                        if (w.cameo) { const cd = document.createElement('div'); cd.style.cssText = 'font-size:11px;color:var(--text-muted);'; cd.textContent = w.cameo.includes('.') ? '@' + w.cameo : '@fswyoutub.' + w.cameo; row.appendChild(cd); }
+                        row.onclick = () => { wrestlerBtn.textContent = w.name; wrestlerBtn.classList.add('filled'); closeMobilePanel(); clearPanel(); };
+                        panel.appendChild(row);
+                    });
+                };
+                cannedContainer.appendChild(fieldWrap('Wrestler:', wrestlerBtn));
+
+                // Where in the arena
+                const spotSel = mkSel([
+                    'Standing at ringside — ring half-built',
+                    'Walking the entrance ramp — ramp structure being assembled',
+                    'Standing center ring — ring complete, arena empty',
+                    'In the upper deck — looking down at the full setup below',
+                    'Backstage gorilla position — staring out at the empty arena'
+                ], 'Standing at ringside — ring half-built');
+                cannedContainer.appendChild(fieldWrap('Location in Arena:', spotSel));
+
+                // Build stage
+                const stageSel = mkSel([
+                    'Early build — scaffolding and rigging visible',
+                    'Mid build — ring is up, lighting rigs being hung',
+                    'Nearly complete — everything set, house lights still on',
+                ], 'Early build — scaffolding and rigging visible');
+                cannedContainer.appendChild(fieldWrap('Build Stage:', stageSel));
+
+                // Wrestler mood
+                const moodSel = mkSel([
+                    'Silent and focused — taking it all in alone',
+                    'Visibly locked in — visualizing the match',
+                    'Walking slowly, surveying every detail',
+                    'Pausing at a specific spot — standing completely still'
+                ], 'Silent and focused — taking it all in alone');
+                cannedContainer.appendChild(fieldWrap('Wrestler Mood:', moodSel));
+
+                // Buttons
+                const btnRow = document.createElement('div'); btnRow.style.cssText = 'display:flex;gap:8px;margin-bottom:15px;margin-top:4px;';
+                const generateBtn = document.createElement('button'); generateBtn.className = 'add-commercial-btn'; generateBtn.textContent = 'Generate'; generateBtn.style.marginBottom = '0';
+
+                generateBtn.onclick = () => {
+                    const wrestlerName = wrestlerBtn.textContent !== '+' ? wrestlerBtn.textContent.trim() : null;
+                    if (!wrestlerName) { alert('Please select a wrestler.'); return; }
+                    let cameo = wrestlerName;
+                    const wr = rosterData.find(r => r.name === wrestlerName);
+                    if (wr && wr.cameo && wr.cameo.trim()) cameo = (wr.cameo.trim().includes('.') ? '@' : '@fswyoutub.') + wr.cameo.trim();
+
+                    const spot = spotSel.value;
+                    const stage = stageSel.value;
+                    const mood = moodSel.value;
+
+                    const spotDescMap = {
+                        'Standing at ringside — ring half-built': `${cameo} stands at ringside, hands resting on the half-assembled ring apron. The ring structure is up but the ropes are not yet fully tensioned. Workers visible in the background.`,
+                        'Walking the entrance ramp — ramp structure being assembled': `${cameo} walks the entrance ramp slowly as crew members continue assembling the ramp structure around them. The staging and rigging overhead is partially hung. Cables and equipment cases line the sides.`,
+                        'Standing center ring — ring complete, arena empty': `${cameo} stands dead center in the ring. White ropes, small round black turnbuckles. The ring is finished and perfect — the arena around it is still raw and unoccupied. 20,000 empty seats.`,
+                        'In the upper deck — looking down at the full setup below': `${cameo} stands in the upper level of the arena, looking straight down at the ring and stage being assembled on the floor below. The scale of the event is visible from up here. Alone with the view.`,
+                        'Backstage gorilla position — staring out at the empty arena': `${cameo} stands at the gorilla position — the curtain edge, the threshold between backstage and the arena. Looking out at the empty building. The ramp stretches out ahead. No crowd yet. Just the setup.`
+                    };
+                    const stageDescMap = {
+                        'Early build — scaffolding and rigging visible': 'The arena is in early build — scaffolding and rigging towers rising from the floor, lighting truss being assembled overhead, production cases and crates everywhere. Workers with hard hats moving throughout. The venue still looks like a construction site.',
+                        'Mid build — ring is up, lighting rigs being hung': 'Mid-build — the ring is fully assembled and centered on the floor, the entrance ramp is taking shape, and lighting rigs are being hoisted up into the grid overhead. The venue is starting to look like a show. Not there yet.',
+                        'Nearly complete — everything set, house lights still on': 'The arena is nearly complete — stage built, ring set, entrance ramp finished, LED boards dark but in place. Everything is ready. House lights still on, the venue lit in flat white. No atmosphere yet — that comes tomorrow when the doors open.'
+                    };
+                    const moodDescMap = {
+                        'Silent and focused — taking it all in alone': `${cameo} is completely silent. Not performing. Not talking. Just present — absorbing the scale of what's coming. Eyes moving across the arena slowly. Totally alone with their thoughts.`,
+                        'Visibly locked in — visualizing the match': `${cameo}'s expression is fixed, jaw tight, eyes forward. They are visualizing — running through the match in their head while standing in the actual building. The body is still. The mind is already fighting.`,
+                        'Walking slowly, surveying every detail': `${cameo} moves through the space deliberately — stopping, looking up at the rigging, glancing toward the entrance, checking sightlines. Not rushing. Taking inventory. This is preparation.`,
+                        'Pausing at a specific spot — standing completely still': `${cameo} stops at one specific spot and stands completely still for a long beat. Not moving. Not speaking. Whatever is happening internally is not visible on their face — but the stillness says everything.`
+                    };
+
+                    const prompt =
+`1920x1080 true 1080p broadcast realism. 8–12 seconds. No fade-in. No fade-out.
+
+CHARACTER LOCK — ABSOLUTE:
+${cameo} maintains their exact established appearance, body type, and presence throughout. No drift. Casual attire — street clothes or team gear, not ring gear.
+
+SCENE — PRE-PLE ARENA VISIT:
+${spotDescMap[spot]}
+
+ARENA BUILD STATE:
+${stageDescMap[stage]}
+
+WRESTLER:
+${moodDescMap[mood]}
+
+BACKGROUND ACTIVITY:
+Stagehands and production crew working throughout — moving equipment, rigging lights, laying cable. They are aware of ${cameo}'s presence but do not interact. The work continues around them. This is a private moment in a public workplace.
+
+CAMERA:
+Slow, deliberate cinematography. Wide establishing shot showing the full scope of the arena and where ${cameo} stands within it. Then a medium or close shot on their face — reading the space, reading what's coming. Minimal movement. The stillness of the camera amplifies the stillness of the moment.
+
+LIGHTING:
+Practical construction lighting — house lights, work lights, the natural light of a venue mid-build. No dramatic production lighting. Unglamorous. The contrast between this moment and what the building will become on show night is the point.
+
+NO crowd. NO music. NO commentary. NO text overlays. NO title cards. Pure cinematic silence.`;
+
+                    outputTextarea.value = prompt;
+                    outputContainer.style.display = 'block';
+                };
+
+                const clearBtn = document.createElement('button'); clearBtn.textContent = 'Clear';
+                clearBtn.style.cssText = "padding:7px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;border-radius:4px;border:1px solid var(--border-input);background:transparent;color:var(--text-tertiary);text-transform:uppercase;";
+                clearBtn.onclick = () => { wrestlerBtn.textContent = '+'; wrestlerBtn.classList.remove('filled'); spotSel.selectedIndex = 0; stageSel.selectedIndex = 0; moodSel.selectedIndex = 0; outputContainer.style.display = 'none'; outputTextarea.value = ''; };
+                btnRow.appendChild(generateBtn); btnRow.appendChild(clearBtn);
+                cannedContainer.appendChild(btnRow);
+
+                // Output
+                const outputContainer = document.createElement('div'); outputContainer.style.display = 'none';
+                const outputLabel = document.createElement('div');
+                outputLabel.style.cssText = "font-size:10px;font-weight:700;font-family:'Bebas Neue',sans-serif;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;";
+                outputLabel.textContent = 'Generated Prompt:';
+                const outputTextarea = document.createElement('textarea');
+                outputTextarea.className = 'detail-textarea'; outputTextarea.style.minHeight = '240px'; outputTextarea.readOnly = true;
+                const copyBtn = document.createElement('button'); copyBtn.className = 'add-commercial-btn'; copyBtn.textContent = 'Copy';
+                copyBtn.style.cssText = 'margin-top:8px;margin-bottom:0;';
+                copyBtn.onclick = () => { navigator.clipboard.writeText(outputTextarea.value).then(() => { copyBtn.textContent = 'Copied!'; copyBtn.style.background = '#107c10'; setTimeout(() => { copyBtn.textContent = 'Copy'; copyBtn.style.background = ''; }, 2000); }).catch(() => alert('Failed to copy')); };
+                outputContainer.appendChild(outputLabel); outputContainer.appendChild(outputTextarea); outputContainer.appendChild(copyBtn);
+                cannedContainer.appendChild(outputContainer);
+            }
+            container.appendChild(cannedContainer);
+        }
+
         function buildTrainingPrompt(container) {
             const id = 'training';
             const minimized = cannedTrainingMinimized;
             const cannedContainer = document.createElement('div'); cannedContainer.style.cssText = 'margin-bottom:20px;padding:15px;background:var(--bg-tertiary);border:1px solid var(--border-primary);border-radius:8px;position:relative;';
             const headerRow = document.createElement('div'); headerRow.style.cssText = `display:flex;justify-content:space-between;align-items:center;gap:10px;${minimized ? '' : 'margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid var(--border-secondary);'}`;
-            const titleEl = document.createElement('div'); titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);"; titleEl.textContent = 'Training';
+            const titleEl = document.createElement('div'); titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);"; titleEl.textContent = 'Preparation';
             const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:11px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Wrestler trains at a gym — building their character between shows.';
             const menuBtn = document.createElement('button'); menuBtn.className = 'hide-section-btn'; menuBtn.textContent = minimized ? '↓' : '↑'; menuBtn.style.opacity = '0'; menuBtn.style.transition = 'opacity 0.2s';
             menuBtn.onclick = () => { cannedTrainingMinimized = !cannedTrainingMinimized; renderPrompts(); };
@@ -6088,23 +6601,31 @@ NO slow motion. NO text overlays. NO graphics. NO title cards. Pure live broadca
                 };
                 cannedContainer.appendChild(fieldWrap('Wrestler Being Impersonated:', wrestlerBtn));
 
-                // Fan build
-                const fanBuildSel = mkSel([
-                    'Average build — costume is the whole commitment',
-                    'Big guy — actually pulls off the look',
-                    'Small/slim — totally oversells it, crowd loves the effort',
-                    'Kid — full ring gear, doing the entrance walk'
-                ], 'Average build — costume is the whole commitment');
-                cannedContainer.appendChild(fieldWrap('Fan Type:', fanBuildSel));
+                // Location
+                const locationSel = mkSel([
+                    'Arena Backstage',
+                    'Arena Parking Lot',
+                    'Convention Center',
+                    'Merch Booth',
+                    'Hotel Lobby',
+                    'Hotel Hallway',
+                    'Venue Entrance',
+                    'Fan Meet & Greet Area'
+                ], 'Arena Backstage');
+                cannedContainer.appendChild(fieldWrap('Location:', locationSel));
 
-                // Entrance energy
-                const energySel = mkSel([
-                    'Full entrance walk — arms out, soaking it in',
-                    'Taunting the crowd — playing the character hard',
-                    'Doing the wrestler\'s signature pose at the entrance',
-                    'Slapping hands down the ramp like a real entrance'
-                ], 'Full entrance walk — arms out, soaking it in');
-                cannedContainer.appendChild(fieldWrap('Entrance Energy:', energySel));
+                // Adult or Kid
+                const ageSel = mkSel(['Adult', 'Kid'], 'Adult');
+                cannedContainer.appendChild(fieldWrap('Fan Age:', ageSel));
+
+                // Real wrestler present
+                const realWrestlerRow = document.createElement('div'); realWrestlerRow.style.cssText = 'display:flex;align-items:center;gap:10px;margin-bottom:10px;cursor:pointer;';
+                const realWrestlerCheck = document.createElement('input'); realWrestlerCheck.type = 'checkbox'; realWrestlerCheck.style.cssText = 'width:16px;height:16px;cursor:pointer;accent-color:var(--accent-blue);';
+                const realWrestlerLabel = document.createElement('span'); realWrestlerLabel.style.cssText = 'font-size:13px;font-weight:600;color:var(--text-primary);'; realWrestlerLabel.textContent = 'Real wrestler appears with the fan';
+                realWrestlerRow.appendChild(realWrestlerCheck); realWrestlerRow.appendChild(realWrestlerLabel);
+                realWrestlerRow.onclick = () => { realWrestlerCheck.checked = !realWrestlerCheck.checked; };
+                realWrestlerCheck.onclick = e => e.stopPropagation();
+                cannedContainer.appendChild(realWrestlerRow);
 
                 // Buttons
                 const btnRow = document.createElement('div'); btnRow.style.cssText = 'display:flex;gap:8px;margin-bottom:15px;margin-top:4px;';
@@ -6117,42 +6638,49 @@ NO slow motion. NO text overlays. NO graphics. NO title cards. Pure live broadca
                     const wr = rosterData.find(r => r.name === wrestlerName);
                     if (wr && wr.cameo && wr.cameo.trim()) cameo = (wr.cameo.trim().includes('.') ? '@' : '@fswyoutub.') + wr.cameo.trim();
 
-                    const fanBuild = fanBuildSel.value;
-                    const energy = energySel.value;
+                    const location = locationSel.value;
+                    const isKid = ageSel.value === 'Kid';
+                    const withRealWrestler = realWrestlerCheck.checked;
 
-                    const fanDescMap = {
-                        'Average build — costume is the whole commitment': 'an average-built fan in a full FSW costume — ring gear, matching colors, name on the back. The commitment is total. The resemblance is approximate at best.',
-                        'Big guy — actually pulls off the look': 'a large, heavyset fan in FSW ring gear styled after the wrestler. He actually has the build for it — the crowd does a double take before losing it.',
-                        'Small/slim — totally oversells it, crowd loves the effort': 'a slim fan in FSW ring gear, clearly half the size of the wrestler he\'s imitating. Overselling every step. The crowd loves him for it.',
-                        'Kid — full ring gear, doing the entrance walk': 'a young kid — maybe 8 or 9 years old — in a full FSW ring gear costume styled after the wrestler. Tiny. Completely serious about the walk. The crowd melts.'
+                    const fanDesc = isKid
+                        ? `a young kid — maybe 8 or 9 years old — in full FSW ring gear styled after ${cameo}. Same body proportions as ${cameo} but scaled down to child size — similar build, completely different face. Tiny. Completely serious about every step.`
+                        : `an adult fan in full FSW ring gear styled after ${cameo}. Same approximate height, weight, and body type as ${cameo} — built similarly, but a clearly different face. Not the same person — a convincing physical match in the costume, different in every other way.`;
+
+                    const locationDescMap = {
+                        'Arena Backstage': 'arena backstage — concrete corridor, equipment cases and road cases stacked along the walls, staff passing through. Fluorescent overhead lighting.',
+                        'Arena Parking Lot': 'the arena parking lot — cars filling the lot, the arena exterior visible in background, fans milling around before or after the show.',
+                        'Convention Center': 'a convention center floor — vendor booths, banners, and crowds in the background. Busy, loud, electric.',
+                        'Merch Booth': 'in front of the FSW merch booth — branded shirts, title belt replicas, and merchandise on display directly behind. Fans in line nearby.',
+                        'Hotel Lobby': 'a hotel lobby — marble floors, ambient lighting, other guests and fans in the background.',
+                        'Hotel Hallway': 'a hotel hallway — carpeted corridor, quiet and close quarters, small group of fans gathered nearby.',
+                        'Venue Entrance': 'the venue entrance — outside the arena doors, fans streaming in, the marquee or arena signage visible overhead.',
+                        'Fan Meet & Greet Area': 'an official fan meet & greet setup — draped table, branded signage, organized line of fans.'
                     };
-                    const energyDescMap = {
-                        'Full entrance walk — arms out, soaking it in': 'He walks the entrance ramp with arms spread wide, head tilted back, absorbing every cheer like he earned it. Slow. Deliberate. Fully committed.',
-                        'Taunting the crowd — playing the character hard': 'He taunts the crowd mid-ramp — pointing, flexing, doing the character\'s signature trash talk gestures. The crowd screams back in delight.',
-                        'Doing the wrestler\'s signature pose at the entrance': `He stops at the top of the ramp and hits ${cameo}'s signature entrance pose — holds it for a full beat. The crowd erupts.`,
-                        'Slapping hands down the ramp like a real entrance': 'He slaps hands with fans all the way down the ramp, working both sides, treating it like a legitimate televised entrance. Crowd feeds him every step.'
-                    };
+
+                    const realWrestlerLine = withRealWrestler
+                        ? `\n\nREAL WRESTLER APPEARANCE:\n${cameo} appears alongside the fan — standing next to them, reacting with visible amusement or playing along. Side by side, the size match is undeniable. ${cameo} acknowledges the fan directly — maybe a nod, a laugh, or pointing them out to the crowd.`
+                        : '';
 
                     const prompt =
 `1920x1080 true 1080p broadcast realism. 8–10 seconds. No fade-in. No fade-out.
 
-SCENE — SUPER FAN ENTRANCE:
-At the entrance ramp, ${fanDescMap[fanBuild]}
+CHARACTER LOCK — ABSOLUTE:
+${cameo} maintains their exact established appearance throughout. The fan is ${fanDesc}
 
-ENTRANCE BEHAVIOR:
-${energyDescMap[energy]}
+SCENE — FAN COSPLAY:
+${locationDescMap[location]}
 
 COSTUME DETAIL:
-FSW ring gear styled to match ${cameo} — color scheme, design, name or number on the back. Homemade or fan-made quality — close but not exact. The effort is obvious and it's the whole point.
+FSW ring gear styled to match ${cameo} — matching color scheme, design, name or number on the back. Homemade or fan-made quality — clearly not official, clearly an imitation. The effort is total and it's the whole point.
 
 CROWD:
-Packed arena. Fans on their feet, cheering and laughing — not mocking, genuinely loving it. People pointing, phones raised, smiling. The energy is pure joy. Some fans near the ramp reach out. Total crowd approval.
+Packed arena. Fans on their feet, cheering and laughing — not mocking, genuinely loving it. Phones raised, people pointing, smiling. Pure joy. Total crowd approval.${realWrestlerLine}
 
 CAMERA:
-Broadcast-style coverage. Wide shot establishing the entrance ramp moment, then a medium shot on the fan mid-walk. Occasional cutaways to crowd reactions — laughing, cheering, phones up. Clean steady-cam mixed with handheld energy. Feels like a live event broadcast catching an unplanned moment.
+Broadcast-style. Wide shot establishing the moment, then medium shot on the fan. Occasional crowd reaction cutaways. Clean steady-cam with some handheld energy. Feels like a live broadcast catching something unplanned.
 
 LIGHTING:
-Full arena entrance lighting — entrance ramp lights, overhead production rigs. The fan is lit the same way a real wrestler would be on that ramp.
+Full arena production lighting. The fan is lit the same way a real wrestler would be.
 
 NO security intervention. NO chaos. NO confrontation. This is a celebration.
 NO slow motion. NO text overlays. NO graphics. NO title cards.`;
@@ -6163,7 +6691,7 @@ NO slow motion. NO text overlays. NO graphics. NO title cards.`;
 
                 const clearBtn = document.createElement('button'); clearBtn.textContent = 'Clear';
                 clearBtn.style.cssText = "padding:7px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;border-radius:4px;border:1px solid var(--border-input);background:transparent;color:var(--text-tertiary);text-transform:uppercase;";
-                clearBtn.onclick = () => { wrestlerBtn.textContent = '+'; wrestlerBtn.classList.remove('filled'); fanBuildSel.selectedIndex = 0; energySel.selectedIndex = 0; outputContainer.style.display = 'none'; outputTextarea.value = ''; };
+                clearBtn.onclick = () => { wrestlerBtn.textContent = '+'; wrestlerBtn.classList.remove('filled'); locationSel.selectedIndex = 0; ageSel.selectedIndex = 0; realWrestlerCheck.checked = false; outputContainer.style.display = 'none'; outputTextarea.value = ''; };
                 btnRow.appendChild(generateBtn); btnRow.appendChild(clearBtn);
                 cannedContainer.appendChild(btnRow);
 
@@ -6173,7 +6701,7 @@ NO slow motion. NO text overlays. NO graphics. NO title cards.`;
                 outputLabel.style.cssText = "font-size:10px;font-weight:700;font-family:'Bebas Neue',sans-serif;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;";
                 outputLabel.textContent = 'Generated Prompt:';
                 const outputTextarea = document.createElement('textarea');
-                outputTextarea.className = 'detail-textarea'; outputTextarea.style.minHeight = '260px'; outputTextarea.readOnly = true;
+                outputTextarea.className = 'detail-textarea'; outputTextarea.style.minHeight = '240px'; outputTextarea.readOnly = true;
                 const copyBtn = document.createElement('button'); copyBtn.className = 'add-commercial-btn'; copyBtn.textContent = 'Copy';
                 copyBtn.style.cssText = 'margin-top:8px;margin-bottom:0;';
                 copyBtn.onclick = () => { navigator.clipboard.writeText(outputTextarea.value).then(() => { copyBtn.textContent = 'Copied!'; copyBtn.style.background = '#107c10'; setTimeout(() => { copyBtn.textContent = 'Copy'; copyBtn.style.background = ''; }, 2000); }).catch(() => alert('Failed to copy')); };
@@ -6484,6 +7012,193 @@ NO slow motion. NO text overlays. NO graphics. NO title cards.`;
                 const copyBtn = document.createElement('button'); copyBtn.className = 'add-commercial-btn'; copyBtn.textContent = 'Copy'; copyBtn.style.cssText = 'margin-top:8px;margin-bottom:0;';
                 copyBtn.onclick = () => { navigator.clipboard.writeText(outputTextarea.value).then(() => { copyBtn.textContent = 'Copied!'; copyBtn.style.background = '#107c10'; setTimeout(() => { copyBtn.textContent = 'Copy'; copyBtn.style.background = ''; }, 2000); }).catch(() => alert('Failed to copy')); };
                 outputContainer.appendChild(outputLabel); outputContainer.appendChild(outputTextarea); outputContainer.appendChild(copyBtn); cannedContainer.appendChild(outputContainer);
+            }
+            container.appendChild(cannedContainer);
+        }
+
+        function buildCurtainEntrancePrompt(container) {
+            const id = 'curtainentrance';
+            const minimized = cannedCurtainEntranceMinimized;
+            const cannedContainer = document.createElement('div');
+            cannedContainer.style.cssText = 'margin-bottom:20px;padding:15px;background:var(--bg-tertiary);border:1px solid var(--border-primary);border-radius:8px;position:relative;';
+            const headerRow = document.createElement('div');
+            headerRow.style.cssText = `display:flex;justify-content:space-between;align-items:center;gap:10px;${minimized ? '' : 'margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid var(--border-secondary);'}`;
+            const titleEl = document.createElement('div');
+            titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);";
+            titleEl.textContent = 'Curtain Entrance';
+            const subtitleEl = document.createElement('div');
+            subtitleEl.style.cssText = "font-size:11px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;";
+            subtitleEl.textContent = 'Wrestler pauses at the curtain, then steps out into the arena to the crowd.';
+            const menuBtn = document.createElement('button');
+            menuBtn.className = 'hide-section-btn';
+            menuBtn.textContent = minimized ? '↓' : '↑';
+            menuBtn.style.opacity = '0'; menuBtn.style.transition = 'opacity 0.2s';
+            menuBtn.onclick = () => { cannedCurtainEntranceMinimized = !cannedCurtainEntranceMinimized; renderPrompts(); };
+            if (minimized) {
+                cannedContainer.style.cursor = 'pointer';
+                cannedContainer.onclick = (e) => { if (e.target === menuBtn || (e.target.closest && e.target.closest('button') === menuBtn)) return; cannedCurtainEntranceMinimized = !cannedCurtainEntranceMinimized; renderPrompts(); };
+                menuBtn.style.display = 'none';
+            } else {
+                cannedContainer.style.cursor = '';
+                cannedContainer.onclick = null;
+                menuBtn.style.display = '';
+                cannedContainer.onmouseenter = () => menuBtn.style.opacity = '1';
+                cannedContainer.onmouseleave = () => menuBtn.style.opacity = '0';
+            }
+            const titleWrap = document.createElement('div'); titleWrap.style.cssText = 'flex:1;min-width:0;';
+            titleWrap.appendChild(titleEl); titleWrap.appendChild(subtitleEl);
+            headerRow.appendChild(titleWrap); headerRow.appendChild(menuBtn);
+            cannedContainer.appendChild(headerRow);
+
+            if (!minimized) {
+                const mkLabel = t => { const l = document.createElement('span'); l.style.cssText = "font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = t; return l; };
+                const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
+                const mkSel = (opts, val) => { const s = document.createElement('select'); s.className = 'item-dropdown'; s.style.cssText = 'width:100%;max-width:none;'; opts.forEach(o => { const op = document.createElement('option'); op.value = o; op.textContent = o; s.appendChild(op); }); if(val) s.value = val; return s; };
+
+                // Wrestler picker
+                const wrestlerBtn = document.createElement('button'); wrestlerBtn.className = 'wrestler-slot'; wrestlerBtn.textContent = '+';
+                wrestlerBtn.onclick = () => {
+                    const panel = document.getElementById('detailsPanel'); openMobilePanel('Select Wrestler'); clearPanel();
+                    const t = document.createElement('div'); t.className = 'details-title'; t.textContent = 'Select Wrestler'; panel.appendChild(t);
+                    const cancelB = document.createElement('button'); cancelB.textContent = 'Cancel'; cancelB.style.cssText = "margin-bottom:12px;padding:7px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;border-radius:4px;border:1px solid var(--border-input);background:transparent;color:var(--text-tertiary);text-transform:uppercase;";
+                    cancelB.onclick = () => { closeMobilePanel(); clearPanel(); }; panel.appendChild(cancelB);
+                    if (wrestlerBtn.textContent !== '+') {
+                        const clrB = document.createElement('button'); clrB.textContent = 'Clear'; clrB.style.cssText = "display:block;margin-bottom:12px;padding:7px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;border-radius:4px;border:1px solid var(--accent-red);background:transparent;color:var(--accent-red);text-transform:uppercase;";
+                        clrB.onclick = () => { wrestlerBtn.textContent = '+'; wrestlerBtn.classList.remove('filled'); closeMobilePanel(); clearPanel(); }; panel.appendChild(clrB);
+                    }
+                    appendPickerSortFilter(panel, () => {});
+                    applyPickerSortFilter(rosterData).forEach(w => {
+                        const row = document.createElement('div'); row.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:4px;padding:8px 10px;background:var(--bg-secondary);border:1px solid var(--border-primary);border-radius:4px;cursor:pointer;transition:all 0.15s;';
+                        row.onmouseenter = () => { row.style.background = 'var(--bg-tertiary)'; row.style.borderColor = 'var(--accent-blue)'; };
+                        row.onmouseleave = () => { row.style.background = 'var(--bg-secondary)'; row.style.borderColor = 'var(--border-primary)'; };
+                        const nd = document.createElement('div'); nd.style.cssText = 'flex:1;font-size:13px;font-weight:500;color:var(--text-primary);'; nd.textContent = w.name; row.appendChild(nd);
+                        if (w.cameo) { const cd = document.createElement('div'); cd.style.cssText = 'font-size:11px;color:var(--text-muted);'; cd.textContent = w.cameo.includes('.') ? '@' + w.cameo : '@fswyoutub.' + w.cameo; row.appendChild(cd); }
+                        row.onclick = () => { wrestlerBtn.textContent = w.name; wrestlerBtn.classList.add('filled'); closeMobilePanel(); clearPanel(); };
+                        panel.appendChild(row);
+                    });
+                };
+                cannedContainer.appendChild(fieldWrap('Wrestler:', wrestlerBtn));
+
+                // Curtain moment
+                const curtainSel = mkSel([
+                    'Stands still — eyes closed, composing',
+                    'Peers through the curtain — watching the crowd first',
+                    'Takes a deep breath — then steps through',
+                    'Locks in immediately — no hesitation, straight through'
+                ], 'Stands still — eyes closed, composing');
+                cannedContainer.appendChild(fieldWrap('At the Curtain:', curtainSel));
+
+                // Crowd reaction
+                const crowdSel = mkSel([
+                    'Massive pop — arena explodes the moment they appear',
+                    'Mixed reaction — half cheering, half booing',
+                    'Heavy heat — sustained booing from the full arena',
+                    'Slow build — murmur then grows to full roar'
+                ], 'Massive pop — arena explodes the moment they appear');
+                cannedContainer.appendChild(fieldWrap('Crowd Reaction:', crowdSel));
+
+                // Ramp behavior
+                const rampSel = mkSel([
+                    'Stops at the top — poses, soaks it in, then walks',
+                    'Walks straight down — no showboating, locked in',
+                    'Taunts the crowd on the way down',
+                    'Slaps hands with fans on both sides of the ramp'
+                ], 'Stops at the top — poses, soaks it in, then walks');
+                cannedContainer.appendChild(fieldWrap('Ramp Walk:', rampSel));
+
+                // Buttons
+                const btnRow = document.createElement('div'); btnRow.style.cssText = 'display:flex;gap:8px;margin-bottom:15px;margin-top:4px;';
+                const generateBtn = document.createElement('button'); generateBtn.className = 'add-commercial-btn'; generateBtn.textContent = 'Generate'; generateBtn.style.marginBottom = '0';
+
+                generateBtn.onclick = () => {
+                    const wrestlerName = wrestlerBtn.textContent !== '+' ? wrestlerBtn.textContent.trim() : null;
+                    if (!wrestlerName) { alert('Please select a wrestler.'); return; }
+                    let cameo = wrestlerName;
+                    const wr = rosterData.find(r => r.name === wrestlerName);
+                    if (wr && wr.cameo && wr.cameo.trim()) cameo = (wr.cameo.trim().includes('.') ? '@' : '@fswyoutub.') + wr.cameo.trim();
+
+                    const curtain = curtainSel.value;
+                    const crowd = crowdSel.value;
+                    const ramp = rampSel.value;
+
+                    const curtainDescMap = {
+                        'Stands still — eyes closed, composing': `${cameo} stands behind the curtain — the noise of the crowd audible through the fabric. Eyes closed. Still. Composing. The last private moment before stepping into the arena.`,
+                        'Peers through the curtain — watching the crowd first': `${cameo} parts the curtain slightly with one hand and peers out — scanning the arena, reading the crowd before they know he's there. Taking stock. Then he lets the curtain fall and prepares to walk.`,
+                        'Takes a deep breath — then steps through': `${cameo} stands at the edge of the curtain, chest rising on a slow deep breath — holds it — then exhales and pushes through. The transition from backstage darkness to arena light is immediate.`,
+                        'Locks in immediately — no hesitation, straight through': `${cameo} hits the curtain without breaking stride — through it in one motion. No pause, no ritual. Already locked in before the crowd even registers the entrance.`
+                    };
+                    const crowdDescMap = {
+                        'Massive pop — arena explodes the moment they appear': 'The instant ${cameo} appears through the curtain the arena detonates — 20,000 people on their feet, the sound hitting like a wall. The reaction is immediate and total.',
+                        'Mixed reaction — half cheering, half booing': 'The crowd splits the moment ${cameo} comes through — half cheering, half booing, both sides loud. The dueling noise fills the arena. ${cameo} registers it and uses it.',
+                        'Heavy heat — sustained booing from the full arena': 'The boos start before ${cameo} is fully through the curtain and don\'t stop — sustained, loud, a wall of heat from every section of the arena. ${cameo} walks into it like it\'s nothing.',
+                        'Slow build — murmur then grows to full roar': 'A murmur moves through the arena as ${cameo} appears — then it grows. Section by section, the crowd builds until it\'s a full roar. The slow build makes the peak hit harder.'
+                    };
+                    const rampDescMap = {
+                        'Stops at the top — poses, soaks it in, then walks': `${cameo} stops dead at the top of the ramp the moment they clear the curtain. Arms out or head back — hitting a pose, holding it. Drinking in the reaction for a full beat. Then begins the walk down.`,
+                        'Walks straight down — no showboating, locked in': `${cameo} walks straight down the ramp — no pause, no pose, no acknowledgment of the crowd. Eyes forward, pace deliberate. The focus is the ring, not the reaction.`,
+                        'Taunts the crowd on the way down': `${cameo} taunts on the way down — pointing at sections, gesturing dismissively, feeding off the reaction. Every taunt gets a response. The ramp is a performance.`,
+                        'Slaps hands with fans on both sides of the ramp': `${cameo} works both sides of the ramp — reaching out, slapping hands, making eye contact with fans. Taking their time. The walk down is a shared moment with the crowd.`
+                    };
+
+                    const curtainDesc = curtainDescMap[curtain];
+                    const crowdDesc = crowdDescMap[crowd].replace(/\${cameo}/g, cameo);
+                    const rampDesc = rampDescMap[ramp].replace(/\${cameo}/g, cameo);
+
+                    const prompt =
+`1920x1080 true 1080p broadcast realism. 10–14 seconds. No fade-in. No fade-out.
+
+CHARACTER LOCK — ABSOLUTE:
+${cameo} maintains their exact established appearance, body type, ring gear, and presence throughout every frame. No drift. No reinterpretation.
+
+SCENE — CURTAIN ENTRANCE:
+Two-part sequence: the moment behind or at the curtain, then the step out into the arena.
+
+PART 1 — THE CURTAIN:
+${curtainDesc}
+The backstage side is dark — concrete walls, dim practical lighting, the hum of the crowd through the barrier. This is the last private moment.
+
+PART 2 — INTO THE ARENA:
+${cameo} pushes through the curtain and emerges into full arena production — entrance lighting blazing, pyro positions active, the entrance ramp stretching out ahead. The transition from dark to light is hard and immediate.
+
+CROWD:
+${crowdDesc}
+
+RAMP:
+${rampDesc}
+
+CAMERA:
+Broadcast multi-angle coverage. Tight on ${cameo}'s face just before the curtain — reading the emotion. Wide shot the moment they step through, capturing the full arena reaction. Then a tracking shot following them down the ramp. Cutaways to crowd faces reacting. Standard FSW broadcast presentation.
+
+LIGHTING:
+Backstage — dark, practical only. The instant the curtain parts — full arena production lighting floods in. High contrast between the two environments.
+
+RING DETAIL:
+White ropes, small round black turnbuckles. Reinforced solid ringside barricade separating the crowd from the floor. No logos on the barricades.
+
+NO text overlays. NO title cards. NO slow motion. Pure broadcast realism.`;
+
+                    outputTextarea.value = prompt;
+                    outputContainer.style.display = 'block';
+                };
+
+                const clearBtn = document.createElement('button'); clearBtn.textContent = 'Clear';
+                clearBtn.style.cssText = "padding:7px 14px;font-size:12px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;border-radius:4px;border:1px solid var(--border-input);background:transparent;color:var(--text-tertiary);text-transform:uppercase;";
+                clearBtn.onclick = () => { wrestlerBtn.textContent = '+'; wrestlerBtn.classList.remove('filled'); curtainSel.selectedIndex = 0; crowdSel.selectedIndex = 0; rampSel.selectedIndex = 0; outputContainer.style.display = 'none'; outputTextarea.value = ''; };
+                btnRow.appendChild(generateBtn); btnRow.appendChild(clearBtn);
+                cannedContainer.appendChild(btnRow);
+
+                // Output
+                const outputContainer = document.createElement('div'); outputContainer.style.display = 'none';
+                const outputLabel = document.createElement('div');
+                outputLabel.style.cssText = "font-size:10px;font-weight:700;font-family:'Bebas Neue',sans-serif;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;";
+                outputLabel.textContent = 'Generated Prompt:';
+                const outputTextarea = document.createElement('textarea');
+                outputTextarea.className = 'detail-textarea'; outputTextarea.style.minHeight = '240px'; outputTextarea.readOnly = true;
+                const copyBtn = document.createElement('button'); copyBtn.className = 'add-commercial-btn'; copyBtn.textContent = 'Copy';
+                copyBtn.style.cssText = 'margin-top:8px;margin-bottom:0;';
+                copyBtn.onclick = () => { navigator.clipboard.writeText(outputTextarea.value).then(() => { copyBtn.textContent = 'Copied!'; copyBtn.style.background = '#107c10'; setTimeout(() => { copyBtn.textContent = 'Copy'; copyBtn.style.background = ''; }, 2000); }).catch(() => alert('Failed to copy')); };
+                outputContainer.appendChild(outputLabel); outputContainer.appendChild(outputTextarea); outputContainer.appendChild(copyBtn);
+                cannedContainer.appendChild(outputContainer);
             }
             container.appendChild(cannedContainer);
         }
