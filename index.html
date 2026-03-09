@@ -267,7 +267,7 @@
   <div class="hero-bg"></div>
   <!-- Slideshow video layer -->
   <div class="hero-vid-wrap">
-    <iframe id="hero-iframe" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <iframe id="hero-iframe" src="https://www.youtube.com/embed/SGQqbCUJvME?autoplay=1&mute=1&start=50&loop=1&playlist=SGQqbCUJvME&controls=0&disablekb=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&enablejsapi=1&playsinline=1" frameborder="0" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
   </div>
   <!-- Thumbnail shown between transitions -->
   <div class="hero-thumb" id="hero-thumb"></div>
@@ -683,8 +683,8 @@ function loadHeroSlide() {
   if (_heroFirstLoad) {
     _heroFirstLoad = false;
     thumb.classList.add('hidden');
-    iframe.src = heroSrc(id, v.start);
-    showHeroText(v, isFirst);
+    // src already hardcoded in HTML — don't reset or mobile loses autoplay
+    showHeroText(v, true);
     setTimeout(() => fade.classList.remove('active'), 800);
     heroTimer = setTimeout(() => { heroIdx = (heroIdx + 1) % heroPlaylist.length; loadHeroSlide(); }, HERO_DUR * 1000);
     return;
