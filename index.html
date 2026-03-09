@@ -37,38 +37,66 @@
 
   .hero{position:relative;min-height:100vh;display:flex;align-items:flex-end;padding:0 56px 100px;overflow:hidden;}
   .hero-bg{position:absolute;inset:0;background:#07070a;}
-  .hero-img{position:absolute;inset:0;background-size:cover;background-position:center top;opacity:.55;}
-  .hero-vignette{position:absolute;inset:0;background:linear-gradient(to right,rgba(7,7,10,.92) 0%,rgba(7,7,10,.4) 50%,transparent 100%),linear-gradient(to top,rgba(7,7,10,1) 0%,rgba(7,7,10,.95) 18%,rgba(7,7,10,.7) 35%,rgba(7,7,10,.2) 55%,transparent 72%);}
-  .hero-bottom-fade{position:absolute;bottom:0;left:0;right:0;height:220px;background:linear-gradient(to top,#07070a 0%,#07070a 30%,rgba(7,7,10,.85) 60%,transparent 100%);z-index:3;pointer-events:none;}
-  .hero-grain{position:absolute;inset:0;opacity:.035;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");background-size:200px;animation:grain 1s steps(2) infinite;}
+  /* Slideshow video layer */
+  .hero-vid-wrap{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;}
+  .hero-vid-wrap iframe{position:absolute;top:50%;left:50%;width:177.78vh;height:100vh;min-width:100%;min-height:56.25vw;transform:translate(-50%,-50%);opacity:.6;pointer-events:none;border:none;}
+  /* Thumbnail fallback shown between slides */
+  .hero-thumb{position:absolute;inset:0;z-index:2;background-size:cover;background-position:center;transition:opacity 1.5s ease;}
+  .hero-thumb.hidden{opacity:0;pointer-events:none;}
+  /* Black fade overlay for transitions */
+  .hero-fade{position:absolute;inset:0;z-index:2;background:#000;opacity:0;pointer-events:none;transition:opacity .7s ease;}
+  .hero-fade.active{opacity:1;}
+  .hero-vignette{position:absolute;inset:0;z-index:4;background:linear-gradient(to right,rgba(7,7,10,.88) 0%,rgba(7,7,10,.3) 50%,transparent 100%),linear-gradient(to top,rgba(7,7,10,1) 0%,rgba(7,7,10,.15) 38%,transparent 65%);}
+  .hero-bottom-fade{position:absolute;bottom:0;left:0;right:0;height:100px;background:linear-gradient(to top,#07070a 0%,#07070a 20%,rgba(7,7,10,.6) 60%,transparent 100%);z-index:5;pointer-events:none;}
+  .hero-grain{position:absolute;inset:0;z-index:3;opacity:.035;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");background-size:200px;animation:grain 1s steps(2) infinite;}
   @keyframes grain{0%{background-position:0 0}25%{background-position:20px -15px}50%{background-position:-10px 20px}75%{background-position:15px 10px}100%{background-position:-20px -5px}}
 
-  .hero-content{position:relative;z-index:2;max-width:560px;}
+  .hero-content{position:relative;z-index:6;max-width:560px;}
   .era-tag{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(200,168,75,.35);background:rgba(200,168,75,.08);color:var(--gold);font-size:.68rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;padding:5px 14px;border-radius:2px;margin-bottom:20px;}
   .era-tag .pulse{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 1.8s infinite;}
   @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.75)}}
-  .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,6.5vw,5.2rem);line-height:.9;letter-spacing:3px;color:#fff;margin-bottom:6px;}
-  .hero-sub{font-family:'Bebas Neue',sans-serif;font-size:clamp(1rem,2vw,1.6rem);letter-spacing:6px;color:var(--gold);margin-bottom:20px;}
-  .hero-desc{font-size:.9rem;line-height:1.65;color:rgba(232,232,232,.65);margin-bottom:28px;max-width:420px;}
-  .hero-latest{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:12px 16px;margin-bottom:24px;max-width:420px;cursor:pointer;transition:background .2s;}
-  .hero-latest:hover{background:rgba(255,255,255,.08);}
-  .hl-thumb{width:80px;height:45px;border-radius:5px;overflow:hidden;flex-shrink:0;background:var(--surface2);}
-  .hl-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
-  .hl-info{flex:1;min-width:0;}
-  .hl-label{font-size:.62rem;color:var(--gold);letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:3px;}
-  .hl-title{font-size:.82rem;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .hl-play{width:34px;height:34px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  /* Animated hero text */
+  .hero-ep-label{font-size:.62rem;color:var(--gold);letter-spacing:3px;text-transform:uppercase;font-weight:700;margin-bottom:8px;opacity:0;transform:translateY(8px);transition:opacity .5s .1s,transform .5s .1s;}
+  .hero-ep-label.show{opacity:1;transform:translateY(0);}
+  .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,6.5vw,5.2rem);line-height:.9;letter-spacing:3px;color:#fff;margin-bottom:10px;opacity:0;transform:translateY(14px);transition:opacity .55s .2s,transform .55s .2s;}
+  .hero-title.show{opacity:1;transform:translateY(0);}
+  .hero-subtitle{font-size:1rem;color:rgba(232,232,232,.55);letter-spacing:3px;text-transform:uppercase;font-weight:400;margin-bottom:22px;opacity:0;transform:translateY(10px);transition:opacity .55s .38s,transform .55s .38s;}
+  .hero-subtitle.show{opacity:1;transform:translateY(0);}
+  /* Slide dots */
+  .hero-dots{display:flex;gap:6px;margin-bottom:24px;opacity:0;transition:opacity .4s .45s;}
+  .hero-dots.show{opacity:1;}
+  .hero-dot{height:3px;border-radius:2px;background:rgba(255,255,255,.22);transition:background .3s,width .3s;width:22px;cursor:pointer;}
+  .hero-dot.active{background:var(--accent);width:38px;}
 
-  .hero-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
-  .btn-r{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.88rem;padding:13px 26px;border-radius:5px;border:none;cursor:pointer;text-decoration:none;transition:background .2s,transform .15s;}
-  .btn-r:hover{background:#a0000b;transform:scale(1.03);}
-  .btn-g{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.09);color:#fff;font-family:'DM Sans',sans-serif;font-weight:500;font-size:.88rem;padding:13px 26px;border-radius:5px;border:1px solid rgba(255,255,255,.12);cursor:pointer;text-decoration:none;transition:background .2s;}
-  .btn-g:hover{background:rgba(255,255,255,.17);}
+  .hero-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;opacity:0;transform:translateY(10px);transition:opacity .55s .42s,transform .55s .42s;}
+  .hero-actions.show{opacity:1;transform:translateY(0);}
+  .hero-ep-card{
+    display:flex;align-items:center;gap:16px;
+    background:linear-gradient(135deg,rgba(255,255,255,.18) 0%,rgba(255,255,255,.05) 50%,rgba(255,255,255,.12) 100%);
+    backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);
+    border:1px solid rgba(255,255,255,.3);
+    border-bottom-color:rgba(255,255,255,.1);border-right-color:rgba(255,255,255,.1);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 -1px 0 rgba(255,255,255,.06),0 8px 32px rgba(0,0,0,.35),0 2px 8px rgba(0,0,0,.2);
+    border-radius:12px;padding:14px 18px;max-width:420px;cursor:pointer;
+    transition:background .25s,border-color .25s,transform .2s,box-shadow .25s;
+    position:relative;overflow:hidden;
+  }
+  .hero-ep-card::before{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.12) 50%,transparent 70%);transform:translateX(-100%);transition:transform .5s ease;pointer-events:none;}
+  .hero-ep-card:hover::before{transform:translateX(100%);}
+  .hero-ep-card:hover{background:linear-gradient(135deg,rgba(255,255,255,.26) 0%,rgba(255,255,255,.1) 50%,rgba(255,255,255,.2) 100%);border-color:rgba(255,255,255,.45);transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 12px 40px rgba(0,0,0,.4);}
+  .hero-ep-thumb{width:96px;height:54px;border-radius:6px;object-fit:cover;flex-shrink:0;display:block;}
+  .hero-ep-card-info{flex:1;min-width:0;}
+  .hero-ep-card-label{font-size:.6rem;color:var(--gold);letter-spacing:2.5px;text-transform:uppercase;font-weight:700;margin-bottom:4px;}
+  .hero-ep-card-title{font-size:.88rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .hero-ep-play{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,rgba(255,255,255,.18) 0%,rgba(255,255,255,.06) 50%,rgba(255,255,255,.12) 100%);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.3);border-bottom-color:rgba(255,255,255,.1);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 2px 8px rgba(0,0,0,.2);color:#fff;font-size:.75rem;font-weight:700;letter-spacing:.5px;padding:8px 14px;border-radius:6px;flex-shrink:0;transition:background .2s,border-color .2s;}
+  .hero-ep-card:hover .hero-ep-play{background:linear-gradient(135deg,rgba(255,255,255,.28) 0%,rgba(255,255,255,.1) 50%,rgba(255,255,255,.2) 100%);border-color:rgba(255,255,255,.5);}
 
   /* TEASER BUTTON — gold outline */
   .btn-teaser{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--gold);font-family:'DM Sans',sans-serif;font-weight:600;font-size:.88rem;padding:13px 22px;border-radius:5px;border:1px solid rgba(200,168,75,.45);cursor:pointer;transition:background .2s,border-color .2s;letter-spacing:.3px;}
   .btn-teaser:hover{background:rgba(200,168,75,.1);border-color:var(--gold);}
   .btn-teaser .t-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:pulse 1.5s infinite;flex-shrink:0;}
+  @media(max-width:768px){.hero-vid-wrap iframe{width:200%;height:200%;}}
+  @media(max-width:480px){.hero-vid-wrap iframe{width:250%;height:250%;}}
 
   main{padding-bottom:80px;padding-top:40px;}
   .section{margin-bottom:48px;}
@@ -218,33 +246,32 @@
 </nav>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="hero">
   <div class="hero-bg"></div>
-  <div class="hero-img" style="background:radial-gradient(ellipse 80% 60% at 65% 30%,rgba(50,30,30,.8) 0%,rgba(7,7,10,1) 70%),repeating-linear-gradient(135deg,rgba(192,0,14,.04) 0px,rgba(192,0,14,.04) 1px,transparent 1px,transparent 40px);"></div>
+  <!-- Slideshow video layer -->
+  <div class="hero-vid-wrap">
+    <iframe id="hero-iframe" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
+  <!-- Thumbnail shown between transitions -->
+  <div class="hero-thumb" id="hero-thumb"></div>
+  <!-- Black fade for crossfade transitions -->
+  <div class="hero-fade" id="hero-fade"></div>
+  <div class="hero-grain"></div>
   <div class="hero-vignette"></div>
   <div class="hero-bottom-fade"></div>
-  <div class="hero-grain"></div>
-  <!-- AUTOPLAY BG VIDEO -->
-  <div class="hero-video" id="hero-video-wrap">
-    <iframe id="hero-iframe" src="https://www.youtube.com/embed/LFV9xmdWJUY?autoplay=1&mute=1&loop=1&playlist=LFV9xmdWJUY&controls=0&disablekb=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-  </div>
   <div class="hero-content">
     <div class="era-tag"><span class="pulse"></span> Cinematic Era</div>
-    <h1 class="hero-title">First Strike<br>Wrestling</h1>
-    <div class="hero-sub">FSW · CAW Universe</div>
-    <p class="hero-desc">Welcome to the FSW Cinematic Era — where every match tells a story. This is First Strike Wrestling.</p>
-    <div class="hero-latest" onclick="openM('SGQqbCUJvME','FSW 52: Maximum','Choices','FSW 52: Maximum','')">
-      <div class="hl-thumb"><img src="https://i.ytimg.com/vi/SGQqbCUJvME/hqdefault.jpg" alt="FSW 52" onerror="this.src='https://i.ytimg.com/vi/SGQqbCUJvME/default.jpg'"></div>
-      <div class="hl-info">
-        <div class="hl-label">Latest Episode</div>
-        <div class="hl-title">FSW 52: Maximum — "Choices"</div>
+    <div class="hero-ep-label" id="hero-ep-label"></div>
+    <h1 class="hero-title" id="hero-title"></h1>
+    <div class="hero-subtitle" id="hero-subtitle"></div>
+    <div class="hero-actions" id="hero-actions">
+      <div class="hero-ep-card" id="hero-ep-card" onclick="heroWatchNow()">
+        <img class="hero-ep-thumb" id="hero-ep-thumb" src="" alt="">
+        <div class="hero-ep-card-info">
+          <div class="hero-ep-card-label">Latest Episode</div>
+          <div class="hero-ep-card-title" id="hero-ep-card-title"></div>
+        </div>
       </div>
-
-    </div>
-    <div class="hero-actions">
-      <a href="https://www.youtube.com/watch?v=SGQqbCUJvME" target="_blank" class="btn-r">Watch Now</a>
-      <a href="https://www.youtube.com/@fsw_caw/videos" target="_blank" class="btn-g">All Episodes</a>
-
     </div>
   </div>
 </section>
@@ -510,6 +537,113 @@ fill('pop-row',popularVideos,'pop-cnt',true);
 fill('spec-row',specialsVideos,'spec-cnt',false);
 
 function slide(btn,dir){ btn.parentElement.querySelector('.scroll-row').scrollBy({left:dir*600,behavior:'smooth'}); }
+
+// ── HERO SLIDESHOW ─────────────────────────────────────────────────────────────
+const HERO_START = 50;   // start each video at 50s
+const HERO_DUR   = 15;   // show each video for 15s
+function heroSrc(id) {
+  return `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&start=${HERO_START}&loop=1&playlist=${id}&controls=0&disablekb=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&enablejsapi=1&playsinline=1`;
+}
+
+function updateHeroThumb(id) {
+  const thumb = document.getElementById('hero-thumb');
+  thumb.style.backgroundImage = `url(https://i.ytimg.com/vi/${id}/hqdefault.jpg)`;
+  const img = new Image();
+  img.onload = () => { if (img.width > 120) thumb.style.backgroundImage = `url(https://i.ytimg.com/vi/${id}/maxresdefault.jpg)`; };
+  img.src = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+}
+
+// Build a shuffled playlist: FSW 52 first, then rest randomised
+function buildHeroPlaylist() {
+  const first = latestVideos[0];
+  const rest  = latestVideos.slice(1).sort(() => Math.random() - 0.5);
+  return [first, ...rest];
+}
+const heroPlaylist = buildHeroPlaylist();
+let heroIdx  = 0;
+let heroTimer = null;
+
+function buildHeroDots() {
+  const wrap = document.getElementById('hero-dots');
+  if(!wrap) return;
+  wrap.innerHTML = '';
+  heroPlaylist.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'hero-dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => { clearTimeout(heroTimer); heroIdx = i; loadHeroSlide(); };
+    wrap.appendChild(d);
+  });
+  wrap.classList.add('show');
+}
+
+function setHeroDot(idx) {
+  document.querySelectorAll('.hero-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+}
+
+function showHeroText(v, isFirst) {
+  ['hero-ep-label','hero-title','hero-subtitle','hero-actions'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el){ el.classList.remove('show'); void el.offsetWidth; el.classList.add('show'); }
+  });
+  const parts  = v.ep.split(': ');
+  const epNum  = parts[0];
+  const epShow = parts[1] || '';
+  const epSub  = v.title ? v.title.replace(/^"|"$/g,'') : '';
+  document.getElementById('hero-ep-label').textContent = epNum;
+  document.getElementById('hero-title').textContent = epShow;
+  const subEl = document.getElementById('hero-subtitle');
+  if(subEl){ subEl.textContent = epSub; subEl.style.display = epSub ? '' : 'none'; }
+  // Card label: "Latest Episode" for first, "Rewatch Episode" for rest
+  const labelEl = document.querySelector('.hero-ep-card-label');
+  if(labelEl) labelEl.textContent = isFirst ? 'Latest Episode' : 'Rewatch Episode';
+  const cardTitle = v.ep + (epSub ? ' — ' + epSub : '');
+  document.getElementById('hero-ep-card-title').textContent = cardTitle;
+  document.getElementById('hero-ep-thumb').src = `https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`;
+}
+
+let _heroFirstLoad = true;
+let _heroCurrentId = null;
+
+function loadHeroSlide() {
+  const v      = heroPlaylist[heroIdx];
+  const id     = v.id;
+  const isFirst = heroIdx === 0;
+  const fade   = document.getElementById('hero-fade');
+  const iframe = document.getElementById('hero-iframe');
+  const thumb  = document.getElementById('hero-thumb');
+
+  _heroCurrentId = id;
+  updateHeroThumb(id);
+  setHeroDot(heroIdx);
+
+  if (_heroFirstLoad) {
+    _heroFirstLoad = false;
+    thumb.classList.add('hidden');
+    iframe.src = heroSrc(id);
+    showHeroText(v, isFirst);
+    setTimeout(() => fade.classList.remove('active'), 800);
+    heroTimer = setTimeout(() => { heroIdx = (heroIdx + 1) % heroPlaylist.length; loadHeroSlide(); }, HERO_DUR * 1000);
+    return;
+  }
+
+  fade.classList.add('active');
+  thumb.classList.remove('hidden');
+  setTimeout(() => {
+    iframe.src = heroSrc(id);
+    showHeroText(v, isFirst);
+    setTimeout(() => fade.classList.remove('active'), 300);
+    setTimeout(() => thumb.classList.add('hidden'), 2500);
+    heroTimer = setTimeout(() => { heroIdx = (heroIdx + 1) % heroPlaylist.length; loadHeroSlide(); }, HERO_DUR * 1000);
+  }, 600);
+}
+
+function heroWatchNow() {
+  const v = heroPlaylist[heroIdx];
+  openM(v.id, v.ep, v.title, v.ep, '', v.t || 0);
+}
+
+buildHeroDots();
+loadHeroSlide();
 
 // YouTube IFrame API for modal player
 var mPlayer = null;
