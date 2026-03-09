@@ -281,6 +281,7 @@
     <div class="hero-ep-label" id="hero-ep-label"></div>
     <h1 class="hero-title" id="hero-title"></h1>
     <div class="hero-subtitle" id="hero-subtitle"></div>
+    <div class="hero-dots" id="hero-dots"></div>
     <div class="hero-actions" id="hero-actions">
       <div class="hero-ep-card" id="hero-ep-card" onclick="heroWatchNow()">
         <div class="hero-ep-thumb-wrap">
@@ -536,10 +537,12 @@ const latestVideos = [
   { id:"5j4tvvRi3KA", ep:"FCW 9: Nemesis",                    title:"",                                                      ple:false, isNew:false },
   { id:"OPAI2tOmxJ4", ep:"FCW 8: New Revolution",             title:"",                                                      ple:false, isNew:false },
   { id:"JcJkl6_KUsc", ep:"FCW 7: Maximum",                    title:"",                                                      ple:false, isNew:false },
-  { id:"FnaaJ0_n85g", ep:"FCW 6: Nemesis",                    title:"",                                                      ple:false, isNew:false, start:4387 },
+  { id:"FnaaJ0_n85g", ep:"FCW 6: Nemesis",                    title:"",                                                      ple:false, isNew:false, start:4778 },
   { id:"qWCJIajMr7g", ep:"FCW 5: New Revolution",             title:"",                                                      ple:false, isNew:false },
   { id:"VO_oEXIku_g", ep:"FCW 4: Maximum",                    title:"",                                                      ple:false, isNew:false, start:311 },
   { id:"-0gwLyT8wyY", ep:"FCW 3: Royal Rumble",               title:"",                                                      ple:false, isNew:false, t:7881, start:7 },
+  { id:"yh832EPu7f8", ep:"FCW 2: Nemesis",                    title:"",                                                      ple:false, isNew:false, start:4670 },
+  { id:"6tbdr_3T6UE", ep:"FCW 1: Nemesis",                    title:"",                                                      ple:false, isNew:false, start:265 },
 ];
 const popularVideos = [
   { id:"4wD-1MvCLg8", ep:"FSW 37: Fight For Survival", title:"PLE",               ple:true,  isNew:false, t:258  },
@@ -624,7 +627,7 @@ function buildHeroDots() {
   const wrap = document.getElementById('hero-dots');
   if(!wrap) return;
   wrap.innerHTML = '';
-  heroPlaylist.forEach((_, i) => {
+  heroPlaylist.slice(0, 5).forEach((_, i) => {
     const d = document.createElement('div');
     d.className = 'hero-dot' + (i === 0 ? ' active' : '');
     d.onclick = () => { clearTimeout(heroTimer); heroIdx = i; loadHeroSlide(); };
