@@ -627,12 +627,11 @@ function loadHeroSlide() {
   }
 
   fade.classList.add('active');
-  thumb.classList.remove('hidden');
+  thumb.classList.add('hidden');
   setTimeout(() => {
     iframe.src = heroSrc(id);
     showHeroText(v, isFirst);
     setTimeout(() => fade.classList.remove('active'), 300);
-    setTimeout(() => thumb.classList.add('hidden'), 2500);
     heroTimer = setTimeout(() => { heroIdx = (heroIdx + 1) % heroPlaylist.length; loadHeroSlide(); }, HERO_DUR * 1000);
   }, 600);
 }
