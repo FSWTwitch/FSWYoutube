@@ -646,13 +646,17 @@ function showHeroText(v, isFirst) {
   const epShow = parts[1] || '';
   const epSub  = v.title ? v.title.replace(/^"|"$/g,'') : '';
   document.getElementById('hero-ep-label').textContent = epNum;
-  document.getElementById('hero-title').textContent = epShow;
+  // Strip anything after a dash in the show name — those become subtitle
+  const epShowClean = epShow.split(/\s*[—\-]\s*/)[0].trim();
+  const epShowExtra = epShow.includes('—') || epShow.includes('-') ? epShow.split(/\s*[—\-]\s/).slice(1).join(' ').trim() : '';
+  const finalSub = epSub || epShowExtra;
+  document.getElementById('hero-title').textContent = epShowClean;
   const subEl = document.getElementById('hero-subtitle');
-  if(subEl){ subEl.textContent = epSub; subEl.style.display = epSub ? '' : 'none'; }
+  if(subEl){ subEl.textContent = finalSub; subEl.style.display = finalSub ? '' : 'none'; }
   // Card label: "Latest Episode" for first, "Rewatch Episode" for rest
   const labelEl = document.querySelector('.hero-ep-card-label');
   if(labelEl) labelEl.textContent = isFirst ? 'Latest Episode' : 'Rewatch Episode';
-  const cardTitle = v.ep + (epSub ? ' — ' + epSub : '');
+  const cardTitle = epNum + ': ' + epShowClean + (finalSub ? ' — ' + finalSub : '');
   document.getElementById('hero-ep-card-title').textContent = cardTitle;
   document.getElementById('hero-ep-thumb').src = `https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`;
 }
