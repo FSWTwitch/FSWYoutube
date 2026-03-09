@@ -610,8 +610,9 @@ function updateHeroThumb(id) {
 
 // Build a shuffled playlist: FSW 52 first, then rest randomised
 function buildHeroPlaylist() {
-  const first = latestVideos[0];
-  const rest  = latestVideos.slice(1).sort(() => Math.random() - 0.5);
+  const filtered = latestVideos.filter(v => v.id !== 'HNu52rG6UYU');
+  const first = filtered[0];
+  const rest  = filtered.slice(1).sort(() => Math.random() - 0.5);
   return [first, ...rest];
 }
 const heroPlaylist = buildHeroPlaylist();
