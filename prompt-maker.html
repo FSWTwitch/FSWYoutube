@@ -15,10 +15,10 @@
             --bg-secondary: #ffffff;
             --bg-tertiary: #e8eef5;
             --bg-input: #ffffff;
-            --text-primary: #0a0a0a;
-            --text-secondary: #222222;
-            --text-tertiary: #444444;
-            --text-muted: #666666;
+            --text-primary: #0d0d0d;
+            --text-secondary: #1a1a1a;
+            --text-tertiary: #2a2a2a;
+            --text-muted: #3a3a3a;
             --border-primary: rgba(0,0,0,0.1);
             --border-secondary: rgba(0,0,0,0.06);
             --border-input: rgba(0,0,0,0.2);
@@ -42,10 +42,10 @@
             --bg-secondary: #ffffff;
             --bg-tertiary: #e8eef5;
             --bg-input: #ffffff;
-            --text-primary: #0a0a0a;
-            --text-secondary: #222222;
-            --text-tertiary: #444444;
-            --text-muted: #666666;
+            --text-primary: #0d0d0d;
+            --text-secondary: #1a1a1a;
+            --text-tertiary: #2a2a2a;
+            --text-muted: #3a3a3a;
             --border-primary: rgba(0,0,0,0.1);
             --border-secondary: rgba(0,0,0,0.06);
             --border-input: rgba(0,0,0,0.2);
@@ -3696,7 +3696,7 @@ function syncContentPadding() {}
 
             // Top row: sort + filter + add
             const sortArea = document.createElement('div'); sortArea.style.cssText = 'display:flex;gap:8px;align-items:center;margin-bottom:14px;flex-wrap:wrap;';
-            const mkLbl = t => { const s = document.createElement('span'); s.style.cssText = 'font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;'; s.textContent = t; return s; };
+            const mkLbl = t => { const s = document.createElement('span'); s.style.cssText = 'font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;'; s.textContent = t; return s; };
             const mkSel = (opts, val) => { const s = document.createElement('select'); s.className = 'roster-dropdown'; opts.forEach(o => { const op = document.createElement('option'); op.value = o; op.textContent = o; s.appendChild(op); }); s.value = val; return s; };
             const sortSel = mkSel(['A-Z','Z-A','Active','Inactive'], tbSort); sortSel.onchange = () => { tbSort = sortSel.value; renderTitleBelts(); };
             const filterSel = mkSel(['All','Active','Inactive'], tbFilter); filterSel.onchange = () => { tbFilter = filterSel.value; renderTitleBelts(); };
@@ -3999,7 +3999,7 @@ function syncContentPadding() {}
             titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);";
             titleEl.textContent = 'Tale of the Tape';
             const subtitleEl = document.createElement('div');
-            subtitleEl.style.cssText = "font-size:15px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;";
+            subtitleEl.style.cssText = "font-size:15px;color:var(--text-secondary);margin-top:2px;font-family:'DM Sans',sans-serif;";
             subtitleEl.textContent = 'ESPN-style face-off graphic — two wrestlers, split screen standoff with stats.';
             const menuBtn = document.createElement('button');
             menuBtn.className = 'hide-section-btn';
@@ -4023,7 +4023,7 @@ function syncContentPadding() {}
             cannedContainer.appendChild(headerRow);
 
             if (!minimized) {
-                const mkLabel = t => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = t; return l; };
+                const mkLabel = t => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = t; return l; };
                 const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
                 const mkSel = (opts, val) => { const s = document.createElement('select'); s.className = 'item-dropdown'; s.style.cssText = 'width:100%;max-width:none;'; opts.forEach(o => { const op = document.createElement('option'); op.value = o; op.textContent = o; s.appendChild(op); }); if(val) s.value = val; return s; };
 
@@ -4062,7 +4062,7 @@ function syncContentPadding() {}
                 const w2Btn = document.createElement('button'); w2Btn.className = 'wrestler-slot'; w2Btn.textContent = '+';
                 w1Btn.onclick = () => openWrestlerPicker(w1Btn);
                 w2Btn.onclick = () => openWrestlerPicker(w2Btn);
-                const wSlotsLabel = document.createElement('div'); wSlotsLabel.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;"; wSlotsLabel.innerHTML = 'Wrestlers <span style="color:#c0392b;">*</span>';
+                const wSlotsLabel = document.createElement('div'); wSlotsLabel.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;"; wSlotsLabel.innerHTML = 'Wrestlers <span style="color:#c0392b;">*</span>';
                 const wSlotsRow = document.createElement('div'); wSlotsRow.style.cssText = 'display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center;';
                 wSlotsRow.appendChild(w1Btn); wSlotsRow.appendChild(w2Btn);
                 cannedContainer.appendChild(wSlotsLabel); cannedContainer.appendChild(wSlotsRow);
@@ -4248,14 +4248,14 @@ This must feel like a legitimate sports broadcast face-off package — the kind 
             const cannedContainer = document.createElement('div'); cannedContainer.style.cssText = 'margin-bottom:20px;padding:15px;background:var(--bg-tertiary);border:1px solid var(--border-primary);border-radius:8px;position:relative;';
             const headerRow = document.createElement('div'); headerRow.style.cssText = 'display:flex;justify-content:space-between;align-items:center;gap:10px;' + (minimized ? '' : 'margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid var(--border-secondary);');
             const titleEl = document.createElement('div'); titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);"; titleEl.textContent = 'Podcast Guest';
-            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Wrestler joins a podcast as a featured guest.';
+            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-secondary);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Wrestler joins a podcast as a featured guest.';
             const menuBtn = document.createElement('button'); menuBtn.className = 'hide-section-btn'; menuBtn.textContent = minimized ? '\u2193' : '\u2191'; menuBtn.style.opacity = '0'; menuBtn.style.transition = 'opacity 0.2s';
             menuBtn.onclick = () => { cannedPodcastMinimized = !cannedPodcastMinimized; renderPrompts(); };
             if (minimized) { cannedContainer.style.cursor = 'pointer'; cannedContainer.onclick = (e) => { if (e.target === menuBtn || e.target.closest && e.target.closest('button') === menuBtn) return; cannedPodcastMinimized = !cannedPodcastMinimized; renderPrompts(); }; menuBtn.style.display = 'none'; } else { cannedContainer.style.cursor = ''; cannedContainer.onclick = null; menuBtn.style.display = ''; cannedContainer.onmouseenter = () => menuBtn.style.opacity = '1'; cannedContainer.onmouseleave = () => menuBtn.style.opacity = '0'; }
             const _titleWrap = document.createElement('div'); _titleWrap.style.cssText = 'flex:1;min-width:0;'; _titleWrap.appendChild(titleEl); if (typeof subtitleEl !== 'undefined') _titleWrap.appendChild(subtitleEl); headerRow.appendChild(_titleWrap); headerRow.appendChild(menuBtn); cannedContainer.appendChild(headerRow);
 
             if (!minimized) {
-                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
+                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
                 const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
 
                 // Wrestler slot
@@ -4385,13 +4385,13 @@ This must feel like a legitimate sports broadcast face-off package — the kind 
             const cannedContainer = document.createElement('div'); cannedContainer.style.cssText = 'margin-bottom:20px;padding:15px;background:var(--bg-tertiary);border:1px solid var(--border-primary);border-radius:8px;position:relative;';
             const headerRow = document.createElement('div'); headerRow.style.cssText = 'display:flex;justify-content:space-between;align-items:center;gap:10px;' + (minimized ? '' : 'margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid var(--border-secondary);');
             const titleEl = document.createElement('div'); titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);"; titleEl.textContent = 'TV Guest Appearance';
-            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Wrestler appears live on a TV talk or entertainment show.';
+            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-secondary);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Wrestler appears live on a TV talk or entertainment show.';
             const menuBtn = document.createElement('button'); menuBtn.className = 'hide-section-btn'; menuBtn.textContent = minimized ? '\u2193' : '\u2191'; menuBtn.style.opacity = '0'; menuBtn.style.transition = 'opacity 0.2s';
             menuBtn.onclick = () => { cannedGuestMinimized = !cannedGuestMinimized; renderPrompts(); };
             if (minimized) { cannedContainer.style.cursor = 'pointer'; cannedContainer.onclick = (e) => { if (e.target === menuBtn || e.target.closest && e.target.closest('button') === menuBtn) return; cannedGuestMinimized = !cannedGuestMinimized; renderPrompts(); }; menuBtn.style.display = 'none'; } else { cannedContainer.style.cursor = ''; cannedContainer.onclick = null; menuBtn.style.display = ''; cannedContainer.onmouseenter = () => menuBtn.style.opacity = '1'; cannedContainer.onmouseleave = () => menuBtn.style.opacity = '0'; }
             const _titleWrap = document.createElement('div'); _titleWrap.style.cssText = 'flex:1;min-width:0;'; _titleWrap.appendChild(titleEl); if (typeof subtitleEl !== 'undefined') _titleWrap.appendChild(subtitleEl); headerRow.appendChild(_titleWrap); headerRow.appendChild(menuBtn); cannedContainer.appendChild(headerRow);
             if (!minimized) {
-                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
+                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
                 const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
 
                 const typeSel = document.createElement('select'); typeSel.className = 'item-dropdown'; typeSel.style.cssText = 'width:100%;max-width:none;';
@@ -4464,14 +4464,14 @@ This must feel like a legitimate sports broadcast face-off package — the kind 
             const cannedContainer = document.createElement('div'); cannedContainer.style.cssText = 'margin-bottom:20px;padding:15px;background:var(--bg-tertiary);border:1px solid var(--border-primary);border-radius:8px;position:relative;';
             const headerRow = document.createElement('div'); headerRow.style.cssText = 'display:flex;justify-content:space-between;align-items:center;gap:10px;' + (minimized ? '' : 'margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid var(--border-secondary);');
             const titleEl = document.createElement('div'); titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);"; titleEl.textContent = 'QVC Shopping Commercial';
-            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Host sells FSW merchandise live on a QVC-style shopping channel.';
+            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-secondary);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Host sells FSW merchandise live on a QVC-style shopping channel.';
             const menuBtn = document.createElement('button'); menuBtn.className = 'hide-section-btn'; menuBtn.textContent = minimized ? '↓' : '↑'; menuBtn.style.opacity = '0'; menuBtn.style.transition = 'opacity 0.2s';
             menuBtn.onclick = () => { cannedQVCMinimized = !cannedQVCMinimized; renderPrompts(); };
             if (minimized) { cannedContainer.style.cursor = 'pointer'; cannedContainer.onclick = (e) => { if (e.target === menuBtn || e.target.closest && e.target.closest('button') === menuBtn) return; cannedQVCMinimized = !cannedQVCMinimized; renderPrompts(); }; menuBtn.style.display = 'none'; } else { cannedContainer.style.cursor = ''; cannedContainer.onclick = null; menuBtn.style.display = ''; cannedContainer.onmouseenter = () => menuBtn.style.opacity = '1'; cannedContainer.onmouseleave = () => menuBtn.style.opacity = '0'; }
             const _titleWrap = document.createElement('div'); _titleWrap.style.cssText = 'flex:1;min-width:0;'; _titleWrap.appendChild(titleEl); if (typeof subtitleEl !== 'undefined') _titleWrap.appendChild(subtitleEl); headerRow.appendChild(_titleWrap); headerRow.appendChild(menuBtn); cannedContainer.appendChild(headerRow);
 
             if (!minimized) {
-                const mkLabel = t => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = t; return l; };
+                const mkLabel = t => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = t; return l; };
                 const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
 
                 // Salesperson — 3 buttons
@@ -4634,8 +4634,8 @@ This must feel like a legitimate sports broadcast face-off package — the kind 
                             'Is the quality as good as it looks?'
                         ];
                         const q = questions[Math.floor(Math.random()*questions.length)];
-                        hostDesc = 'SALESPERSON: ' + wrestlerCameoSales + ' — holding a phone to their ear, live on air. Listening and reacting to a caller. One hand gestures toward the product on the table. Wearing ' + clothingDesc + '. The ' + product + ' is still prominently displayed on the table.' + (guestCameo ? ' Special guest ' + guestCameo + ' is seated beside the host, listening in and reacting to the call.' : '');
-                        segmentDesc = 'SEGMENT TYPE — LIVE PHONE CALL: Host has just answered a live caller on air. Mid-conversation energy. Caller question (not heard, only implied): "' + q + '" — host is reacting naturally to this question. Not scripted-looking. Real interaction energy. Phone to ear, slight lean, genuine reaction.';
+                        hostDesc = 'SALESPERSON: ' + wrestlerCameoSales + ' — on a live caller segment, no phone in hand. Listening to the caller through a small in-ear earpiece. One hand gestures toward the product on the table. Wearing ' + clothingDesc + '. The ' + product + ' is still prominently displayed on the table.' + (guestCameo ? ' Special guest ' + guestCameo + ' is seated beside the host, listening in and reacting to the call.' : '');
+                        segmentDesc = 'SEGMENT TYPE — LIVE PHONE CALL: Host has just answered a live caller on air. Mid-conversation energy. Caller question (not heard, only implied): "' + q + '" — host is reacting naturally to this question. Not scripted-looking. Real interaction energy. No phone — caller audio comes through the studio speaker system. Slight lean forward, genuine reaction, full hands free.';
                         const phoneGraphic = '— PHONE CALL OVERLAY: Bottom left corner shows a "LIVE CALLER" badge in green with a phone icon. Caller display shows "CALLER FROM [CITY]" in small white text.';
                         prompt = [base1, '', base2, '', hostDesc, '', productDesc, '', segmentDesc, '', baseGraphics + '\n' + phoneGraphic, '', baseRealism, '', baseNeg + saleDesc].join('\n');
                     } else if (segment === 'Special Sale') {
@@ -4670,7 +4670,7 @@ This must feel like a legitimate sports broadcast face-off package — the kind 
             const headerRow = document.createElement('div'); headerRow.style.cssText = 'display:flex;justify-content:space-between;align-items:center;gap:10px;' + (minimized ? '' : 'margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid var(--border-secondary);');
             const titleWrap = document.createElement('div'); titleWrap.style.cssText = 'flex:1;min-width:0;';
             const titleEl = document.createElement('div'); titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);"; titleEl.textContent = 'FSW Show Teaser';
-            const subEl = document.createElement('div'); subEl.style.cssText = "font-size:15px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;"; subEl.textContent = 'Narration-style voiceover script announcing an upcoming FSW event with match callouts.';
+            const subEl = document.createElement('div'); subEl.style.cssText = "font-size:15px;color:var(--text-secondary);margin-top:2px;font-family:'DM Sans',sans-serif;"; subEl.textContent = 'Narration-style voiceover script announcing an upcoming FSW event with match callouts.';
             titleWrap.appendChild(titleEl); titleWrap.appendChild(subEl);
             const menuBtn = document.createElement('button'); menuBtn.className = 'hide-section-btn'; menuBtn.textContent = minimized ? '\u2193' : '\u2191'; menuBtn.style.opacity = '0'; menuBtn.style.transition = 'opacity 0.2s';
             menuBtn.onclick = () => { cannedPPVMinimized = !cannedPPVMinimized; renderPrompts(); };
@@ -4678,7 +4678,7 @@ This must feel like a legitimate sports broadcast face-off package — the kind 
             headerRow.appendChild(titleWrap); headerRow.appendChild(menuBtn); cannedContainer.appendChild(headerRow);
 
             if (!minimized) {
-                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
+                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
                 const mkInput = (placeholder, val, onchange) => { const i = document.createElement('input'); i.type = 'text'; i.className = 'roster-text-input'; i.placeholder = placeholder; i.value = val || ''; i.style.cssText = 'width:100%;box-sizing:border-box;'; i.oninput = e => onchange(e.target.value); return i; };
                 const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; if (label) w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
 
@@ -4867,14 +4867,14 @@ This must feel like a legitimate sports broadcast face-off package — the kind 
             const cannedContainer = document.createElement('div'); cannedContainer.style.cssText = 'margin-bottom:20px;padding:15px;background:var(--bg-tertiary);border:1px solid var(--border-primary);border-radius:8px;position:relative;';
             const headerRow = document.createElement('div'); headerRow.style.cssText = 'display:flex;justify-content:space-between;align-items:center;gap:10px;' + (minimized ? '' : 'margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid var(--border-secondary);');
             const titleEl = document.createElement('div'); titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);"; titleEl.textContent = 'Sparring';
-            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Two wrestlers spar in the ring or gym — real training intensity.';
+            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-secondary);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Two wrestlers spar in the ring or gym — real training intensity.';
             const menuBtn = document.createElement('button'); menuBtn.className = 'hide-section-btn'; menuBtn.textContent = minimized ? '\u2193' : '\u2191'; menuBtn.style.opacity = '0'; menuBtn.style.transition = 'opacity 0.2s';
             menuBtn.onclick = () => { cannedSparringMinimized = !cannedSparringMinimized; renderPrompts(); };
             if (minimized) { cannedContainer.style.cursor = 'pointer'; cannedContainer.onclick = (e) => { if (e.target === menuBtn || e.target.closest && e.target.closest('button') === menuBtn) return; cannedSparringMinimized = !cannedSparringMinimized; renderPrompts(); }; menuBtn.style.display = 'none'; } else { cannedContainer.style.cursor = ''; cannedContainer.onclick = null; menuBtn.style.display = ''; cannedContainer.onmouseenter = () => menuBtn.style.opacity = '1'; cannedContainer.onmouseleave = () => menuBtn.style.opacity = '0'; }
             const _titleWrap = document.createElement('div'); _titleWrap.style.cssText = 'flex:1;min-width:0;'; _titleWrap.appendChild(titleEl); _titleWrap.appendChild(subtitleEl); headerRow.appendChild(_titleWrap); headerRow.appendChild(menuBtn); cannedContainer.appendChild(headerRow);
 
             if (!minimized) {
-                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
+                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
                 const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
 
                 const makeSlot = (labelText, slotId) => {
@@ -5010,14 +5010,14 @@ This must feel like a legitimate sports broadcast face-off package — the kind 
             const cannedContainer = document.createElement('div'); cannedContainer.style.cssText = 'margin-bottom:20px;padding:15px;background:var(--bg-tertiary);border:1px solid var(--border-primary);border-radius:8px;position:relative;';
             const headerRow = document.createElement('div'); headerRow.style.cssText = 'display:flex;justify-content:space-between;align-items:center;gap:10px;' + (minimized ? '' : 'margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid var(--border-secondary);');
             const titleEl = document.createElement('div'); titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);"; titleEl.textContent = 'Locker Room';
-            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Wrestler alone pre-match — getting mentally and physically ready.';
+            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-secondary);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Wrestler alone pre-match — getting mentally and physically ready.';
             const menuBtn = document.createElement('button'); menuBtn.className = 'hide-section-btn'; menuBtn.textContent = minimized ? '\u2193' : '\u2191'; menuBtn.style.opacity = '0'; menuBtn.style.transition = 'opacity 0.2s';
             menuBtn.onclick = () => { cannedLockerRoomMinimized = !cannedLockerRoomMinimized; renderPrompts(); };
             if (minimized) { cannedContainer.style.cursor = 'pointer'; cannedContainer.onclick = (e) => { if (e.target === menuBtn || e.target.closest && e.target.closest('button') === menuBtn) return; cannedLockerRoomMinimized = !cannedLockerRoomMinimized; renderPrompts(); }; menuBtn.style.display = 'none'; } else { cannedContainer.style.cursor = ''; cannedContainer.onclick = null; menuBtn.style.display = ''; cannedContainer.onmouseenter = () => menuBtn.style.opacity = '1'; cannedContainer.onmouseleave = () => menuBtn.style.opacity = '0'; }
             const _titleWrap = document.createElement('div'); _titleWrap.style.cssText = 'flex:1;min-width:0;'; _titleWrap.appendChild(titleEl); _titleWrap.appendChild(subtitleEl); headerRow.appendChild(_titleWrap); headerRow.appendChild(menuBtn); cannedContainer.appendChild(headerRow);
 
             if (!minimized) {
-                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
+                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
                 const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
 
                 // Wrestler slot
@@ -5132,14 +5132,14 @@ This must feel like a legitimate sports broadcast face-off package — the kind 
             const cannedContainer = document.createElement('div'); cannedContainer.style.cssText = 'margin-bottom:20px;padding:15px;background:var(--bg-tertiary);border:1px solid var(--border-primary);border-radius:8px;position:relative;';
             const headerRow = document.createElement('div'); headerRow.style.cssText = 'display:flex;justify-content:space-between;align-items:center;gap:10px;' + (minimized ? '' : 'margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid var(--border-secondary);');
             const titleEl = document.createElement('div'); titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);"; titleEl.textContent = 'Drone Arena Shot';
-            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Aerial drone shot establishing the arena before or during the show.';
+            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-secondary);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Aerial drone shot establishing the arena before or during the show.';
             const menuBtn = document.createElement('button'); menuBtn.className = 'hide-section-btn'; menuBtn.textContent = minimized ? '\u2193' : '\u2191'; menuBtn.style.opacity = '0'; menuBtn.style.transition = 'opacity 0.2s';
             menuBtn.onclick = () => { cannedDroneMinimized = !cannedDroneMinimized; renderPrompts(); };
             if (minimized) { cannedContainer.style.cursor = 'pointer'; cannedContainer.onclick = (e) => { if (e.target === menuBtn || e.target.closest && e.target.closest('button') === menuBtn) return; cannedDroneMinimized = !cannedDroneMinimized; renderPrompts(); }; menuBtn.style.display = 'none'; } else { cannedContainer.style.cursor = ''; cannedContainer.onclick = null; menuBtn.style.display = ''; cannedContainer.onmouseenter = () => menuBtn.style.opacity = '1'; cannedContainer.onmouseleave = () => menuBtn.style.opacity = '0'; }
             const _titleWrap = document.createElement('div'); _titleWrap.style.cssText = 'flex:1;min-width:0;'; _titleWrap.appendChild(titleEl); _titleWrap.appendChild(subtitleEl); headerRow.appendChild(_titleWrap); headerRow.appendChild(menuBtn); cannedContainer.appendChild(headerRow);
 
             if (!minimized) {
-                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
+                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
                 const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
 
                 // Arena dropdown
@@ -5267,7 +5267,7 @@ This must feel like a legitimate sports broadcast face-off package — the kind 
             const _titleWrap = document.createElement('div'); _titleWrap.style.cssText = 'flex:1;min-width:0;'; _titleWrap.appendChild(titleEl); if (typeof subtitleEl !== 'undefined') _titleWrap.appendChild(subtitleEl); headerRow.appendChild(_titleWrap); headerRow.appendChild(menuBtn); cannedContainer.appendChild(headerRow);
 
             if (!minimized) {
-                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
+                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
                 const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
 
                 // Type dropdown: Commercial | Movie Trailer
@@ -5328,7 +5328,7 @@ This must feel like a legitimate sports broadcast face-off package — the kind 
                     if (pickList.length === 0) { const em = document.createElement('p'); em.style.cssText = 'color:var(--text-muted);font-size:15px;padding:20px 0;'; em.textContent = isMovie ? 'No movies added yet.' : 'No sponsors added yet.'; panel.appendChild(em); return; }
                     // Sort dropdown
                     const sortRow = document.createElement('div'); sortRow.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:10px;';
-                    const sortLbl = document.createElement('span'); sortLbl.style.cssText = 'font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;flex-shrink:0;'; sortLbl.textContent = 'Sort:';
+                    const sortLbl = document.createElement('span'); sortLbl.style.cssText = 'font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;flex-shrink:0;'; sortLbl.textContent = 'Sort:';
                     const sortSel = document.createElement('select'); sortSel.className = 'item-dropdown'; sortSel.style.cssText = 'flex:1;';
                     ['Product A–Z', 'Wrestler A–Z'].forEach(o => { const op = document.createElement('option'); op.value = o; op.textContent = o; sortSel.appendChild(op); });
                     sortRow.appendChild(sortLbl); sortRow.appendChild(sortSel); panel.appendChild(sortRow);
@@ -5422,7 +5422,7 @@ This must feel like a legitimate sports broadcast face-off package — the kind 
             titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);";
             titleEl.textContent = 'FSW Truck / Bus';
             const subtitleEl = document.createElement('div');
-            subtitleEl.style.cssText = "font-size:15px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;";
+            subtitleEl.style.cssText = "font-size:15px;color:var(--text-secondary);margin-top:2px;font-family:'DM Sans',sans-serif;";
             subtitleEl.textContent = 'FSW branded vehicle on the street — wrestler faces on the wrap, parked or in motion.';
             const menuBtn = document.createElement('button');
             menuBtn.className = 'hide-section-btn';
@@ -5446,7 +5446,7 @@ This must feel like a legitimate sports broadcast face-off package — the kind 
             cannedContainer.appendChild(headerRow);
 
             if (!minimized) {
-                const mkLabel = t => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = t; return l; };
+                const mkLabel = t => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = t; return l; };
                 const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
                 const mkSel = (opts, val) => { const s = document.createElement('select'); s.className = 'item-dropdown'; s.style.cssText = 'width:100%;max-width:none;'; opts.forEach(o => { const op = document.createElement('option'); op.value = o; op.textContent = o; s.appendChild(op); }); if(val) s.value = val; return s; };
 
@@ -5585,14 +5585,14 @@ NO text overlays added in post. NO motion graphics. NO title cards. Pure cinemat
             const cannedContainer = document.createElement('div'); cannedContainer.style.cssText = 'margin-bottom:20px;padding:15px;background:var(--bg-tertiary);border:1px solid var(--border-primary);border-radius:8px;position:relative;';
             const headerRow = document.createElement('div'); headerRow.style.cssText = 'display:flex;justify-content:space-between;align-items:center;gap:10px;' + (minimized ? '' : 'margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid var(--border-secondary);');
             const titleEl = document.createElement('div'); titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);"; titleEl.textContent = 'Titantron';
-            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Entrance video that plays on the big screen as a wrestler walks out.';
+            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-secondary);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Entrance video that plays on the big screen as a wrestler walks out.';
             const menuBtn = document.createElement('button'); menuBtn.className = 'hide-section-btn'; menuBtn.textContent = minimized ? '\u2193' : '\u2191'; menuBtn.style.opacity = '0'; menuBtn.style.transition = 'opacity 0.2s';
             menuBtn.onclick = () => { cannedTitantronMinimized = !cannedTitantronMinimized; renderPrompts(); };
             if (minimized) { cannedContainer.style.cursor = 'pointer'; cannedContainer.onclick = (e) => { if (e.target === menuBtn || e.target.closest && e.target.closest('button') === menuBtn) return; cannedTitantronMinimized = !cannedTitantronMinimized; renderPrompts(); }; menuBtn.style.display = 'none'; } else { cannedContainer.style.cursor = ''; cannedContainer.onclick = null; menuBtn.style.display = ''; cannedContainer.onmouseenter = () => menuBtn.style.opacity = '1'; cannedContainer.onmouseleave = () => menuBtn.style.opacity = '0'; }
             const _titleWrap = document.createElement('div'); _titleWrap.style.cssText = 'flex:1;min-width:0;'; _titleWrap.appendChild(titleEl); if (typeof subtitleEl !== 'undefined') _titleWrap.appendChild(subtitleEl); headerRow.appendChild(_titleWrap); headerRow.appendChild(menuBtn); cannedContainer.appendChild(headerRow);
 
             if (!minimized) {
-                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
+                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
                 const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
 
                 // Wrestler slot
@@ -5727,16 +5727,16 @@ NO text overlays added in post. NO motion graphics. NO title cards. Pure cinemat
             const cannedContainer = document.createElement('div'); cannedContainer.style.cssText = 'margin-bottom:20px;padding:15px;background:var(--bg-tertiary);border:1px solid var(--border-primary);border-radius:8px;position:relative;';
             const headerRow = document.createElement('div'); headerRow.style.cssText = `display:flex;justify-content:space-between;align-items:center;gap:10px;${minimized ? '' : 'margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid var(--border-secondary);'}`;
             const titleEl = document.createElement('div'); titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);"; titleEl.textContent = 'Crowd Reaction';
-            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Arena crowd reacts to a moment — used to cut into highlight footage.';
+            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-secondary);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Arena crowd reacts to a moment — used to cut into highlight footage.';
             const menuBtn = document.createElement('button'); menuBtn.className = 'hide-section-btn'; menuBtn.textContent = minimized ? '↓' : '↑'; menuBtn.style.opacity = '0'; menuBtn.style.transition = 'opacity 0.2s';
             menuBtn.onclick = () => { cannedCrowdReactionMinimized = !cannedCrowdReactionMinimized; renderPrompts(); };
             if (minimized) { cannedContainer.style.cursor = 'pointer'; cannedContainer.onclick = (e) => { if (e.target === menuBtn || e.target.closest && e.target.closest('button') === menuBtn) return; cannedCrowdReactionMinimized = !cannedCrowdReactionMinimized; renderPrompts(); }; menuBtn.style.display = 'none'; } else { cannedContainer.style.cursor = ''; cannedContainer.onclick = null; menuBtn.style.display = ''; cannedContainer.onmouseenter = () => menuBtn.style.opacity = '1'; cannedContainer.onmouseleave = () => menuBtn.style.opacity = '0'; }
             const _titleWrap = document.createElement('div'); _titleWrap.style.cssText = 'flex:1;min-width:0;'; _titleWrap.appendChild(titleEl); if (typeof subtitleEl !== 'undefined') _titleWrap.appendChild(subtitleEl); headerRow.appendChild(_titleWrap); headerRow.appendChild(menuBtn); cannedContainer.appendChild(headerRow);
 
             if (!minimized) {
-                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
+                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
                 const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
-                const mkLbl = (t) => { const s = document.createElement('span'); s.style.cssText = 'font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;flex-shrink:0;'; s.textContent = t; return s; };
+                const mkLbl = (t) => { const s = document.createElement('span'); s.style.cssText = 'font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;flex-shrink:0;'; s.textContent = t; return s; };
 
                 // Reaction type dropdown
                 const reactionSel = document.createElement('select'); reactionSel.className = 'item-dropdown'; reactionSel.style.cssText = 'width:100%;max-width:none;';
@@ -5754,7 +5754,7 @@ NO text overlays added in post. NO motion graphics. NO title cards. Pure cinemat
                 cannedContainer.appendChild(fieldWrap('Speed:', speedSel));
 
                 // 4 wrestler slots for logos on shirts/signs
-                const slotsLabel = document.createElement('div'); slotsLabel.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;"; slotsLabel.textContent = 'Wrestler Logos on Merch (optional):';
+                const slotsLabel = document.createElement('div'); slotsLabel.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;"; slotsLabel.textContent = 'Wrestler Logos on Merch (optional):';
                 cannedContainer.appendChild(slotsLabel);
                 const slotsRow = document.createElement('div'); slotsRow.style.cssText = 'display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center;';
                 const wrestlerSlots = [];
@@ -5871,7 +5871,7 @@ NO text overlays added in post. NO motion graphics. NO title cards. Pure cinemat
             titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);";
             titleEl.textContent = 'Entrance Rehearsal';
             const subtitleEl = document.createElement('div');
-            subtitleEl.style.cssText = "font-size:15px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;";
+            subtitleEl.style.cssText = "font-size:15px;color:var(--text-secondary);margin-top:2px;font-family:'DM Sans',sans-serif;";
             subtitleEl.textContent = 'Wrestler runs through their entrance with the cameraman — Michael coaching poses behind the scenes.';
             const menuBtn = document.createElement('button');
             menuBtn.className = 'hide-section-btn';
@@ -5895,7 +5895,7 @@ NO text overlays added in post. NO motion graphics. NO title cards. Pure cinemat
             cannedContainer.appendChild(headerRow);
 
             if (!minimized) {
-                const mkLabel = t => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = t; return l; };
+                const mkLabel = t => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = t; return l; };
                 const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
                 const mkSel = (opts, val) => { const s = document.createElement('select'); s.className = 'item-dropdown'; s.style.cssText = 'width:100%;max-width:none;'; opts.forEach(o => { const op = document.createElement('option'); op.value = o; op.textContent = o; s.appendChild(op); }); if(val) s.value = val; return s; };
 
@@ -6032,7 +6032,7 @@ NO crowd. NO music unless full production setting. NO text overlays. NO title ca
             titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);";
             titleEl.textContent = 'Arena Walkthrough';
             const subtitleEl = document.createElement('div');
-            subtitleEl.style.cssText = "font-size:15px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;";
+            subtitleEl.style.cssText = "font-size:15px;color:var(--text-secondary);margin-top:2px;font-family:'DM Sans',sans-serif;";
             subtitleEl.textContent = 'Wrestler walks through the arena as it is being built ahead of a major event.';
             const menuBtn = document.createElement('button');
             menuBtn.className = 'hide-section-btn';
@@ -6056,7 +6056,7 @@ NO crowd. NO music unless full production setting. NO text overlays. NO title ca
             cannedContainer.appendChild(headerRow);
 
             if (!minimized) {
-                const mkLabel = t => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = t; return l; };
+                const mkLabel = t => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = t; return l; };
                 const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
                 const mkSel = (opts, val) => { const s = document.createElement('select'); s.className = 'item-dropdown'; s.style.cssText = 'width:100%;max-width:none;'; opts.forEach(o => { const op = document.createElement('option'); op.value = o; op.textContent = o; s.appendChild(op); }); if(val) s.value = val; return s; };
 
@@ -6203,14 +6203,14 @@ NO crowd. NO music. NO commentary. NO text overlays. NO title cards. Pure cinema
             const cannedContainer = document.createElement('div'); cannedContainer.style.cssText = 'margin-bottom:20px;padding:15px;background:var(--bg-tertiary);border:1px solid var(--border-primary);border-radius:8px;position:relative;';
             const headerRow = document.createElement('div'); headerRow.style.cssText = `display:flex;justify-content:space-between;align-items:center;gap:10px;${minimized ? '' : 'margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid var(--border-secondary);'}`;
             const titleEl = document.createElement('div'); titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);"; titleEl.textContent = 'Preparation';
-            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Wrestler trains at a gym — building their character between shows.';
+            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-secondary);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Wrestler trains at a gym — building their character between shows.';
             const menuBtn = document.createElement('button'); menuBtn.className = 'hide-section-btn'; menuBtn.textContent = minimized ? '↓' : '↑'; menuBtn.style.opacity = '0'; menuBtn.style.transition = 'opacity 0.2s';
             menuBtn.onclick = () => { cannedTrainingMinimized = !cannedTrainingMinimized; renderPrompts(); };
             if (minimized) { cannedContainer.style.cursor = 'pointer'; cannedContainer.onclick = (e) => { if (e.target === menuBtn || e.target.closest && e.target.closest('button') === menuBtn) return; cannedTrainingMinimized = !cannedTrainingMinimized; renderPrompts(); }; menuBtn.style.display = 'none'; } else { cannedContainer.style.cursor = ''; cannedContainer.onclick = null; menuBtn.style.display = ''; cannedContainer.onmouseenter = () => menuBtn.style.opacity = '1'; cannedContainer.onmouseleave = () => menuBtn.style.opacity = '0'; }
             const _titleWrap = document.createElement('div'); _titleWrap.style.cssText = 'flex:1;min-width:0;'; _titleWrap.appendChild(titleEl); if (typeof subtitleEl !== 'undefined') _titleWrap.appendChild(subtitleEl); headerRow.appendChild(_titleWrap); headerRow.appendChild(menuBtn); cannedContainer.appendChild(headerRow);
 
             if (!minimized) {
-                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
+                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
                 const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
 
                 const makeWrestlerSlot = (labelText, slotId) => {
@@ -6330,14 +6330,14 @@ NO crowd. NO music. NO commentary. NO text overlays. NO title cards. Pure cinema
             const cannedContainer = document.createElement('div'); cannedContainer.style.cssText = 'margin-bottom:20px;padding:15px;background:var(--bg-tertiary);border:1px solid var(--border-primary);border-radius:8px;position:relative;';
             const headerRow = document.createElement('div'); headerRow.style.cssText = `display:flex;justify-content:space-between;align-items:center;gap:10px;${minimized ? '' : 'margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid var(--border-secondary);'}`;
             const titleEl = document.createElement('div'); titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);"; titleEl.textContent = 'Autograph Signing';
-            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Wrestler signs autographs and takes photos with fans.';
+            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-secondary);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Wrestler signs autographs and takes photos with fans.';
             const menuBtn = document.createElement('button'); menuBtn.className = 'hide-section-btn'; menuBtn.textContent = minimized ? '↓' : '↑'; menuBtn.style.opacity = '0'; menuBtn.style.transition = 'opacity 0.2s';
             menuBtn.onclick = () => { cannedAutographMinimized = !cannedAutographMinimized; renderPrompts(); };
             if (minimized) { cannedContainer.style.cursor = 'pointer'; cannedContainer.onclick = (e) => { if (e.target === menuBtn || e.target.closest && e.target.closest('button') === menuBtn) return; cannedAutographMinimized = !cannedAutographMinimized; renderPrompts(); }; menuBtn.style.display = 'none'; } else { cannedContainer.style.cursor = ''; cannedContainer.onclick = null; menuBtn.style.display = ''; cannedContainer.onmouseenter = () => menuBtn.style.opacity = '1'; cannedContainer.onmouseleave = () => menuBtn.style.opacity = '0'; }
             const _titleWrap = document.createElement('div'); _titleWrap.style.cssText = 'flex:1;min-width:0;'; _titleWrap.appendChild(titleEl); if (typeof subtitleEl !== 'undefined') _titleWrap.appendChild(subtitleEl); headerRow.appendChild(_titleWrap); headerRow.appendChild(menuBtn); cannedContainer.appendChild(headerRow);
 
             if (!minimized) {
-                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
+                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
                 const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
 
                 // Wrestler slot
@@ -6452,7 +6452,7 @@ NO crowd. NO music. NO commentary. NO text overlays. NO title cards. Pure cinema
             titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);";
             titleEl.textContent = 'Fan Interference';
             const subtitleEl = document.createElement('div');
-            subtitleEl.style.cssText = "font-size:15px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;";
+            subtitleEl.style.cssText = "font-size:15px;color:var(--text-secondary);margin-top:2px;font-family:'DM Sans',sans-serif;";
             subtitleEl.textContent = 'A fan breaches security and attacks a wrestler — chaos, instinct, crowd panic.';
             const menuBtn = document.createElement('button');
             menuBtn.className = 'hide-section-btn';
@@ -6476,7 +6476,7 @@ NO crowd. NO music. NO commentary. NO text overlays. NO title cards. Pure cinema
             cannedContainer.appendChild(headerRow);
 
             if (!minimized) {
-                const mkLabel = t => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = t; return l; };
+                const mkLabel = t => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = t; return l; };
                 const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
                 const mkSel = (opts, val) => { const s = document.createElement('select'); s.className = 'item-dropdown'; s.style.cssText = 'width:100%;max-width:none;'; opts.forEach(o => { const op = document.createElement('option'); op.value = o; op.textContent = o; s.appendChild(op); }); if(val) s.value = val; return s; };
 
@@ -6612,7 +6612,7 @@ NO slow motion. NO text overlays. NO graphics. NO title cards. Pure live broadca
             titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);";
             titleEl.textContent = 'Fan Cosplay';
             const subtitleEl = document.createElement('div');
-            subtitleEl.style.cssText = "font-size:15px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;";
+            subtitleEl.style.cssText = "font-size:15px;color:var(--text-secondary);margin-top:2px;font-family:'DM Sans',sans-serif;";
             subtitleEl.textContent = 'A fan in the entrance pretending to be an FSW wrestler — crowd goes wild.';
             const menuBtn = document.createElement('button');
             menuBtn.className = 'hide-section-btn';
@@ -6636,7 +6636,7 @@ NO slow motion. NO text overlays. NO graphics. NO title cards. Pure live broadca
             cannedContainer.appendChild(headerRow);
 
             if (!minimized) {
-                const mkLabel = t => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = t; return l; };
+                const mkLabel = t => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = t; return l; };
                 const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
                 const mkSel = (opts, val) => { const s = document.createElement('select'); s.className = 'item-dropdown'; s.style.cssText = 'width:100%;max-width:none;'; opts.forEach(o => { const op = document.createElement('option'); op.value = o; op.textContent = o; s.appendChild(op); }); if(val) s.value = val; return s; };
 
@@ -6779,14 +6779,14 @@ NO slow motion. NO text overlays. NO graphics. NO title cards.`;
             const cannedContainer = document.createElement('div'); cannedContainer.style.cssText = 'margin-bottom:20px;padding:15px;background:var(--bg-tertiary);border:1px solid var(--border-primary);border-radius:8px;position:relative;';
             const headerRow = document.createElement('div'); headerRow.style.cssText = `display:flex;justify-content:space-between;align-items:center;gap:10px;${minimized ? '' : 'margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid var(--border-secondary);'}`;
             const titleEl = document.createElement('div'); titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);"; titleEl.textContent = 'Vignette';
-            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Short cinematic video package introducing or building a character.';
+            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-secondary);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Short cinematic video package introducing or building a character.';
             const menuBtn = document.createElement('button'); menuBtn.className = 'hide-section-btn'; menuBtn.textContent = minimized ? '↓' : '↑'; menuBtn.style.opacity = '0'; menuBtn.style.transition = 'opacity 0.2s';
             menuBtn.onclick = () => { cannedVignetteMinimized = !cannedVignetteMinimized; renderPrompts(); };
             if (minimized) { cannedContainer.style.cursor = 'pointer'; cannedContainer.onclick = (e) => { if (e.target === menuBtn || e.target.closest && e.target.closest('button') === menuBtn) return; cannedVignetteMinimized = !cannedVignetteMinimized; renderPrompts(); }; menuBtn.style.display = 'none'; } else { cannedContainer.style.cursor = ''; cannedContainer.onclick = null; menuBtn.style.display = ''; cannedContainer.onmouseenter = () => menuBtn.style.opacity = '1'; cannedContainer.onmouseleave = () => menuBtn.style.opacity = '0'; }
             const _titleWrap = document.createElement('div'); _titleWrap.style.cssText = 'flex:1;min-width:0;'; _titleWrap.appendChild(titleEl); if (typeof subtitleEl !== 'undefined') _titleWrap.appendChild(subtitleEl); headerRow.appendChild(_titleWrap); headerRow.appendChild(menuBtn); cannedContainer.appendChild(headerRow);
 
             if (!minimized) {
-                const mkLabel = t => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = t; return l; };
+                const mkLabel = t => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = t; return l; };
                 const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
                 const mkSel = (opts, val, onChange) => { const s = document.createElement('select'); s.className = 'item-dropdown'; s.style.cssText = 'width:100%;max-width:none;'; opts.forEach(o => { const op = document.createElement('option'); op.value = o; op.textContent = o; s.appendChild(op); }); s.value = val; s.onchange = e => onChange(e.target.value); return s; };
 
@@ -6919,14 +6919,14 @@ NO slow motion. NO text overlays. NO graphics. NO title cards.`;
             const cannedContainer = document.createElement('div'); cannedContainer.style.cssText = 'margin-bottom:20px;padding:15px;background:var(--bg-tertiary);border:1px solid var(--border-primary);border-radius:8px;position:relative;';
             const headerRow = document.createElement('div'); headerRow.style.cssText = 'display:flex;justify-content:space-between;align-items:center;gap:10px;' + (minimized ? '' : 'margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid var(--border-secondary);');
             const titleEl = document.createElement('div'); titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);"; titleEl.textContent = 'Press Conference';
-            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Wrestler answers questions seated at a press conference table.';
+            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-secondary);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Wrestler answers questions seated at a press conference table.';
             const menuBtn = document.createElement('button'); menuBtn.className = 'hide-section-btn'; menuBtn.textContent = minimized ? '\u2193' : '\u2191'; menuBtn.style.opacity = '0'; menuBtn.style.transition = 'opacity 0.2s';
             menuBtn.onclick = () => { cannedPressConfMinimized = !cannedPressConfMinimized; renderPrompts(); };
             if (minimized) { cannedContainer.style.cursor = 'pointer'; cannedContainer.onclick = (e) => { if (e.target === menuBtn || e.target.closest && e.target.closest('button') === menuBtn) return; cannedPressConfMinimized = !cannedPressConfMinimized; renderPrompts(); }; menuBtn.style.display = 'none'; } else { cannedContainer.style.cursor = ''; cannedContainer.onclick = null; menuBtn.style.display = ''; cannedContainer.onmouseenter = () => menuBtn.style.opacity = '1'; cannedContainer.onmouseleave = () => menuBtn.style.opacity = '0'; }
             const _titleWrap = document.createElement('div'); _titleWrap.style.cssText = 'flex:1;min-width:0;'; _titleWrap.appendChild(titleEl); if (typeof subtitleEl !== 'undefined') _titleWrap.appendChild(subtitleEl); headerRow.appendChild(_titleWrap); headerRow.appendChild(menuBtn); cannedContainer.appendChild(headerRow);
 
             if (!minimized) {
-                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
+                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
                 const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
 
                 const wrestlerBtn = document.createElement('button'); wrestlerBtn.className = 'wrestler-slot' + (s.wrestler ? ' filled' : ''); wrestlerBtn.id = 'canned-' + id + '-wrestler1'; wrestlerBtn.textContent = s.wrestler || '+';
@@ -6983,14 +6983,14 @@ NO slow motion. NO text overlays. NO graphics. NO title cards.`;
             const cannedContainer = document.createElement('div'); cannedContainer.style.cssText = 'margin-bottom:20px;padding:15px;background:var(--bg-tertiary);border:1px solid var(--border-primary);border-radius:8px;position:relative;';
             const headerRow = document.createElement('div'); headerRow.style.cssText = `display:flex;justify-content:space-between;align-items:center;gap:10px;${minimized ? '' : 'margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid var(--border-secondary);'}`;
             const titleEl = document.createElement('div'); titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);"; titleEl.textContent = 'Backstage Arrival';
-            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Wrestler arrives at the arena — entering through a door or corridor.';
+            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-secondary);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Wrestler arrives at the arena — entering through a door or corridor.';
             const menuBtn = document.createElement('button'); menuBtn.className = 'hide-section-btn'; menuBtn.textContent = minimized ? '↓' : '↑'; menuBtn.style.opacity = '0'; menuBtn.style.transition = 'opacity 0.2s';
             menuBtn.onclick = () => { cannedBackstageArrivalMinimized = !cannedBackstageArrivalMinimized; renderPrompts(); };
             if (minimized) { cannedContainer.style.cursor = 'pointer'; cannedContainer.onclick = (e) => { if (e.target === menuBtn || e.target.closest && e.target.closest('button') === menuBtn) return; cannedBackstageArrivalMinimized = !cannedBackstageArrivalMinimized; renderPrompts(); }; menuBtn.style.display = 'none'; } else { cannedContainer.style.cursor = ''; cannedContainer.onclick = null; menuBtn.style.display = ''; cannedContainer.onmouseenter = () => menuBtn.style.opacity = '1'; cannedContainer.onmouseleave = () => menuBtn.style.opacity = '0'; }
             const _titleWrap = document.createElement('div'); _titleWrap.style.cssText = 'flex:1;min-width:0;'; _titleWrap.appendChild(titleEl); if (typeof subtitleEl !== 'undefined') _titleWrap.appendChild(subtitleEl); headerRow.appendChild(_titleWrap); headerRow.appendChild(menuBtn); cannedContainer.appendChild(headerRow);
 
             if (!minimized) {
-                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
+                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
                 const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
 
                 // Wrestler slot
@@ -7089,7 +7089,7 @@ NO slow motion. NO text overlays. NO graphics. NO title cards.`;
             titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);";
             titleEl.textContent = 'Curtain Entrance';
             const subtitleEl = document.createElement('div');
-            subtitleEl.style.cssText = "font-size:15px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;";
+            subtitleEl.style.cssText = "font-size:15px;color:var(--text-secondary);margin-top:2px;font-family:'DM Sans',sans-serif;";
             subtitleEl.textContent = 'Wrestler pauses at the curtain, then steps out into the arena to the crowd.';
             const menuBtn = document.createElement('button');
             menuBtn.className = 'hide-section-btn';
@@ -7113,7 +7113,7 @@ NO slow motion. NO text overlays. NO graphics. NO title cards.`;
             cannedContainer.appendChild(headerRow);
 
             if (!minimized) {
-                const mkLabel = t => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = t; return l; };
+                const mkLabel = t => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = t; return l; };
                 const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
                 const mkSel = (opts, val) => { const s = document.createElement('select'); s.className = 'item-dropdown'; s.style.cssText = 'width:100%;max-width:none;'; opts.forEach(o => { const op = document.createElement('option'); op.value = o; op.textContent = o; s.appendChild(op); }); if(val) s.value = val; return s; };
 
@@ -7276,7 +7276,7 @@ NO text overlays. NO title cards. NO slow motion. Pure broadcast realism.`;
             titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);";
             titleEl.textContent = 'Staredown';
             const subtitleEl = document.createElement('div');
-            subtitleEl.style.cssText = "font-size:15px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;";
+            subtitleEl.style.cssText = "font-size:15px;color:var(--text-secondary);margin-top:2px;font-family:'DM Sans',sans-serif;";
             subtitleEl.textContent = 'Two wrestlers face to face in the ring — no contact, pure tension.';
             const menuBtn = document.createElement('button');
             menuBtn.className = 'hide-section-btn';
@@ -7300,7 +7300,7 @@ NO text overlays. NO title cards. NO slow motion. Pure broadcast realism.`;
             cannedContainer.appendChild(headerRow);
 
             if (!minimized) {
-                const mkLabel = t => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = t; return l; };
+                const mkLabel = t => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = t; return l; };
                 const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
                 const mkSel = (opts, val) => { const s = document.createElement('select'); s.className = 'item-dropdown'; s.style.cssText = 'width:100%;max-width:none;'; opts.forEach(o => { const op = document.createElement('option'); op.value = o; op.textContent = o; s.appendChild(op); }); if(val) s.value = val; return s; };
 
@@ -7496,13 +7496,13 @@ NO contact between wrestlers. NO physicality. NO title belts unless relevant. NO
             const cannedContainer = document.createElement('div'); cannedContainer.style.cssText = 'margin-bottom:20px;padding:15px;background:var(--bg-tertiary);border:1px solid var(--border-primary);border-radius:8px;position:relative;';
             const headerRow = document.createElement('div'); headerRow.style.cssText = `display:flex;justify-content:space-between;align-items:center;gap:10px;${minimized ? '' : 'margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid var(--border-secondary);'}`;
             const titleEl = document.createElement('div'); titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);"; titleEl.textContent = 'In-Ring Promo';
-            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Wrestler cuts a live promo inside the ring with a microphone.';
+            const subtitleEl = document.createElement('div'); subtitleEl.style.cssText = "font-size:15px;color:var(--text-secondary);margin-top:2px;font-family:'DM Sans',sans-serif;"; subtitleEl.textContent = 'Wrestler cuts a live promo inside the ring with a microphone.';
             const menuBtn = document.createElement('button'); menuBtn.className = 'hide-section-btn'; menuBtn.textContent = minimized ? '↓' : '↑'; menuBtn.style.opacity = '0'; menuBtn.style.transition = 'opacity 0.2s';
             menuBtn.onclick = () => { cannedPromo2Minimized = !cannedPromo2Minimized; renderPrompts(); };
             if (minimized) { cannedContainer.style.cursor = 'pointer'; cannedContainer.onclick = (e) => { if (e.target === menuBtn || e.target.closest && e.target.closest('button') === menuBtn) return; cannedPromo2Minimized = !cannedPromo2Minimized; renderPrompts(); }; menuBtn.style.display = 'none'; } else { cannedContainer.style.cursor = ''; cannedContainer.onclick = null; menuBtn.style.display = ''; cannedContainer.onmouseenter = () => menuBtn.style.opacity = '1'; cannedContainer.onmouseleave = () => menuBtn.style.opacity = '0'; }
             const _titleWrap = document.createElement('div'); _titleWrap.style.cssText = 'flex:1;min-width:0;'; _titleWrap.appendChild(titleEl); if (typeof subtitleEl !== 'undefined') _titleWrap.appendChild(subtitleEl); headerRow.appendChild(_titleWrap); headerRow.appendChild(menuBtn); cannedContainer.appendChild(headerRow);
             if (!minimized) {
-                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
+                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px;"; l.textContent = text; return l; };
                 const fieldWrap = (label, el) => { const w = document.createElement('div'); w.style.cssText = 'margin-bottom:10px;'; w.appendChild(mkLabel(label)); w.appendChild(el); return w; };
 
                 // Wrestler slot
@@ -7580,7 +7580,7 @@ NO contact between wrestlers. NO physicality. NO title belts unless relevant. NO
             const titleWrap = document.createElement('div'); titleWrap.style.cssText = 'flex:1;min-width:0;';
             const titleEl = document.createElement('div'); titleEl.style.cssText = "font-size:15px;font-family:'Bebas Neue',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-primary);"; titleEl.textContent = title;
             titleWrap.appendChild(titleEl);
-            if (subtitle) { const subEl = document.createElement('div'); subEl.style.cssText = "font-size:15px;color:var(--text-muted);margin-top:2px;font-family:'DM Sans',sans-serif;"; subEl.textContent = subtitle; titleWrap.appendChild(subEl); }
+            if (subtitle) { const subEl = document.createElement('div'); subEl.style.cssText = "font-size:15px;color:var(--text-secondary);margin-top:2px;font-family:'DM Sans',sans-serif;"; subEl.textContent = subtitle; titleWrap.appendChild(subEl); }
             headerRow.appendChild(titleWrap);
 
             const menuBtn = document.createElement('button'); menuBtn.className = 'hide-section-btn'; menuBtn.textContent = minimized ? '↓' : '↑'; menuBtn.style.opacity = '0'; menuBtn.style.transition = 'opacity 0.2s'; menuBtn.onclick = onToggle;
@@ -7588,7 +7588,7 @@ NO contact between wrestlers. NO physicality. NO title belts unless relevant. NO
             headerRow.appendChild(menuBtn); cannedContainer.appendChild(headerRow);
             if (!minimized) {
                 const slotsRow = document.createElement('div'); slotsRow.style.cssText = 'display:flex;gap:8px;margin-bottom:12px;align-items:center;flex-wrap:wrap;';
-                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;"; l.textContent = text; return l; };
+                const mkLabel = (text) => { const l = document.createElement('span'); l.style.cssText = "font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;"; l.textContent = text; return l; };
                 const slot1 = document.createElement('button'); slot1.className = 'wrestler-slot'; slot1.id = `canned-${id}-wrestler1`; slot1.textContent = '+'; slot1.onclick = () => showCannedWrestlerPicker(id, 1);
                 const slot2 = document.createElement('button'); slot2.className = 'wrestler-slot'; slot2.id = `canned-${id}-wrestler2`; slot2.textContent = '+'; slot2.onclick = () => showCannedWrestlerPicker(id, 2);
                 const replyDropdown = document.createElement('select'); replyDropdown.className = 'item-dropdown'; replyDropdown.id = `canned-${id}-reply`;
@@ -7602,7 +7602,7 @@ NO contact between wrestlers. NO physicality. NO title belts unless relevant. NO
                 }
                 slotsRow.appendChild(mkLabel(label1 + ':')); slotsRow.appendChild(slot1); slotsRow.appendChild(mkLabel(label2 + ':')); slotsRow.appendChild(slot2); slotsRow.appendChild(mkLabel('Reply:')); slotsRow.appendChild(replyDropdown); cannedContainer.appendChild(slotsRow);
                 const optRow = document.createElement('div'); optRow.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:12px;';
-                const optLbl = document.createElement('span'); optLbl.style.cssText = 'font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;flex-shrink:0;'; optLbl.textContent = 'Optional Instructions:';
+                const optLbl = document.createElement('span'); optLbl.style.cssText = 'font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;flex-shrink:0;'; optLbl.textContent = 'Optional Instructions:';
                 const optInput = document.createElement('input'); optInput.type = 'text'; optInput.className = 'roster-text-input'; optInput.placeholder = 'e.g. The interviewer nods as he speaks.'; optInput.style.flex = '1';
                 optRow.appendChild(optLbl); optRow.appendChild(optInput); cannedContainer.appendChild(optRow);
                 const btnRow = document.createElement('div'); btnRow.style.cssText = 'display:flex;gap:8px;margin-bottom:15px;';
@@ -7758,10 +7758,10 @@ NO contact between wrestlers. NO physicality. NO title belts unless relevant. NO
 
             // Sort row
             const sortArea = document.createElement('div'); sortArea.style.cssText = 'display:flex;gap:8px;align-items:center;margin-bottom:14px;flex-wrap:wrap;';
-            const sortLbl = document.createElement('span'); sortLbl.style.cssText = 'font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;'; sortLbl.textContent = 'Sort:';
+            const sortLbl = document.createElement('span'); sortLbl.style.cssText = 'font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;'; sortLbl.textContent = 'Sort:';
             const sortSel = document.createElement('select'); sortSel.className = 'roster-dropdown';
             ['Wrestler', 'A-Z', 'Z-A', 'Category'].forEach(o => { const opt = document.createElement('option'); opt.value = o; opt.textContent = o; sortSel.appendChild(opt); });
-            const catLbl = document.createElement('span'); catLbl.style.cssText = 'font-size:15px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.5px;'; catLbl.textContent = 'Category:';
+            const catLbl = document.createElement('span'); catLbl.style.cssText = 'font-size:15px;font-weight:700;color:var(--text-primary);text-transform:uppercase;letter-spacing:0.5px;'; catLbl.textContent = 'Category:';
             const catSel = document.createElement('select'); catSel.className = 'roster-dropdown';
             const allOpt = document.createElement('option'); allOpt.value = 'All'; allOpt.textContent = 'All'; catSel.appendChild(allOpt);
             SPONSOR_CATEGORIES.forEach(c => { const o = document.createElement('option'); o.value = c; o.textContent = c; catSel.appendChild(o); });
