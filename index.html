@@ -491,9 +491,9 @@
 <script>
 const latestVideos = [
   { id:"SGQqbCUJvME", ep:"FSW 52: Maximum",                    title:'"Choices"',                                             ple:false, isNew:true  },
-  { id:"isA0xhaRtNY", ep:"FSW 51: Victory",                    title:'"Thy Kingdom Fall"',                                    ple:false, isNew:false },
+  { id:"isA0xhaRtNY", ep:"FSW 51: Victory",                    title:'"Thy Kingdom Fall"',                                    ple:false, isNew:false, start:3705 },
   { id:"XcWs4fyKcZQ", ep:"FSW: Tryouts 2025",                  title:"",                                                      ple:false, isNew:false, t:1398 },
-  { id:"oXjQWCnBiHo", ep:"FSW 50: Nemesis",                    title:'"Episode 50"',                                          ple:false, isNew:false },
+  { id:"oXjQWCnBiHo", ep:"FSW 50: Nemesis",                    title:'"Episode 50"',                                          ple:false, isNew:false, start:862  },
   { id:"kzipiRDDunM", ep:"FSW 49: New Revolution",             title:"",                                                      ple:false, isNew:false },
   { id:"EDhStVktCow", ep:"FSW 48: Unfinished Business",        title:"PLE",                                                   ple:true,  isNew:false },
   { id:"gHIwdZqxOtg", ep:"FSW 47: House Show #7",             title:'"Christmas Special"',                                   ple:false, isNew:false },
@@ -596,8 +596,9 @@ function slide(btn,dir){ btn.parentElement.querySelector('.scroll-row').scrollBy
 // ── HERO SLIDESHOW ─────────────────────────────────────────────────────────────
 const HERO_START = 50;   // start each video at 50s
 const HERO_DUR   = 20;   // show each video for 20s
-function heroSrc(id) {
-  return `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&start=${HERO_START}&loop=1&playlist=${id}&controls=0&disablekb=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&enablejsapi=1&playsinline=1`;
+function heroSrc(id, start) {
+  const t = start !== undefined ? start : HERO_START;
+  return `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&start=${t}&loop=1&playlist=${id}&controls=0&disablekb=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&enablejsapi=1&playsinline=1`;
 }
 
 function updateHeroThumb(id) {
@@ -679,7 +680,7 @@ function loadHeroSlide() {
   if (_heroFirstLoad) {
     _heroFirstLoad = false;
     thumb.classList.add('hidden');
-    iframe.src = heroSrc(id);
+    iframe.src = heroSrc(id, v.start);
     showHeroText(v, isFirst);
     setTimeout(() => fade.classList.remove('active'), 800);
     heroTimer = setTimeout(() => { heroIdx = (heroIdx + 1) % heroPlaylist.length; loadHeroSlide(); }, HERO_DUR * 1000);
@@ -689,7 +690,7 @@ function loadHeroSlide() {
   fade.classList.add('active');
   thumb.classList.add('hidden');
   setTimeout(() => {
-    iframe.src = heroSrc(id);
+    iframe.src = heroSrc(id, v.start);
     showHeroText(v, isFirst);
     setTimeout(() => fade.classList.remove('active'), 300);
     heroTimer = setTimeout(() => { heroIdx = (heroIdx + 1) % heroPlaylist.length; loadHeroSlide(); }, HERO_DUR * 1000);
