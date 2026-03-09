@@ -492,6 +492,7 @@
 const latestVideos = [
   { id:"SGQqbCUJvME", ep:"FSW 52: Maximum",                    title:'"Choices"',                                             ple:false, isNew:true  },
   { id:"isA0xhaRtNY", ep:"FSW 51: Victory",                    title:'"Thy Kingdom Fall"',                                    ple:false, isNew:false },
+  { id:"XcWs4fyKcZQ", ep:"FSW: Tryouts 2025",                  title:"",                                                      ple:false, isNew:false, t:1398 },
   { id:"oXjQWCnBiHo", ep:"FSW 50: Nemesis",                    title:'"Episode 50"',                                          ple:false, isNew:false },
   { id:"kzipiRDDunM", ep:"FSW 49: New Revolution",             title:"",                                                      ple:false, isNew:false },
   { id:"EDhStVktCow", ep:"FSW 48: Unfinished Business",        title:"PLE",                                                   ple:true,  isNew:false },
@@ -511,6 +512,34 @@ const latestVideos = [
   { id:"7afHWzc9wiU", ep:"FSW 32: House Show #4",             title:"",                                                      ple:false, isNew:false },
   { id:"tnC47Xmfd_A", ep:"FSW 31: Brand Collision",           title:'"New Revolution vs Nemesis"',                           ple:false, isNew:false },
   { id:"vfycE12ERRI", ep:"FSW 30: Maximum",                   title:"",                                                      ple:false, isNew:false },
+  { id:"vs1Ocs4I_F8", ep:"FSW 29: 1st Batch Tryouts",         title:"",                                                      ple:false, isNew:false },
+  { id:"6rYZlVPLFPs", ep:"FSW 28: Sin City Slam",             title:"PLE",                                                   ple:true,  isNew:false, t:189  },
+  { id:"LWIU-wXfV5c", ep:"FSW 27: House Show #3",             title:"",                                                      ple:false, isNew:false },
+  { id:"2k6NWxecXMY", ep:"FSW 26: Omega Tournament",          title:"",                                                      ple:false, isNew:false },
+  { id:"11pGwAk4Jzw", ep:"FSW 25: House Show #2",             title:"",                                                      ple:false, isNew:false },
+  { id:"ijr6wnA_ktc", ep:"FSW 24: House Show #1",             title:"",                                                      ple:false, isNew:false },
+  { id:"Ejjw9E2hqZs", ep:"FSW 23: Nemesis All-Stars",         title:"",                                                      ple:false, isNew:false },
+  { id:"ymdZbh9n57E", ep:"FSW 22: New Revolution",            title:"",                                                      ple:false, isNew:false },
+  { id:"TeuqLTAiF54", ep:"FSW 21: Maximum",                   title:"",                                                      ple:false, isNew:false, t:7549 },
+  { id:"urAj-vnflCQ", ep:"FSW 20: Thrilla In Manila Night 1", title:"",                                                      ple:false, isNew:false, t:4442 },
+  { id:"95Ddlr82yyw", ep:"FSW 20: Thrilla In Manila Night 2", title:"",                                                      ple:false, isNew:false },
+  { id:"7y6carhxUFU", ep:"FSW 19: Nemesis — Unbroken",        title:"",                                                      ple:false, isNew:false, t:2363 },
+  { id:"2e6YE3LfmAU", ep:"FSW 18: New Revolution — Unleashed",title:"",                                                      ple:false, isNew:false, t:3028 },
+  { id:"i4ADmkTlrjA", ep:"FSW 17: Maximum",                   title:"",                                                      ple:false, isNew:false, t:3736 },
+  { id:"T84wHyRahL8", ep:"FSW 16: Nemesis",                   title:"",                                                      ple:false, isNew:false },
+  { id:"J7T7cyahgH8", ep:"FSW 15: New Revolution — Premiere", title:"",                                                      ple:false, isNew:false, t:3241 },
+  { id:"x_AaZU4md8c", ep:"FCW 14: Maximum — Final FCW Show",  title:"",                                                      ple:false, isNew:false },
+  { id:"OYNyMFNIijg", ep:"FCW 13: Born Bad",                  title:"PLE",                                                   ple:true,  isNew:false, t:8230 },
+  { id:"R-aOkaHegiE", ep:"FCW 12: Nemesis",                   title:"",                                                      ple:false, isNew:false },
+  { id:"vk5-1y7q7Jo", ep:"FCW 11: New Revolution",            title:"",                                                      ple:false, isNew:false },
+  { id:"04Lq_rpEWq4", ep:"FCW 10: Maximum",                   title:"",                                                      ple:false, isNew:false },
+  { id:"5j4tvvRi3KA", ep:"FCW 9: Nemesis",                    title:"",                                                      ple:false, isNew:false },
+  { id:"OPAI2tOmxJ4", ep:"FCW 8: New Revolution",             title:"",                                                      ple:false, isNew:false },
+  { id:"JcJkl6_KUsc", ep:"FCW 7: Maximum",                    title:"",                                                      ple:false, isNew:false },
+  { id:"FnaaJ0_n85g", ep:"FCW 6: Nemesis",                    title:"",                                                      ple:false, isNew:false },
+  { id:"qWCJIajMr7g", ep:"FCW 5: New Revolution",             title:"",                                                      ple:false, isNew:false },
+  { id:"VO_oEXIku_g", ep:"FCW 4: Maximum",                    title:"",                                                      ple:false, isNew:false },
+  { id:"-0gwLyT8wyY", ep:"FCW 3: Royal Rumble",               title:"",                                                      ple:false, isNew:false, t:7881 },
 ];
 const popularVideos = [
   { id:"4wD-1MvCLg8", ep:"FSW 37: Fight For Survival", title:"PLE",               ple:true,  isNew:false, t:258  },
@@ -566,7 +595,7 @@ function slide(btn,dir){ btn.parentElement.querySelector('.scroll-row').scrollBy
 
 // ── HERO SLIDESHOW ─────────────────────────────────────────────────────────────
 const HERO_START = 50;   // start each video at 50s
-const HERO_DUR   = 15;   // show each video for 15s
+const HERO_DUR   = 20;   // show each video for 20s
 function heroSrc(id) {
   return `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&start=${HERO_START}&loop=1&playlist=${id}&controls=0&disablekb=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&enablejsapi=1&playsinline=1`;
 }
