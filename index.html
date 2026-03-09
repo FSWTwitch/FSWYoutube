@@ -38,7 +38,8 @@
   .hero{position:relative;min-height:100vh;display:flex;align-items:flex-end;padding:0 56px 100px;overflow:hidden;}
   .hero-bg{position:absolute;inset:0;background:#07070a;}
   .hero-img{position:absolute;inset:0;background-size:cover;background-position:center top;opacity:.55;}
-  .hero-vignette{position:absolute;inset:0;background:linear-gradient(to right,rgba(7,7,10,.92) 0%,rgba(7,7,10,.4) 50%,transparent 100%),linear-gradient(to top,rgba(7,7,10,1) 0%,rgba(7,7,10,.5) 30%,transparent 60%);}
+  .hero-vignette{position:absolute;inset:0;background:linear-gradient(to right,rgba(7,7,10,.92) 0%,rgba(7,7,10,.4) 50%,transparent 100%),linear-gradient(to top,rgba(7,7,10,1) 0%,rgba(7,7,10,.95) 18%,rgba(7,7,10,.7) 35%,rgba(7,7,10,.2) 55%,transparent 72%);}
+  .hero-bottom-fade{position:absolute;bottom:0;left:0;right:0;height:220px;background:linear-gradient(to top,#07070a 0%,#07070a 30%,rgba(7,7,10,.85) 60%,transparent 100%);z-index:3;pointer-events:none;}
   .hero-grain{position:absolute;inset:0;opacity:.035;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");background-size:200px;animation:grain 1s steps(2) infinite;}
   @keyframes grain{0%{background-position:0 0}25%{background-position:20px -15px}50%{background-position:-10px 20px}75%{background-position:15px 10px}100%{background-position:-20px -5px}}
 
@@ -221,6 +222,7 @@
   <div class="hero-bg"></div>
   <div class="hero-img" style="background:radial-gradient(ellipse 80% 60% at 65% 30%,rgba(50,30,30,.8) 0%,rgba(7,7,10,1) 70%),repeating-linear-gradient(135deg,rgba(192,0,14,.04) 0px,rgba(192,0,14,.04) 1px,transparent 1px,transparent 40px);"></div>
   <div class="hero-vignette"></div>
+  <div class="hero-bottom-fade"></div>
   <div class="hero-grain"></div>
   <!-- AUTOPLAY BG VIDEO -->
   <div class="hero-video" id="hero-video-wrap">
