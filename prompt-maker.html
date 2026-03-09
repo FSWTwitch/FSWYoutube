@@ -7336,6 +7336,34 @@ NO text overlays. NO title cards. NO slow motion. Pure broadcast realism.`;
                 slotsRow.appendChild(w1Btn); slotsRow.appendChild(w2Btn);
                 cannedContainer.appendChild(fieldWrap('Wrestlers (Face to Face):', slotsRow));
 
+                const emotions = [
+                    'Confident',
+                    'Angry',
+                    'Vengeful',
+                    'Focused',
+                    'Cold / Emotionless',
+                    'Intense',
+                    'Relaxed / Unbothered',
+                    'Cocky / Smirking',
+                    'Desperate',
+                    'Fearless',
+                    'Disgusted',
+                    'Nervous but hiding it',
+                    'Calculating',
+                    'Fired up',
+                    'Hurt but determined'
+                ];
+
+                const emotionGrid = document.createElement('div'); emotionGrid.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;';
+                const w1EmotionSel = mkSel(emotions, 'Confident');
+                const w2EmotionSel = mkSel(emotions, 'Angry');
+                const w1EmotionWrap = document.createElement('div');
+                const w2EmotionWrap = document.createElement('div');
+                w1EmotionWrap.appendChild(mkLabel('Wrestler 1 Emotion:')); w1EmotionWrap.appendChild(w1EmotionSel);
+                w2EmotionWrap.appendChild(mkLabel('Wrestler 2 Emotion:')); w2EmotionWrap.appendChild(w2EmotionSel);
+                emotionGrid.appendChild(w1EmotionWrap); emotionGrid.appendChild(w2EmotionWrap);
+                cannedContainer.appendChild(emotionGrid);
+
                 // Tension type
                 const tensionSel = mkSel([
                     'Dead silent — neither moves, neither flinches',
@@ -7360,6 +7388,26 @@ NO text overlays. NO title cards. NO slow motion. Pure broadcast realism.`;
                     const wr2 = rosterData.find(r => r.name === n2);
 
                     const tension = tensionSel.value;
+                    const e1 = w1EmotionSel.value;
+                    const e2 = w2EmotionSel.value;
+
+                    const emotionDescMap = {
+                        'Confident':            'utterly confident — no tension visible, no doubt. Standing like they already know how this ends.',
+                        'Angry':                'visibly angry — jaw tight, eyes burning, every muscle in their face holding back an eruption.',
+                        'Vengeful':             'carrying pure vengeance — the kind of cold, focused hatred that doesn\'t need to raise its voice.',
+                        'Focused':              'locked in completely — eyes forward, face still, processing everything in silence.',
+                        'Cold / Emotionless':   'completely cold — no expression, no reaction, no tells. A blank wall that says everything.',
+                        'Intense':              'radiating intensity — still but coiled, every cell in their body ready to go at a half second\'s notice.',
+                        'Relaxed / Unbothered': 'visibly relaxed — almost casual, like this moment does not move them at all. Which is its own kind of threat.',
+                        'Cocky / Smirking':     'barely containing a smirk — enjoying this, feeding off it, making sure the other person sees it.',
+                        'Desperate':            'desperate but not broken — there\'s something raw and dangerous in their eyes. They need this.',
+                        'Fearless':             'showing zero fear — stepping forward, not back. Absorbing every ounce of pressure and returning nothing.',
+                        'Disgusted':            'disgusted — looking at their opponent like they can\'t believe they have to share a ring with them.',
+                        'Nervous but hiding it': 'holding it together on the surface — but the micro-expressions are there. The jaw set too hard. The breath too controlled.',
+                        'Calculating':          'calculating — reading every micro-expression, every breath, every shift in weight. Already three moves ahead.',
+                        'Fired up':             'fired up and barely containing it — a live wire, practically vibrating, leaning into the heat.',
+                        'Hurt but determined':  'carrying visible pain — something happened, and it shows. But they\'re here, and they\'re not leaving.'
+                    };
 
                     const tensionDescMap = {
                         'Dead silent — neither moves, neither flinches': `${c1} and ${c2} stand dead center in the ring, faces inches apart. Neither speaks. Neither moves. Neither flinches. Eyes locked. The stillness is total — two people refusing to be the first to blink. The entire arena feels it.`,
@@ -7393,6 +7441,10 @@ Maintain each wrestler's exact canonical height, limb length, torso proportions,
 SCENE — STAREDOWN:
 ${tensionDescMap[tension]}
 
+WRESTLER EMOTIONS:
+${c1} is ${emotionDescMap[e1]}
+${c2} is ${emotionDescMap[e2]}
+
 RING:
 Standard professional wrestling ring. White ropes — three tiers, taut and clean. Turnbuckle pads are compact, round, and vertically stacked — black with the FSW logo. Never wide, square, oversized, or flattened. Ring post thickness consistent with real televised standards. Canvas flooring is white with FSW branding. The top rope sits at chest-to-eye-line height on both wrestlers when standing.
 
@@ -7417,7 +7469,7 @@ NO contact between wrestlers. NO physicality. NO title belts unless relevant. NO
 
                 const clearBtn = document.createElement('button'); clearBtn.textContent = 'Clear';
                 clearBtn.style.cssText = "padding:7px 14px;font-size:14px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;border-radius:4px;border:1px solid var(--border-input);background:transparent;color:var(--text-tertiary);text-transform:uppercase;";
-                clearBtn.onclick = () => { w1Btn.textContent = '+'; w1Btn.classList.remove('filled'); w2Btn.textContent = '+'; w2Btn.classList.remove('filled'); tensionSel.selectedIndex = 0; outputContainer.style.display = 'none'; outputTextarea.value = ''; };
+                clearBtn.onclick = () => { w1Btn.textContent = '+'; w1Btn.classList.remove('filled'); w2Btn.textContent = '+'; w2Btn.classList.remove('filled'); tensionSel.selectedIndex = 0; w1EmotionSel.selectedIndex = 0; w2EmotionSel.selectedIndex = 0; outputContainer.style.display = 'none'; outputTextarea.value = ''; };
                 btnRow.appendChild(generateBtn); btnRow.appendChild(clearBtn);
                 cannedContainer.appendChild(btnRow);
 
