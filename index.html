@@ -692,6 +692,7 @@ function loadHeroSlide() {
 
   fade.classList.add('active');
   thumb.classList.add('hidden');
+  iframe.src = '';
   setTimeout(() => {
     iframe.src = heroSrc(id, v.start);
     showHeroText(v, isFirst);
