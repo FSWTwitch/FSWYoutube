@@ -462,13 +462,6 @@
     <div class="cosmic-tag" style="display:flex;align-items:center;gap:8px;"><span class="logo-top">Brought to you by</span><img src="https://i.imgur.com/ZalooKf.png" alt="Cosmic Energy Drink" style="height:16px;width:auto;"></div>
   </a>
   <div class="nav-r">
-    <div style="display:flex;align-items:center;gap:8px;">
-      <label class="vid-toggle" id="roster-toggle-label" title="Show incomplete profiles">
-        <input type="checkbox" id="roster-show-incomplete" onchange="filterRoster()">
-        <span class="vid-toggle-track"><span class="vid-toggle-thumb"></span></span>
-      </label>
-      <span style="font-size:.55rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;">All</span>
-    </div>
     <a href="index.html" style="color:rgba(255,255,255,.45);text-decoration:none;font-size:.75rem;font-weight:500;letter-spacing:1px;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.45)'">Home</a>
     <a href="https://www.youtube.com/@fsw_caw?sub_confirmation=1" target="_blank" class="sub-btn">Subscribe</a>
   </div>
@@ -816,24 +809,6 @@ const wrestlers = [
     recentMatches:[{show:"FSW 52: Maximum",opponent:"Damian Rage",result:"L",type:"Singles — Non Title",championship:null,ranked:false,rankPos:null}],
   },
   {
-    name: "Dean Ivy",
-    incomplete: true,
-    nickname: "",
-    img: "https://i.imgur.com/wPn0GJT.png",
-    popupImg: "https://i.imgur.com/wPn0GJT.png",
-    bgImg: "",
-    videoId: "",
-    champion: false, title: "",
-    alignment: "face",
-    location: "",
-    height: "", weight: "",
-    stable: "", social: "", instagram: "",
-    theme: "", rating: 85, rival: "",
-    endorsements: ["Spotify"],
-    bio: "Dean Ivy enters FSW as a determined newcomer eager to prove she belongs among the roster. Focused and observant, she approaches every match as a chance to learn, adapt, and make her presence known. While still building her reputation, Dean Ivy's discipline and resilience suggest a competitor with the potential to rise quickly and make a lasting impact.",
-    record: { singlesW:0, singlesL:0, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
-  },
-  {
     name: "Henry Carter",
     incomplete: false,
     nickname: "",
@@ -929,25 +904,6 @@ const wrestlers = [
     debut: "FSW 52: Maximum",
     record: { singlesW:1, singlesL:0, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
     recentMatches:[{show:"FSW 52: Maximum",opponent:"Axel Hernandez",result:"W",type:"Singles — Debut",championship:null,ranked:false,rankPos:null}],
-  },
-
-  {
-    name: "TJG",
-    incomplete: true,
-    nickname: "",
-    img: "https://i.imgur.com/wPn0GJT.png",
-    popupImg: "https://i.imgur.com/wPn0GJT.png",
-    bgImg: "",
-    videoId: "",
-    champion: false, title: "",
-    alignment: "face",
-    location: "",
-    height: "", weight: "",
-    stable: "", social: "", instagram: "",
-    theme: "", rating: 82, rival: "",
-    endorsements: ["Celsius"],
-    bio: "",
-    record: { singlesW:0, singlesL:0, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
   },
   {
     name: "Travis Valentine",
@@ -1504,10 +1460,9 @@ const wrestlers = [
 ];
 
 function filterRoster(){
-  const showAll = document.getElementById('roster-show-incomplete').checked;
   const grid = document.getElementById('roster-grid');
   grid.innerHTML = '';
-  const filtered = wrestlers.filter(w => showAll || !w.incomplete).sort((a,b) => a.name.localeCompare(b.name));
+  const filtered = wrestlers.filter(w => !w.incomplete).sort((a,b) => a.name.localeCompare(b.name));
   filtered.forEach((w, i) => grid.appendChild(makeCard(w, i)));
 }
 
