@@ -341,31 +341,7 @@ const wrestlers = [
     { show:"FSW 50: Nemesis", opponent:"—", result:"—", type:"—", championship:null, ranked:false, rankPos:null }
   ],
   },
-  {
-    name: "Smoove Marino",
-    incomplete: false,
-    nickname: "",
-    img: "https://i.imgur.com/SubN4je.jpeg",
-    popupImg: "https://i.imgur.com/SubN4je.jpeg",
-    bgImg: "",
-    videoId: "HIxk-21co88",
-    champion: false, title: "",
-    alignment: "heel",
-    location: "",
-    height: "6'2\"", weight: "286 lbs",
-    stable: "", social: "@fswyoutub2.smoove", instagram: "jahh_marino",
-    theme: "Out Of My Hands — Future & Metro Boomin", rating: 87, rival: "",
-    rankBadge: "new contender",
-    endorsements: ["Hennessy"],
-    bio: "Smoove Marino walks back into FSW with a reputation that only grew while he was gone. Recently released from jail, he carries the same swagger and street-hardened confidence that made him dangerous before, but now with even more to prove. Smoove Marino does not just want his place back; he wants everyone to remember why his name still carries weight the moment he steps into the arena.",
-    debut: "FSW Underground",
-    record: { singlesW:2, singlesL:1, multiW:0, multiL:0, titleWins:0, titleDefenses:0 },
-  recentMatches:[
-    { show:"FSW 52: Maximum", opponent:"Jay Cole", result:"W", type:"Singles", championship:null, ranked:true, rankPos:9 },
-    { show:"FSW Underground", opponent:"—", result:"W", type:"Singles", championship:null, ranked:false, rankPos:null },
-    { show:"FSW Underground", opponent:"—", result:"L", type:"Singles", championship:null, ranked:false, rankPos:null }
-  ],
-  },
+
   {
     name: "TJG",
     incomplete: true,
