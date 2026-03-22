@@ -512,8 +512,8 @@
   <div class="modal-box" id="modal-box">
     <button class="modal-close" onclick="closeModal()">✕</button>
     <a id="modal-edit-btn" href="edit-request.html" title="Request Profile Edit" style="position:absolute;top:12px;right:54px;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;z-index:10;transition:all .2s;text-decoration:none;" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,.3)'" onmouseout="this.style.color='rgba(255,255,255,.5)';this.style.borderColor='rgba(255,255,255,.1)'">✏️</a>
-    <div id="entrance-player" style="display:none;position:absolute;top:0;left:0;right:0;bottom:72px;z-index:20;overflow:hidden;border-radius:8px 8px 0 0;display:flex;align-items:center;justify-content:center;background:#000;">
-      <div id="entrance-iframe" style="width:100%;aspect-ratio:16/9;max-height:100%;"></div>
+    <div id="entrance-player" style="display:none;position:relative;width:100%;aspect-ratio:16/9;z-index:20;background:#000;overflow:hidden;border-radius:8px 8px 0 0;">
+      <div id="entrance-iframe" style="position:absolute;top:0;left:0;width:100%;height:100%;"></div>
     </div>
     <!-- TOP: photo + info side by side -->
     <div class="modal-top">
@@ -1568,12 +1568,26 @@ function setEntranceBtn(playing){
   const ti = document.getElementById('vid-toggle-input');
   const pi = document.querySelector('.entrance-play-icon');
   const pa = document.querySelector('.entrance-pause-icon');
+  const player = document.getElementById('entrance-player');
+  const modalTop = document.querySelector('.modal-top');
+  const modalExt = document.getElementById('modal-extended');
   if(ytBtn){ playing ? ytBtn.classList.add('playing') : ytBtn.classList.remove('playing'); }
   if(editBtn) editBtn.style.display = playing ? 'none' : 'flex';
   if(tw) tw.style.display = playing ? 'flex' : 'none';
-  if(ti && playing) ti.checked = true;
+  if(ti) ti.checked = false; // default OFF — profile view, toggle ON to see video
   if(pi) pi.style.display = playing ? 'none' : 'block';
   if(pa) pa.style.display = playing ? 'block' : 'none';
+  if(!playing) {
+    // Stopped — restore full profile, hide video
+    if(player) player.style.display = 'none';
+    if(modalTop) modalTop.style.display = '';
+    if(modalExt) modalExt.style.display = '';
+  } else {
+    // Started — show profile, hide video until toggled ON
+    if(player) player.style.display = 'none';
+    if(modalTop) modalTop.style.display = '';
+    if(modalExt) modalExt.style.display = '';
+  }
 }
 
 function toggleEntrance(){
@@ -1677,16 +1691,13 @@ function playCommercial(videoId, brand, type){
 
 function hideShowVideo(){
   const toggleInput = document.getElementById('vid-toggle-input');
-  const editBtn = document.getElementById('modal-edit-btn');
   const isShowing = toggleInput && toggleInput.checked;
-  const modalTop = document.querySelector('.modal-top');
-  const modalExt = document.getElementById('modal-extended');
-  const player = document.getElementById('entrance-player');
-
-  if(editBtn) editBtn.style.display = isShowing ? 'none' : 'flex';
-  if(player) player.style.display = isShowing ? 'block' : 'none';
-  if(modalTop) modalTop.style.display = isShowing ? 'none' : '';
-  if(modalExt) modalExt.style.display = isShowing ? 'none' : '';
+  const popup = document.getElementById('vid-popup-bg');
+  if(isShowing) {
+    if(popup) popup.style.display = 'flex';
+  } else {
+    if(popup) popup.style.display = 'none';
+  }
 }
 
 function openModal(w){
@@ -2066,28 +2077,14 @@ renderRoster();
 <!-- ── VIDEO POPUP MODAL ── -->
 <div id="vid-popup-bg" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.88);backdrop-filter:blur(12px);align-items:center;justify-content:center;padding:20px;" onclick="if(event.target===this)closeVidPopup()">
   <div style="width:100%;max-width:860px;background:#0d0d10;border-radius:12px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.9);border:1px solid rgba(255,255,255,.07);position:relative;">
-    <button onclick="closeVidPopup()" style="position:absolute;top:10px;right:10px;z-index:10;background:rgba(0,0,0,.65);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;">✕</button>
-    <div style="width:100%;aspect-ratio:16/9;background:#000;position:relative;">
-      <iframe id="vid-popup-iframe" src="" frameborder="0" allow="autoplay;encrypted-media;fullscreen;picture-in-picture" allowfullscreen style="width:100%;height:100%;display:block;border:none;"></iframe>
-    </div>
-    <div style="padding:12px 18px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
-      <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">
-        <div class="entrance-bars"><span></span><span></span><span></span></div>
-        <div style="min-width:0;">
-          <div id="vid-popup-title" style="font-size:.8rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
-          <div id="vid-popup-artist" style="font-size:.63rem;color:rgba(255,255,255,.35);margin-top:1px;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
-          <div style="font-size:.52rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:2px;">Theme Song</div>
-        </div>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
-        <button id="vid-popup-mute-btn" onclick="toggleVidPopupMute()" style="width:36px;height:36px;border-radius:50%;background:none;border:1px solid rgba(255,255,255,.2);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .2s;">
-          <svg id="vid-popup-icon-muted" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
-          <svg id="vid-popup-icon-sound" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
-        </button>
-        <button id="vid-popup-pause-btn" onclick="toggleVidPopupPause()" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;">
-          <svg id="vid-popup-play-icon" width="13" height="13" viewBox="0 0 24 24" fill="white" style="display:none;margin-left:2px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          <svg id="vid-popup-pause-icon" width="13" height="13" viewBox="0 0 24 24" fill="white"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
-        </button>
+    <button onclick="closeVidPopup()" style="position:absolute;top:10px;right:10px;z-index:30;background:rgba(0,0,0,.65);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;">✕</button>
+    <div id="vid-popup-video-slot" style="width:100%;aspect-ratio:16/9;background:#000;overflow:hidden;border-radius:12px 12px 0 0;"></div>
+    <div style="padding:12px 18px 16px;display:flex;align-items:center;gap:10px;">
+      <div class="entrance-bars"><span></span><span></span><span></span></div>
+      <div style="min-width:0;">
+        <div id="vid-popup-title" style="font-size:.8rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
+        <div id="vid-popup-artist" style="font-size:.63rem;color:rgba(255,255,255,.35);margin-top:1px;letter-spacing:.5px;"></div>
+        <div style="font-size:.52rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:2px;">Theme Song</div>
       </div>
     </div>
   </div>
@@ -2099,48 +2096,39 @@ var _vidPopupPaused = false;
 var _vidPopupCurrentId = '';
 
 function openVidPopup(videoId, label, title, artist) {
-  _vidPopupMuted = false;
-  _vidPopupPaused = false;
-  _vidPopupCurrentId = videoId;
   document.getElementById('vid-popup-title').textContent = title || '';
   document.getElementById('vid-popup-artist').textContent = artist || '';
-  document.getElementById('vid-popup-icon-muted').style.display = 'none';
-  document.getElementById('vid-popup-icon-sound').style.display = 'block';
-  document.getElementById('vid-popup-mute-btn').style.borderColor = 'rgba(255,255,255,.6)';
-  document.getElementById('vid-popup-play-icon').style.display = 'none';
-  document.getElementById('vid-popup-pause-icon').style.display = 'block';
-  document.getElementById('vid-popup-iframe').src =
-    `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&playsinline=1&modestbranding=1&controls=1`;
   document.getElementById('vid-popup-bg').style.display = 'flex';
   document.body.style.overflow = 'hidden';
+  // Move the actual entrance player into the popup video slot
+  const player = document.getElementById('entrance-player');
+  const slot = document.getElementById('vid-popup-video-slot');
+  if(player && slot) {
+    player.style.display = 'block';
+    player.style.position = 'relative';
+    player.style.top = '';player.style.left = '';player.style.right = '';player.style.bottom = '';
+    player.style.width = '100%';player.style.aspectRatio = '16/9';
+    player.style.borderRadius = '0';
+    slot.appendChild(player);
+  }
 }
 
 function closeVidPopup() {
-  document.getElementById('vid-popup-iframe').src = '';
+  // Move entrance player back to modal
+  const player = document.getElementById('entrance-player');
+  const modal = document.getElementById('modal-box');
+  if(player && modal) {
+    player.style.display = 'none';
+    player.style.position = 'absolute';
+    player.style.top = '0'; player.style.left = '0';
+    player.style.right = '0'; player.style.bottom = '72px';
+    player.style.width = ''; player.style.aspectRatio = '';
+    modal.insertBefore(player, modal.firstChild);
+  }
   document.getElementById('vid-popup-bg').style.display = 'none';
   document.body.style.overflow = '';
-}
-
-function toggleVidPopupMute() {
-  _vidPopupMuted = !_vidPopupMuted;
-  const iframe = document.getElementById('vid-popup-iframe');
-  const src = iframe.src;
-  iframe.src = _vidPopupMuted
-    ? src.replace('&mute=0','').replace('&mute=1','') + '&mute=1'
-    : src.replace('&mute=1','') + '&mute=0';
-  document.getElementById('vid-popup-icon-muted').style.display = _vidPopupMuted ? 'block' : 'none';
-  document.getElementById('vid-popup-icon-sound').style.display = _vidPopupMuted ? 'none' : 'block';
-  document.getElementById('vid-popup-mute-btn').style.borderColor = _vidPopupMuted ? 'rgba(255,255,255,.2)' : 'rgba(255,255,255,.6)';
-}
-
-function toggleVidPopupPause() {
-  _vidPopupPaused = !_vidPopupPaused;
-  const iframe = document.getElementById('vid-popup-iframe');
-  iframe.src = _vidPopupPaused
-    ? iframe.src.replace('autoplay=1','autoplay=0')
-    : iframe.src.replace('autoplay=0','autoplay=1');
-  document.getElementById('vid-popup-play-icon').style.display = _vidPopupPaused ? 'block' : 'none';
-  document.getElementById('vid-popup-pause-icon').style.display = _vidPopupPaused ? 'none' : 'block';
+  const ti = document.getElementById('vid-toggle-input');
+  if(ti) ti.checked = false;
 }
 
 document.addEventListener('keydown', e => { if(e.key === 'Escape') closeVidPopup(); });
