@@ -2067,7 +2067,7 @@ renderRoster();
 </script>
 <!-- ── VIDEO POPUP MODAL ── -->
 <div id="vid-popup-bg" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.88);backdrop-filter:blur(12px);align-items:center;justify-content:center;padding:20px;" onclick="if(event.target===this)closeVidPopup()">
-  <div style="width:100%;max-width:640px;background:#0d0d10;border-radius:12px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.9);border:1px solid rgba(255,255,255,.07);position:relative;">
+  <div style="width:100%;max-width:860px;background:#0d0d10;border-radius:12px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.9);border:1px solid rgba(255,255,255,.07);position:relative;">
     <button onclick="closeVidPopup()" style="position:absolute;top:10px;right:10px;z-index:10;background:rgba(0,0,0,.65);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;">✕</button>
     <div style="width:100%;aspect-ratio:16/9;background:#000;position:relative;">
       <iframe id="vid-popup-iframe" src="" frameborder="0" allow="autoplay;encrypted-media;fullscreen;picture-in-picture" allowfullscreen style="width:100%;height:100%;display:block;border:none;"></iframe>
@@ -2098,67 +2098,54 @@ renderRoster();
 <script>
 var _vidPopupMuted = false;
 var _vidPopupPaused = false;
-var _vidPopupPlayer = null;
-var _vidPopupReady = false;
-var _vidPopupPendingId = null;
-
-// Re-use the existing YT API — hook into onYouTubeIframeAPIReady
-var _origYTReady2 = window.onYouTubeIframeAPIReady;
-window.onYouTubeIframeAPIReady = function() {
-  if (_origYTReady2) _origYTReady2();
-  _vidPopupPlayer = new YT.Player('vid-popup-iframe', {
-    height: '100%', width: '100%',
-    playerVars: { controls: 0, disablekb: 1, modestbranding: 1, rel: 0, iv_load_policy: 3, playsinline: 1 },
-    events: {
-      onReady: function() {
-        _vidPopupReady = true;
-        if (_vidPopupPendingId) { _vidPopupPlayer.loadVideoById(_vidPopupPendingId); _vidPopupPendingId = null; }
-      },
-      onStateChange: function(e) {
-        const playing = e.data === YT.PlayerState.PLAYING;
-        document.getElementById('vid-popup-play-icon').style.display = playing ? 'none' : 'block';
-        document.getElementById('vid-popup-pause-icon').style.display = playing ? 'block' : 'none';
-      }
-    }
-  });
-};
+var _vidPopupCurrentId = '';
 
 function openVidPopup(videoId, label, title, artist) {
   _vidPopupMuted = false;
   _vidPopupPaused = false;
+  _vidPopupCurrentId = videoId;
   document.getElementById('vid-popup-title').textContent = title || '';
   document.getElementById('vid-popup-artist').textContent = artist || '';
   document.getElementById('vid-popup-icon-muted').style.display = 'none';
   document.getElementById('vid-popup-icon-sound').style.display = 'block';
   document.getElementById('vid-popup-mute-btn').style.borderColor = 'rgba(255,255,255,.6)';
+  document.getElementById('vid-popup-play-icon').style.display = 'none';
+  document.getElementById('vid-popup-pause-icon').style.display = 'block';
+  document.getElementById('vid-popup-iframe').src =
+    `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&playsinline=1&modestbranding=1&controls=1`;
   document.getElementById('vid-popup-bg').style.display = 'flex';
   document.body.style.overflow = 'hidden';
-  if (_vidPopupReady) { _vidPopupPlayer.loadVideoById(videoId); }
-  else { _vidPopupPendingId = videoId; }
 }
 
 function closeVidPopup() {
+  document.getElementById('vid-popup-iframe').src = '';
   document.getElementById('vid-popup-bg').style.display = 'none';
   document.body.style.overflow = '';
-  if (_vidPopupReady) { _vidPopupPlayer.stopVideo(); }
-  // Also stop entrance player in main modal
-  closeEntrance();
 }
 
 function toggleVidPopupMute() {
-  if (!_vidPopupReady) return;
   _vidPopupMuted = !_vidPopupMuted;
-  _vidPopupMuted ? _vidPopupPlayer.mute() : _vidPopupPlayer.unMute();
+  const iframe = document.getElementById('vid-popup-iframe');
+  const src = iframe.src;
+  iframe.src = _vidPopupMuted
+    ? src.replace('&mute=0','').replace('&mute=1','') + '&mute=1'
+    : src.replace('&mute=1','') + '&mute=0';
   document.getElementById('vid-popup-icon-muted').style.display = _vidPopupMuted ? 'block' : 'none';
   document.getElementById('vid-popup-icon-sound').style.display = _vidPopupMuted ? 'none' : 'block';
   document.getElementById('vid-popup-mute-btn').style.borderColor = _vidPopupMuted ? 'rgba(255,255,255,.2)' : 'rgba(255,255,255,.6)';
 }
 
 function toggleVidPopupPause() {
-  if (!_vidPopupReady) return;
   _vidPopupPaused = !_vidPopupPaused;
-  _vidPopupPaused ? _vidPopupPlayer.pauseVideo() : _vidPopupPlayer.playVideo();
+  const iframe = document.getElementById('vid-popup-iframe');
+  iframe.src = _vidPopupPaused
+    ? iframe.src.replace('autoplay=1','autoplay=0')
+    : iframe.src.replace('autoplay=0','autoplay=1');
+  document.getElementById('vid-popup-play-icon').style.display = _vidPopupPaused ? 'block' : 'none';
+  document.getElementById('vid-popup-pause-icon').style.display = _vidPopupPaused ? 'none' : 'block';
 }
+
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeVidPopup(); });
 </script>
 
 </body>
