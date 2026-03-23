@@ -1568,12 +1568,19 @@ function setEntranceBtn(playing){
   const ti = document.getElementById('vid-toggle-input');
   const pi = document.querySelector('.entrance-play-icon');
   const pa = document.querySelector('.entrance-pause-icon');
+  const player = document.getElementById('entrance-player');
+  const modalTop = document.querySelector('.modal-top');
+  const modalExt = document.getElementById('modal-extended');
   if(ytBtn){ playing ? ytBtn.classList.add('playing') : ytBtn.classList.remove('playing'); }
   if(editBtn) editBtn.style.display = playing ? 'none' : 'flex';
   if(tw) tw.style.display = playing ? 'flex' : 'none';
   if(ti && playing) ti.checked = true;
   if(pi) pi.style.display = playing ? 'none' : 'block';
   if(pa) pa.style.display = playing ? 'block' : 'none';
+  // When playing starts: hide profile, show video. When stopped: restore profile, hide video.
+  if(modalTop) modalTop.style.display = playing ? 'none' : '';
+  if(modalExt) modalExt.style.display = playing ? 'none' : '';
+  if(player && !playing) player.style.display = 'none';
 }
 
 function toggleEntrance(){
@@ -1695,16 +1702,13 @@ function hideShowVideo(){
   const toggleInput = document.getElementById('vid-toggle-input');
   const editBtn = document.getElementById('modal-edit-btn');
   const isShowing = toggleInput && toggleInput.checked;
+  const player = document.getElementById('entrance-player');
+  const modalTop = document.querySelector('.modal-top');
+  const modalExt = document.getElementById('modal-extended');
   if(editBtn) editBtn.style.display = isShowing ? 'none' : 'flex';
-  if(isMobile()){
-    const mbox = document.getElementById('modal-box');
-    if(isShowing){ if(mbox) mbox.classList.add('mobile-playing'); }
-    else { if(mbox) mbox.classList.remove('mobile-playing'); }
-  } else {
-    const player = document.getElementById('entrance-player');
-    if(!player) return;
-    player.style.display = isShowing ? 'block' : 'none';
-  }
+  if(player) player.style.display = isShowing ? 'block' : 'none';
+  if(modalTop) modalTop.style.display = isShowing ? 'none' : '';
+  if(modalExt) modalExt.style.display = isShowing ? 'none' : '';
 }
 
 function openModal(w){
