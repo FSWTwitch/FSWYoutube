@@ -2075,16 +2075,29 @@ window.addEventListener('scroll', () => {
 renderRoster();
 </script>
 <!-- ── VIDEO POPUP MODAL ── -->
-<div id="vid-popup-bg" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.88);backdrop-filter:blur(12px);align-items:center;justify-content:center;padding:20px;" onclick="if(event.target===this)closeVidPopup()">
+<div id="vid-popup-bg" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.88);backdrop-filter:blur(12px);align-items:center;justify-content:center;padding:20px;">
   <div style="width:100%;max-width:860px;background:#0d0d10;border-radius:12px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.9);border:1px solid rgba(255,255,255,.07);position:relative;">
     <button onclick="closeVidPopup()" style="position:absolute;top:10px;right:10px;z-index:30;background:rgba(0,0,0,.65);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;">✕</button>
-    <div id="vid-popup-video-slot" style="width:100%;aspect-ratio:16/9;background:#000;overflow:hidden;border-radius:12px 12px 0 0;"></div>
-    <div style="padding:12px 18px 16px;display:flex;align-items:center;gap:10px;">
-      <div class="entrance-bars"><span></span><span></span><span></span></div>
-      <div style="min-width:0;">
-        <div id="vid-popup-title" style="font-size:.8rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
-        <div id="vid-popup-artist" style="font-size:.63rem;color:rgba(255,255,255,.35);margin-top:1px;letter-spacing:.5px;"></div>
-        <div style="font-size:.52rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:2px;">Theme Song</div>
+    <!-- Mirror of the entrance player — this iframe plays the same video -->
+    <div style="width:100%;aspect-ratio:16/9;background:#000;overflow:hidden;border-radius:12px 12px 0 0;position:relative;">
+      <div id="vid-popup-iframe-wrap" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:177.78%;height:100%;min-width:100%;min-height:56.25vw;"></div>
+    </div>
+    <div style="padding:12px 18px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+      <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">
+        <div class="entrance-bars"><span></span><span></span><span></span></div>
+        <div style="min-width:0;">
+          <div id="vid-popup-title" style="font-size:.8rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
+          <div id="vid-popup-artist" style="font-size:.63rem;color:rgba(255,255,255,.35);margin-top:1px;letter-spacing:.5px;"></div>
+          <div style="font-size:.52rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:2px;">Theme Song</div>
+        </div>
+      </div>
+      <!-- Toggle to go back to profile -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0;">
+        <label class="vid-toggle">
+          <input type="checkbox" checked onchange="closeVidPopup()">
+          <span class="vid-toggle-track"><span class="vid-toggle-thumb"></span></span>
+        </label>
+        <div style="font-size:.48rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;">Video</div>
       </div>
     </div>
   </div>
@@ -2098,37 +2111,25 @@ var _vidPopupCurrentId = '';
 function openVidPopup(videoId, label, title, artist) {
   document.getElementById('vid-popup-title').textContent = title || '';
   document.getElementById('vid-popup-artist').textContent = artist || '';
+  // Get current time from entrance player and open popup video at same point
+  let startTime = 0;
+  try { if(ePlayerReady) startTime = Math.floor(ePlayer.getCurrentTime()) || 0; } catch(e) {}
+  const wrap = document.getElementById('vid-popup-iframe-wrap');
+  wrap.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&start=${startTime}&rel=0&playsinline=1&modestbranding=1&controls=1" frameborder="0" allow="autoplay;encrypted-media;fullscreen" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"></iframe>`;
   document.getElementById('vid-popup-bg').style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-  // Move the actual entrance player into the popup video slot
-  const player = document.getElementById('entrance-player');
-  const slot = document.getElementById('vid-popup-video-slot');
-  if(player && slot) {
-    player.style.display = 'block';
-    player.style.position = 'relative';
-    player.style.top = '';player.style.left = '';player.style.right = '';player.style.bottom = '';
-    player.style.width = '100%';player.style.aspectRatio = '16/9';
-    player.style.borderRadius = '0';
-    slot.appendChild(player);
-  }
+  // Pause the background entrance player to avoid double audio
+  try { if(ePlayerReady && _eVideoPlaying) ePlayer.pauseVideo(); } catch(e) {}
 }
 
 function closeVidPopup() {
-  // Move entrance player back to modal
-  const player = document.getElementById('entrance-player');
-  const modal = document.getElementById('modal-box');
-  if(player && modal) {
-    player.style.display = 'none';
-    player.style.position = 'absolute';
-    player.style.top = '0'; player.style.left = '0';
-    player.style.right = '0'; player.style.bottom = '72px';
-    player.style.width = ''; player.style.aspectRatio = '';
-    modal.insertBefore(player, modal.firstChild);
-  }
+  // Clear popup iframe, resume background player
+  const wrap = document.getElementById('vid-popup-iframe-wrap');
+  if(wrap) wrap.innerHTML = '';
   document.getElementById('vid-popup-bg').style.display = 'none';
-  document.body.style.overflow = '';
   const ti = document.getElementById('vid-toggle-input');
   if(ti) ti.checked = false;
+  // Resume entrance player
+  try { if(ePlayerReady) ePlayer.playVideo(); } catch(e) {}
 }
 
 document.addEventListener('keydown', e => { if(e.key === 'Escape') closeVidPopup(); });
