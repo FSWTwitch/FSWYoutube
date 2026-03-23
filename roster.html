@@ -512,8 +512,8 @@
   <div class="modal-box" id="modal-box">
     <button class="modal-close" onclick="closeModal()">✕</button>
     <a id="modal-edit-btn" href="edit-request.html" title="Request Profile Edit" style="position:absolute;top:12px;right:54px;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;z-index:10;transition:all .2s;text-decoration:none;" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,.3)'" onmouseout="this.style.color='rgba(255,255,255,.5)';this.style.borderColor='rgba(255,255,255,.1)'">✏️</a>
-    <div id="entrance-player" style="display:none;position:relative;width:100%;aspect-ratio:16/9;z-index:20;background:#000;overflow:hidden;border-radius:8px 8px 0 0;">
-      <div id="entrance-iframe" style="position:absolute;top:0;left:0;width:100%;height:100%;"></div>
+    <div id="entrance-player" style="display:none;position:absolute;top:0;left:0;right:0;bottom:72px;z-index:20;background:#000;overflow:hidden;border-radius:8px 8px 0 0;">
+      <div id="entrance-iframe" style="width:100%;height:100%;"></div>
     </div>
     <!-- TOP: photo + info side by side -->
     <div class="modal-top">
@@ -1569,24 +1569,32 @@ function setEntranceBtn(playing){
   const pi = document.querySelector('.entrance-play-icon');
   const pa = document.querySelector('.entrance-pause-icon');
   const player = document.getElementById('entrance-player');
-  const modalTop = document.querySelector('.modal-top');
-  const modalExt = document.getElementById('modal-extended');
   if(ytBtn){ playing ? ytBtn.classList.add('playing') : ytBtn.classList.remove('playing'); }
   if(editBtn) editBtn.style.display = playing ? 'none' : 'flex';
   if(tw) tw.style.display = playing ? 'flex' : 'none';
-  if(ti) ti.checked = false; // default OFF — profile view, toggle ON to see video
+  if(ti) ti.checked = playing; // ON when playing, OFF when stopped
   if(pi) pi.style.display = playing ? 'none' : 'block';
   if(pa) pa.style.display = playing ? 'block' : 'none';
-  if(!playing) {
-    // Stopped — restore full profile, hide video
-    if(player) player.style.display = 'none';
-    if(modalTop) modalTop.style.display = '';
-    if(modalExt) modalExt.style.display = '';
+  if(!playing && player) player.style.display = 'none';
+}
+
+function hideShowVideo(){
+  const ti = document.getElementById('vid-toggle-input');
+  const isShowing = ti && ti.checked;
+  if(isShowing) {
+    // Open the popup with a fresh iframe
+    const themeSong = document.getElementById('modal-theme-song')?.textContent || '';
+    const themeArtist = document.getElementById('modal-theme-artist')?.textContent || '';
+    let startTime = 0;
+    try { if(ePlayerReady) startTime = Math.floor(ePlayer.getCurrentTime()) || 0; } catch(e) {}
+    document.getElementById('vid-popup-title').textContent = themeSong;
+    document.getElementById('vid-popup-artist').textContent = themeArtist;
+    const wrap = document.getElementById('vid-popup-iframe-wrap');
+    wrap.innerHTML = `<iframe src="https://www.youtube.com/embed/${currentVideoId}?autoplay=1&start=${startTime}&rel=0&playsinline=1&modestbranding=1&controls=1" frameborder="0" allow="autoplay;encrypted-media;fullscreen" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"></iframe>`;
+    document.getElementById('vid-popup-bg').style.display = 'flex';
+    try { if(ePlayerReady) ePlayer.pauseVideo(); } catch(e) {}
   } else {
-    // Started — show profile, hide video until toggled ON
-    if(player) player.style.display = 'none';
-    if(modalTop) modalTop.style.display = '';
-    if(modalExt) modalExt.style.display = '';
+    closeVidPopup();
   }
 }
 
@@ -2122,14 +2130,14 @@ function openVidPopup(videoId, label, title, artist) {
 }
 
 function closeVidPopup() {
-  // Clear popup iframe, resume background player
   const wrap = document.getElementById('vid-popup-iframe-wrap');
   if(wrap) wrap.innerHTML = '';
   document.getElementById('vid-popup-bg').style.display = 'none';
+  // Uncheck both toggles (popup and footer)
   const ti = document.getElementById('vid-toggle-input');
   if(ti) ti.checked = false;
-  // Resume entrance player
-  try { if(ePlayerReady) ePlayer.playVideo(); } catch(e) {}
+  // Resume background entrance player
+  try { if(ePlayerReady && window._audioPlaying) ePlayer.playVideo(); } catch(e) {}
 }
 
 document.addEventListener('keydown', e => { if(e.key === 'Escape') closeVidPopup(); });
