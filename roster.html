@@ -292,6 +292,7 @@
   .entrance-bars span:nth-child(2){animation-delay:.15s;}
   .entrance-bars span:nth-child(3){animation-delay:.3s;}
   @keyframes bar-bounce{0%,100%{height:3px}50%{height:14px}}
+  .modal-yt-btn.playing .entrance-bars{display:flex;}
   .modal-video-section .entrance-bars{display:none;align-items:flex-end;gap:2px;height:16px;flex-shrink:0;}
   .modal-yt-btn.playing ~ * .entrance-bars, .modal-video-section:has(.modal-yt-btn.playing) .entrance-bars{display:flex;}
   .modal-yt-btn.playing .entrance-play-icon{display:none !important;}
@@ -511,7 +512,7 @@
   <div class="modal-box" id="modal-box">
     <button class="modal-close" onclick="closeModal()">✕</button>
     <a id="modal-edit-btn" href="edit-request.html" title="Request Profile Edit" style="position:absolute;top:12px;right:54px;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;z-index:10;transition:all .2s;text-decoration:none;" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,.3)'" onmouseout="this.style.color='rgba(255,255,255,.5)';this.style.borderColor='rgba(255,255,255,.1)'">✏️</a>
-    <div id="entrance-player" style="display:none;position:absolute;top:0;left:0;right:0;bottom:72px;z-index:20;background:var(--surface);overflow:hidden;border-radius:8px 8px 0 0;">
+    <div id="entrance-player" style="display:none;position:absolute;top:0;left:0;right:0;bottom:72px;z-index:20;background:#000;overflow:hidden;border-radius:8px 8px 0 0;">
       <div id="entrance-iframe" style="width:100%;height:100%;"></div>
     </div>
     <!-- TOP: photo + info side by side -->
@@ -1567,19 +1568,12 @@ function setEntranceBtn(playing){
   const ti = document.getElementById('vid-toggle-input');
   const pi = document.querySelector('.entrance-play-icon');
   const pa = document.querySelector('.entrance-pause-icon');
-  const player = document.getElementById('entrance-player');
-  const modalTop = document.querySelector('.modal-top');
-  const modalExt = document.getElementById('modal-extended');
   if(ytBtn){ playing ? ytBtn.classList.add('playing') : ytBtn.classList.remove('playing'); }
   if(editBtn) editBtn.style.display = playing ? 'none' : 'flex';
   if(tw) tw.style.display = playing ? 'flex' : 'none';
   if(ti && playing) ti.checked = true;
   if(pi) pi.style.display = playing ? 'none' : 'block';
   if(pa) pa.style.display = playing ? 'block' : 'none';
-  // When playing starts: hide profile, show video. When stopped: restore profile, hide video.
-  if(modalTop) modalTop.style.display = playing ? 'none' : '';
-  if(modalExt) modalExt.style.display = playing ? 'none' : '';
-  if(player && !playing) player.style.display = 'none';
 }
 
 function toggleEntrance(){
@@ -1701,13 +1695,16 @@ function hideShowVideo(){
   const toggleInput = document.getElementById('vid-toggle-input');
   const editBtn = document.getElementById('modal-edit-btn');
   const isShowing = toggleInput && toggleInput.checked;
-  const player = document.getElementById('entrance-player');
-  const modalTop = document.querySelector('.modal-top');
-  const modalExt = document.getElementById('modal-extended');
   if(editBtn) editBtn.style.display = isShowing ? 'none' : 'flex';
-  if(player) player.style.display = isShowing ? 'block' : 'none';
-  if(modalTop) modalTop.style.display = isShowing ? 'none' : '';
-  if(modalExt) modalExt.style.display = isShowing ? 'none' : '';
+  if(isMobile()){
+    const mbox = document.getElementById('modal-box');
+    if(isShowing){ if(mbox) mbox.classList.add('mobile-playing'); }
+    else { if(mbox) mbox.classList.remove('mobile-playing'); }
+  } else {
+    const player = document.getElementById('entrance-player');
+    if(!player) return;
+    player.style.display = isShowing ? 'block' : 'none';
+  }
 }
 
 function openModal(w){
